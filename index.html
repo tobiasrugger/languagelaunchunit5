@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Launch – Unit 5, Lesson 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f0f7ff; --paper:#fff; --warm:#fdf6e8;
+  --ink:#1a2236; --muted:#6b7a99; --border:#dde4f0;
+  --blue:#2563eb; --blue-light:#dbeafe;
+  --green:#16a34a; --green-light:#dcfce7;
+  --orange:#ea580c; --orange-light:#ffedd5;
+  --purple:#7c3aed; --purple-light:#ede9fe;
+  --red:#dc2626; --red-light:#fee2e2;
+  --shadow:0 4px 20px rgba(37,99,235,0.10);
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+/* HEADER */
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.logo{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:#fff;}
+.logo span{color:#fbbf24;}
+.unit-label{font-size:0.75rem;color:#bfdbfe;text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.lang-wrap{display:flex;flex-direction:column;}
+.lang-wrap label{font-size:0.72rem;color:#bfdbfe;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.lang-wrap select{font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;padding:7px 12px;border-radius:8px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;outline:none;min-width:170px;}
+.lang-wrap select option{background:#1d4ed8;color:#fff;}
+
+/* LAYOUT */
+main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
+
+/* SECTION HEADERS */
+.section-banner{background:linear-gradient(90deg,#1d4ed8,#7c3aed);color:#fff;border-radius:var(--r);padding:16px 22px;margin:32px 0 20px;display:flex;align-items:center;gap:12px;}
+.section-banner .num{background:rgba(255,255,255,0.2);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;flex-shrink:0;}
+.section-banner h2{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;}
+.section-banner p{font-size:0.82rem;opacity:0.85;margin-top:2px;}
+
+/* VOCAB CARD */
+.vocab-card{background:var(--paper);border:2px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:16px;box-shadow:var(--shadow);}
+.word-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.word-main{}
+.word-text{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--blue);line-height:1;}
+.word-syllables{font-size:0.8rem;color:var(--muted);margin-top:2px;letter-spacing:2px;}
+.word-pos{display:inline-block;margin-top:4px;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.pos-noun{background:#dbeafe;color:#1d4ed8;}
+.pos-adjective{background:#dcfce7;color:#15803d;}
+.pos-verb{background:#ffedd5;color:#c2410c;}
+.word-actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.btn-speak{width:40px;height:40px;border-radius:50%;border:2px solid var(--green);background:#fff;color:var(--green);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;}
+.btn-speak:hover{background:var(--green);color:#fff;}
+.btn-record{width:40px;height:40px;border-radius:50%;border:2px solid var(--orange);background:#fff;color:var(--orange);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;}
+.btn-record:hover{background:var(--orange);color:#fff;}
+.btn-record.recording{background:var(--red);border-color:var(--red);color:#fff;animation:pulse 1s infinite;}
+.btn-playback{width:40px;height:40px;border-radius:50%;border:2px solid var(--purple);background:#fff;color:var(--purple);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;display:none;}
+.btn-playback:hover{background:var(--purple);color:#fff;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.4)}50%{box-shadow:0 0 0 8px rgba(220,38,38,0)}}
+
+.word-definition{font-size:0.95rem;color:var(--ink);line-height:1.6;margin-bottom:12px;padding:10px 14px;background:var(--warm);border-radius:8px;border-left:4px solid var(--blue);}
+
+/* TRANSLATION */
+.trans-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.trans-label{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);}
+.trans-value{font-size:0.95rem;font-weight:700;color:var(--purple);min-height:22px;}
+.trans-loading{color:var(--muted);font-style:italic;font-size:0.85rem;}
+.spin{display:inline-block;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* RECORD STATUS */
+.record-status{font-size:0.78rem;color:var(--muted);margin-top:6px;min-height:18px;}
+
+/* SET DIVIDER */
+.set-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--blue);margin:24px 0 12px;padding:0 4px;}
+
+/* FILL IN BLANK */
+.fitb-card{background:var(--paper);border:2px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:14px;box-shadow:var(--shadow);}
+.fitb-num{font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;}
+.fitb-sentence{font-size:1.05rem;line-height:2.2;color:var(--ink);}
+.fitb-input{
+  display:inline-block;
+  border:none;border-bottom:3px solid var(--blue);
+  background:transparent;
+  font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;
+  color:var(--blue);text-align:center;
+  width:140px;padding:0 4px;outline:none;
+  transition:border-color 0.15s;
+}
+.fitb-input:focus{border-bottom-color:var(--purple);}
+.fitb-input.correct{border-bottom-color:var(--green);color:var(--green);}
+.fitb-input.incorrect{border-bottom-color:var(--red);color:var(--red);}
+.fitb-hint{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+.fitb-hint span{background:var(--blue-light);color:var(--blue);padding:2px 8px;border-radius:6px;font-weight:700;margin:0 3px;}
+.fitb-feedback{font-size:0.85rem;font-weight:700;margin-top:8px;min-height:20px;}
+.fitb-feedback.ok{color:var(--green);}
+.fitb-feedback.err{color:var(--red);}
+.check-btn{margin-top:10px;padding:8px 20px;border-radius:8px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:all 0.15s;}
+.check-btn:hover{background:#1d4ed8;}
+
+/* PRACTICE SECTION */
+.practice-intro{background:var(--warm);border:2px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:20px;font-size:0.9rem;line-height:1.6;color:var(--muted);}
+.practice-intro strong{color:var(--ink);}
+
+/* ACTIVITY TABS */
+.act-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.act-tab{padding:8px 16px;border-radius:10px;border:2px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.15s;color:var(--muted);}
+.act-tab:hover{border-color:var(--blue);color:var(--blue);}
+.act-tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.act-panel{display:none;}
+.act-panel.active{display:block;}
+
+/* MATCH ACTIVITY */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px;}
+.match-col{display:flex;flex-direction:column;gap:8px;}
+.match-item{padding:12px 16px;border-radius:10px;border:2px solid var(--border);background:#fff;cursor:pointer;font-weight:700;font-size:0.9rem;text-align:center;transition:all 0.18s;line-height:1.3;user-select:none;}
+.match-item:hover:not(.locked){border-color:var(--blue);background:var(--blue-light);}
+.match-item.sel{border-color:var(--orange);background:var(--orange-light);}
+.match-item.matched{border-color:var(--green);background:var(--green-light);pointer-events:none;}
+.match-item.wrong-flash{border-color:var(--red);background:var(--red-light);animation:shake 0.4s;}
+.match-score{font-size:0.85rem;color:var(--muted);font-weight:700;margin-bottom:10px;}
+
+/* LISTEN MATCH */
+.listen-play-btn{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;font-size:1.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 4px 16px rgba(37,99,235,0.3);transition:transform 0.15s;}
+.listen-play-btn:hover{transform:scale(1.08);}
+.listen-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:480px;margin:0 auto;}
+.listen-opt{padding:12px;border-radius:10px;border:2px solid var(--border);background:#fff;cursor:pointer;font-weight:700;font-size:0.9rem;text-align:center;transition:all 0.18s;}
+.listen-opt:hover{border-color:var(--blue);background:var(--blue-light);}
+.listen-opt.correct{border-color:var(--green);background:var(--green-light);}
+.listen-opt.wrong{border-color:var(--red);background:var(--red-light);}
+
+/* UNSCRAMBLE */
+.scramble-card{background:var(--paper);border:2px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:14px;}
+.scramble-hint{font-size:0.82rem;color:var(--muted);margin-bottom:10px;}
+.scramble-letters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.scramble-tile{width:36px;height:40px;border-radius:8px;background:var(--blue-light);border:2px solid var(--blue);color:var(--blue);font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;transition:all 0.15s;}
+.scramble-tile:hover:not(.used){background:var(--blue);color:#fff;}
+.scramble-tile.used{opacity:0.3;pointer-events:none;}
+.scramble-answer{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;min-height:44px;padding:8px;background:var(--warm);border-radius:8px;border:2px dashed var(--border);}
+.scramble-placed{width:36px;height:40px;border-radius:8px;background:var(--purple-light);border:2px solid var(--purple);color:var(--purple);font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* WORD BANK */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+.wb-word{padding:6px 14px;border-radius:8px;background:var(--blue-light);color:var(--blue);font-weight:700;font-size:0.9rem;cursor:pointer;border:2px solid transparent;transition:all 0.15s;}
+.wb-word:hover{border-color:var(--blue);}
+.wb-word.used{opacity:0.35;pointer-events:none;}
+
+/* SCORE */
+.score-banner{text-align:center;padding:24px;background:var(--green-light);border:2px solid var(--green);border-radius:var(--r);margin-top:16px;}
+.score-banner .big{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:var(--green);}
+.score-banner p{color:var(--green);font-weight:700;margin-top:4px;}
+
+/* NAV */
+.nav-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.btn-primary{padding:10px 22px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.15s;}
+.btn-primary:hover{background:#1d4ed8;}
+.btn-secondary{padding:10px 22px;border-radius:10px;border:2px solid var(--border);background:#fff;color:var(--ink);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.15s;}
+.btn-secondary:hover{border-color:var(--ink);}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{0%{transform:scale(0.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop 0.3s ease-out;}
+
+/* PROGRESS */
+.progress-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.prog-step{padding:6px 14px;border-radius:20px;font-size:0.8rem;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.prog-step.done{border-color:var(--green);background:var(--green-light);color:var(--green);}
+.prog-step.current{border-color:var(--blue);background:var(--blue);color:#fff;}
+.prog-step:hover{border-color:var(--blue);}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="logo">Language <span>Launch</span></div>
+    <div class="unit-label">Unit 5 · Lesson 1 · What in the World?</div>
+  </div>
+  <div class="lang-wrap">
+    <label for="langsel">My language</label>
+    <select id="langsel" onchange="setLang(this.value)">
+      <option value="">— select language —</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Cantonese">Cantonese</option>
+      <option value="Mandarin">Mandarin</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Russian">Russian</option>
+      <option value="Darija">Darija (Moroccan Arabic)</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Tagalog">Tagalog</option>
+      <option value="French">French</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <!-- Progress nav -->
+  <div class="progress-nav">
+    <div class="prog-step current" onclick="showSection('vocab1')">1 · Words 1–4</div>
+    <div class="prog-step" onclick="showSection('fitb1')">2 · Sentences 1–4</div>
+    <div class="prog-step" onclick="showSection('vocab2')">3 · Words 5–8</div>
+    <div class="prog-step" onclick="showSection('fitb2')">4 · Sentences 5–8</div>
+    <div class="prog-step" onclick="showSection('practice')">5 · Practice</div>
+  </div>
+
+  <!-- ══ SECTION 1: Vocab Set 1 ══ -->
+  <div id="sec-vocab1">
+    <div class="section-banner">
+      <div class="num">1</div>
+      <div>
+        <h2>Vocabulary · Words 1–4</h2>
+        <p>Listen · Record yourself · Learn the meaning</p>
+      </div>
+    </div>
+
+    <div id="vc-animal" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">animal</div>
+          <div class="word-syllables">an · i · mal</div>
+          <span class="word-pos pos-noun">noun</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('animal')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-animal" onclick="toggleRecord('animal')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-animal" onclick="playBack('animal')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">An animal, like a Florida panther, is a living thing. Animals need food and water to live.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-animal"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-animal"></div>
+    </div>
+
+    <div id="vc-extinct" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">extinct</div>
+          <div class="word-syllables">ex · tinct</div>
+          <span class="word-pos pos-adjective">adjective</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('extinct')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-extinct" onclick="toggleRecord('extinct')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-extinct" onclick="playBack('extinct')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">When an animal species dies out forever, the species is extinct.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-extinct"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-extinct"></div>
+    </div>
+
+    <div id="vc-endangered" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">endangered</div>
+          <div class="word-syllables">en · dan · gered</div>
+          <span class="word-pos pos-adjective">adjective</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('endangered')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-endangered" onclick="toggleRecord('endangered')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-endangered" onclick="playBack('endangered')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">An endangered animal species has very few animals left and is almost extinct.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-endangered"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-endangered"></div>
+    </div>
+
+    <div id="vc-habitat" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">habitat</div>
+          <div class="word-syllables">hab · i · tat</div>
+          <span class="word-pos pos-noun">noun</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('habitat')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-habitat" onclick="toggleRecord('habitat')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-habitat" onclick="playBack('habitat')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">A habitat is where an animal lives in nature.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-habitat"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-habitat"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-primary" onclick="showSection('fitb1')">Next: Sentences ▶</button>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2: Fill in Blank Set 1 ══ -->
+  <div id="sec-fitb1" style="display:none">
+    <div class="section-banner">
+      <div class="num">2</div>
+      <div>
+        <h2>Complete the Sentences</h2>
+        <p>Type the correct word in each blank. Choose from the words shown.</p>
+      </div>
+    </div>
+
+    <div class="fitb-card">
+      <div class="fitb-num">Sentence 1</div>
+      <div class="fitb-sentence">
+        When an <input class="fitb-input" id="f1a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkFitb1()"> species dies out, it is <input class="fitb-input" id="f1b" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkFitb1()">.
+      </div>
+      <div class="fitb-hint">Choose from: <span>endangered</span> <span>extinct</span></div>
+      <div class="fitb-feedback" id="fb1"></div>
+    </div>
+
+    <div class="fitb-card">
+      <div class="fitb-num">Sentence 2</div>
+      <div class="fitb-sentence">
+        The place where an <input class="fitb-input" id="f2a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkFitb1()"> lives in nature is its <input class="fitb-input" id="f2b" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkFitb1()">.
+      </div>
+      <div class="fitb-hint">Choose from: <span>animal</span> <span>habitat</span></div>
+      <div class="fitb-feedback" id="fb2"></div>
+    </div>
+
+    <button class="check-btn" onclick="checkFitb1()">Check Answers ✓</button>
+
+    <div class="nav-row" style="margin-top:16px">
+      <button class="btn-secondary" onclick="showSection('vocab1')">◀ Back</button>
+      <button class="btn-primary" onclick="showSection('vocab2')">Next: Words 5–8 ▶</button>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: Vocab Set 2 ══ -->
+  <div id="sec-vocab2" style="display:none">
+    <div class="section-banner">
+      <div class="num">3</div>
+      <div>
+        <h2>Vocabulary · Words 5–8</h2>
+        <p>Listen · Record yourself · Learn the meaning</p>
+      </div>
+    </div>
+
+    <div id="vc-environment" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">environment</div>
+          <div class="word-syllables">en · vi · ron · ment</div>
+          <span class="word-pos pos-noun">noun</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('environment')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-environment" onclick="toggleRecord('environment')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-environment" onclick="playBack('environment')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">The environment is the physical world, including plants, animals, water, land, and air.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-environment"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-environment"></div>
+    </div>
+
+    <div id="vc-balanced" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">balanced</div>
+          <div class="word-syllables">bal · anced</div>
+          <span class="word-pos pos-adjective">adjective</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('balanced')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-balanced" onclick="toggleRecord('balanced')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-balanced" onclick="playBack('balanced')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">When a habitat is balanced, it has the right amount of each type of animal — not too many or too few.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-balanced"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-balanced"></div>
+    </div>
+
+    <div id="vc-connected" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">connected</div>
+          <div class="word-syllables">con · nect · ed</div>
+          <span class="word-pos pos-adjective">adjective</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('connected')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-connected" onclick="toggleRecord('connected')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-connected" onclick="playBack('connected')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">Humans and animals are connected. Our actions affect animals, and their actions affect us.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-connected"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-connected"></div>
+    </div>
+
+    <div id="vc-save" class="vocab-card">
+      <div class="word-header">
+        <div class="word-main">
+          <div class="word-text">save</div>
+          <div class="word-syllables">save</div>
+          <span class="word-pos pos-verb">verb</span>
+        </div>
+        <div class="word-actions">
+          <button class="btn-speak" onclick="speakWord('save')" title="Hear the word">🔊</button>
+          <button class="btn-record" id="rec-save" onclick="toggleRecord('save')" title="Record yourself">🎙️</button>
+          <button class="btn-playback" id="play-save" onclick="playBack('save')" title="Hear your recording">▶️</button>
+        </div>
+      </div>
+      <div class="word-definition">Putting up signs can help save endangered species from danger.</div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-save"><em class="trans-loading">select a language above</em></span>
+      </div>
+      <div class="record-status" id="rs-save"></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-secondary" onclick="showSection('fitb1')">◀ Back</button>
+      <button class="btn-primary" onclick="showSection('fitb2')">Next: Sentences ▶</button>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4: Fill in Blank Set 2 ══ -->
+  <div id="sec-fitb2" style="display:none">
+    <div class="section-banner">
+      <div class="num">4</div>
+      <div>
+        <h2>Complete the Sentences</h2>
+        <p>Type the correct word in each blank.</p>
+      </div>
+    </div>
+
+    <div class="fitb-card">
+      <div class="fitb-num">Sentence 3</div>
+      <div class="fitb-sentence">
+        To keep habitats <input class="fitb-input" id="f3a" placeholder="______" autocomplete="off">, we must work together to <input class="fitb-input" id="f3b" placeholder="______" autocomplete="off"> endangered species.
+      </div>
+      <div class="fitb-hint">Choose from: <span>balanced</span> <span>save</span></div>
+      <div class="fitb-feedback" id="fb3"></div>
+    </div>
+
+    <div class="fitb-card">
+      <div class="fitb-num">Sentence 4</div>
+      <div class="fitb-sentence">
+        People, plants, and animals are all <input class="fitb-input" id="f4a" placeholder="______" autocomplete="off"> in one shared <input class="fitb-input" id="f4b" placeholder="______" autocomplete="off">.
+      </div>
+      <div class="fitb-hint">Choose from: <span>connected</span> <span>environment</span></div>
+      <div class="fitb-feedback" id="fb4"></div>
+    </div>
+
+    <button class="check-btn" onclick="checkFitb2()">Check Answers ✓</button>
+
+    <div class="nav-row" style="margin-top:16px">
+      <button class="btn-secondary" onclick="showSection('vocab2')">◀ Back</button>
+      <button class="btn-primary" onclick="showSection('practice')">Next: Practice ▶</button>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5: Practice ══ -->
+  <div id="sec-practice" style="display:none">
+    <div class="section-banner">
+      <div class="num">5</div>
+      <div>
+        <h2>Practice All 8 Words</h2>
+        <p>Choose an activity below</p>
+      </div>
+    </div>
+
+    <div class="act-tabs">
+      <button class="act-tab active" onclick="switchTab('fitb')">✏️ Fill in Blank</button>
+      <button class="act-tab" onclick="switchTab('match')">🔗 Match Word</button>
+      <button class="act-tab" onclick="switchTab('listen')">🔊 Listen & Choose</button>
+      <button class="act-tab" onclick="switchTab('scramble')">🔀 Unscramble</button>
+    </div>
+
+    <!-- Fill in Blank Practice -->
+    <div id="tab-fitb" class="act-panel active">
+      <div id="prac-fitb-area"></div>
+      <div class="nav-row" style="margin-top:4px">
+        <button class="btn-primary" onclick="initFitbPrac()">New Question 🔄</button>
+      </div>
+    </div>
+
+    <!-- Match Word to Translation -->
+    <div id="tab-match" class="act-panel">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Match each word on the left to its meaning on the right.</p>
+      <div class="match-score" id="match-score">✅ Matched: 0 / 8</div>
+      <div class="match-grid">
+        <div class="match-col" id="match-left"></div>
+        <div class="match-col" id="match-right"></div>
+      </div>
+      <div class="nav-row" style="margin-top:12px">
+        <button class="btn-primary" onclick="initMatch()">New Game 🔄</button>
+      </div>
+    </div>
+
+    <!-- Listen and Choose -->
+    <div id="tab-listen" class="act-panel">
+      <div id="listen-area"></div>
+    </div>
+
+    <!-- Unscramble -->
+    <div id="tab-scramble" class="act-panel">
+      <div id="scramble-area"></div>
+      <div class="nav-row" style="margin-top:4px">
+        <button class="btn-primary" onclick="initScramble()">New Word 🔄</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ═══════════════════════
+// DATA
+// ═══════════════════════
+const WORDS = [
+  { word:'animal',      syl:'an·i·mal',       pos:'noun',      def:'A living thing that needs food and water to live.',         short:'a living thing' },
+  { word:'extinct',     syl:'ex·tinct',        pos:'adjective', def:'When a species dies out forever, it is extinct.',           short:'died out forever' },
+  { word:'endangered',  syl:'en·dan·gered',    pos:'adjective', def:'An endangered species has very few animals left.',           short:'very few left, almost gone' },
+  { word:'habitat',     syl:'hab·i·tat',       pos:'noun',      def:'A habitat is where an animal lives in nature.',             short:'where an animal lives' },
+  { word:'environment', syl:'en·vi·ron·ment',  pos:'noun',      def:'The physical world including plants, animals, water, and air.', short:'the natural world around us' },
+  { word:'balanced',    syl:'bal·anced',       pos:'adjective', def:'A balanced habitat has the right amount of each animal.',   short:'the right amount of each thing' },
+  { word:'connected',   syl:'con·nect·ed',     pos:'adjective', def:'Humans and animals are connected — we affect each other.', short:'linked together' },
+  { word:'save',        syl:'save',            pos:'verb',      def:'To protect something from danger.',                        short:'protect from danger' },
+];
+
+const FITB_PRACTICE = [
+  { sentence:'A tiger is an ___ that lives in forests.', answer:'animal', hint:'animal / habitat' },
+  { sentence:'The dodo bird is ___ — it no longer exists.', answer:'extinct', hint:'extinct / endangered' },
+  { sentence:'The Florida panther is ___ because very few are left.', answer:'endangered', hint:'endangered / extinct' },
+  { sentence:'A rainforest is the ___ of many animals.', answer:'habitat', hint:'habitat / environment' },
+  { sentence:'We must protect the ___ to keep plants and animals safe.', answer:'environment', hint:'environment / habitat' },
+  { sentence:'A healthy forest has a ___ number of predators and prey.', answer:'balanced', hint:'balanced / connected' },
+  { sentence:'All living things are ___ — we depend on each other.', answer:'connected', hint:'connected / balanced' },
+  { sentence:'We can ___ endangered animals by protecting their habitats.', answer:'save', hint:'save / balanced' },
+];
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbFr3oopIITlxKDhI5wGhEZdomWc3tmB5ZSK6NpBVisPAz-CMA4uKiruXDkCEU3T0Q/exec';
+
+// ═══════════════════════
+// LANGUAGE & TRANSLATION
+// ═══════════════════════
+let currentLang = '';
+const transCache = {};
+
+function setLang(lang) {
+  currentLang = lang;
+  if (!lang) return;
+  WORDS.forEach(w => translateWord(w.word, w.def));
+}
+
+async function translateWord(word, def) {
+  const key = word + '|' + currentLang;
+  if (transCache[key]) { showTrans(word, transCache[key]); return; }
+  const el = document.getElementById('tr-' + word);
+  if (el) el.innerHTML = '<span class="spin">&#8635;</span> translating...';
+  try {
+    const params = new URLSearchParams({ action:'translate', idiom:word, meaning:def, lang:currentLang });
+    const resp = await fetch(SCRIPT_URL + '?' + params, { method:'GET', redirect:'follow' });
+    const data = await resp.json();
+    if (data.ok && data.translation) {
+      const t = data.translation;
+      const display = t.equiv && t.equiv !== 'null' ? t.equiv + (t.meaning ? ' — ' + t.meaning : '') : (t.meaning || 'no translation available');
+      transCache[key] = display;
+      showTrans(word, display);
+    }
+  } catch(e) {
+    const el2 = document.getElementById('tr-' + word);
+    if (el2) el2.innerHTML = '<em style="color:#dc2626;font-size:0.8rem">unavailable</em>';
+  }
+}
+
+function showTrans(word, text) {
+  const el = document.getElementById('tr-' + word);
+  if (el) { el.textContent = text; el.style.color = 'var(--purple)'; }
+}
+
+// ═══════════════════════
+// SPEECH
+// ═══════════════════════
+function speakWord(word) {
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.8;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+// ═══════════════════════
+// RECORDING
+// ═══════════════════════
+let mediaRecorder = null, audioChunks = [], currentRecWord = null;
+const recordings = {};
+
+async function toggleRecord(word) {
+  const btn = document.getElementById('rec-' + word);
+  const status = document.getElementById('rs-' + word);
+  const playBtn = document.getElementById('play-' + word);
+
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    // Stop recording
+    mediaRecorder.stop();
+    btn.classList.remove('recording');
+    btn.title = 'Record yourself';
+    if (status) status.textContent = 'Recording saved! Press ▶ to hear yourself.';
+    return;
+  }
+
+  // Start recording
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioChunks = [];
+    currentRecWord = word;
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(audioChunks, { type: 'audio/webm' });
+      recordings[word] = URL.createObjectURL(blob);
+      if (playBtn) playBtn.style.display = 'flex';
+      stream.getTracks().forEach(t => t.stop());
+    };
+    mediaRecorder.start();
+    btn.classList.add('recording');
+    btn.title = 'Tap to stop recording';
+    if (status) status.textContent = '🔴 Recording... tap the button again to stop.';
+  } catch(e) {
+    if (status) status.textContent = 'Microphone not available. Please allow access.';
+  }
+}
+
+function playBack(word) {
+  if (!recordings[word]) return;
+  const audio = new Audio(recordings[word]);
+  audio.play();
+}
+
+// ═══════════════════════
+// SECTION NAV
+// ═══════════════════════
+const sections = ['vocab1','fitb1','vocab2','fitb2','practice'];
+
+function showSection(name) {
+  sections.forEach(s => {
+    const el = document.getElementById('sec-' + s);
+    if (el) el.style.display = s === name ? 'block' : 'none';
+  });
+  // Update progress nav
+  document.querySelectorAll('.prog-step').forEach((el, i) => {
+    el.className = 'prog-step';
+    const idx = sections.indexOf(name);
+    if (i < idx) el.classList.add('done');
+    else if (i === idx) el.classList.add('current');
+  });
+  if (name === 'practice') { initFitbPrac(); initMatch(); initScramble(); initListen(); }
+  window.scrollTo(0, 0);
+}
+
+// ═══════════════════════
+// FILL IN BLANK CHECK
+// ═══════════════════════
+function checkFitb1() {
+  const answers = [
+    { inputs:['f1a','f1b'], correct:['endangered','extinct'], fb:'fb1' },
+    { inputs:['f2a','f2b'], correct:['animal','habitat'],     fb:'fb2' },
+  ];
+  answers.forEach(a => {
+    let allOk = true;
+    a.inputs.forEach((id, i) => {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      const ok = val === a.correct[i];
+      el.classList.toggle('correct', ok);
+      el.classList.toggle('incorrect', !ok && val.length > 0);
+      if (!ok) allOk = false;
+    });
+    const fb = document.getElementById(a.fb);
+    if (fb) {
+      const filled = a.inputs.every(id => document.getElementById(id).value.trim().length > 0);
+      if (!filled) { fb.textContent = 'Please fill in both blanks.'; fb.className = 'fitb-feedback err'; }
+      else if (allOk) { fb.textContent = '✅ Correct!'; fb.className = 'fitb-feedback ok'; }
+      else { fb.textContent = '❌ Check your answers and try again.'; fb.className = 'fitb-feedback err'; }
+    }
+  });
+}
+
+function checkFitb2() {
+  const answers = [
+    { inputs:['f3a','f3b'], correct:['balanced','save'],        fb:'fb3' },
+    { inputs:['f4a','f4b'], correct:['connected','environment'], fb:'fb4' },
+  ];
+  answers.forEach(a => {
+    let allOk = true;
+    a.inputs.forEach((id, i) => {
+      const el = document.getElementById(id);
+      const val = el.value.trim().toLowerCase();
+      const ok = val === a.correct[i];
+      el.classList.toggle('correct', ok);
+      el.classList.toggle('incorrect', !ok && val.length > 0);
+      if (!ok) allOk = false;
+    });
+    const fb = document.getElementById(a.fb);
+    if (fb) {
+      const filled = a.inputs.every(id => document.getElementById(id).value.trim().length > 0);
+      if (!filled) { fb.textContent = 'Please fill in both blanks.'; fb.className = 'fitb-feedback err'; }
+      else if (allOk) { fb.textContent = '✅ Correct!'; fb.className = 'fitb-feedback ok'; }
+      else { fb.textContent = '❌ Check your answers and try again.'; fb.className = 'fitb-feedback err'; }
+    }
+  });
+}
+
+// ═══════════════════════
+// PRACTICE: FITB
+// ═══════════════════════
+let pracFitbIdx = 0;
+const pracFitbOrder = shuffle([...Array(FITB_PRACTICE.length).keys()]);
+
+function initFitbPrac() {
+  const q = FITB_PRACTICE[pracFitbOrder[pracFitbIdx % pracFitbOrder.length]];
+  pracFitbIdx++;
+  const area = document.getElementById('prac-fitb-area');
+  const inputTag = '<input class="fitb-input" id="prac-input" placeholder="______" autocomplete="off">';
+  area.innerHTML =
+    '<div class="fitb-card pop">' +
+    '<div class="fitb-num">Fill in the blank</div>' +
+    '<div class="fitb-sentence">' + q.sentence.replace('___', inputTag) + '</div>' +
+    '<div class="fitb-hint">Hint: <span>' + q.hint + '</span></div>' +
+    '<div class="fitb-feedback" id="prac-fb"></div>' +
+    '<button class="check-btn" onclick="checkPracFitb()">Check ✓</button>' +
+    '</div>';
+  window._pracAnswer = q.answer;
+  const inp = document.getElementById('prac-input');
+  if (inp) {
+    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkPracFitb(); });
+    setTimeout(() => inp.focus(), 100);
+  }
+}
+
+function checkPracFitb() {
+  const inp = document.getElementById('prac-input');
+  const fb  = document.getElementById('prac-fb');
+  if (!inp || !fb) return;
+  const val = inp.value.trim().toLowerCase();
+  if (!val) { fb.textContent = 'Type your answer first.'; fb.className = 'fitb-feedback err'; return; }
+  if (val === window._pracAnswer) {
+    inp.classList.add('correct'); inp.classList.remove('incorrect');
+    fb.textContent = '✅ Correct! "' + window._pracAnswer + '" is right.';
+    fb.className = 'fitb-feedback ok';
+    speakWord(window._pracAnswer);
+    setTimeout(() => initFitbPrac(), 1500);
+  } else {
+    inp.classList.add('incorrect'); inp.classList.remove('correct');
+    fb.textContent = '❌ Try again!';
+    fb.className = 'fitb-feedback err';
+    inp.value = ''; inp.focus();
+  }
+}
+
+// ═══════════════════════
+// PRACTICE: MATCH
+// ═══════════════════════
+let matchSelected = null, matchMatched = new Set();
+
+function initMatch() {
+  matchSelected = null; matchMatched = new Set();
+  const left  = document.getElementById('match-left');
+  const right = document.getElementById('match-right');
+  const score = document.getElementById('match-score');
+  if (!left || !right) return;
+  score.textContent = 'Matched: 0 / ' + WORDS.length;
+  const leftItems  = shuffle([...WORDS]);
+  const rightItems = shuffle([...WORDS]);
+  left.innerHTML = leftItems.map(function(w,i){
+    return '<div class="match-item" id="ml' + i + '" data-word="' + w.word + '" data-side="left" data-id="ml' + i + '">' + w.word + '</div>';
+  }).join('');
+  right.innerHTML = rightItems.map(function(w,i){
+    return '<div class="match-item" id="mr' + i + '" data-word="' + w.word + '" data-side="right" data-id="mr' + i + '">' + w.short + '</div>';
+  }).join('');
+  document.querySelectorAll('#match-left .match-item, #match-right .match-item').forEach(function(el){
+    el.addEventListener('click', function(){
+      matchClick(el.dataset.side, el.dataset.word, el.dataset.id);
+    });
+  });
+}
+
+function matchClick(side, word, elId) {
+  if (matchMatched.has(word)) return;
+  const el = document.getElementById(elId);
+  if (!matchSelected) {
+    document.querySelectorAll('.match-item.sel').forEach(e => e.classList.remove('sel'));
+    el.classList.add('sel');
+    matchSelected = { side, word, elId };
+  } else {
+    if (matchSelected.side === side) {
+      document.getElementById(matchSelected.elId).classList.remove('sel');
+      el.classList.add('sel');
+      matchSelected = { side, word, elId };
+      return;
+    }
+    if (matchSelected.word === word) {
+      matchMatched.add(word);
+      document.getElementById(matchSelected.elId).className = 'match-item matched pop';
+      el.className = 'match-item matched pop';
+      speakWord(word);
+      matchSelected = null;
+      const score = document.getElementById('match-score');
+      if (score) score.textContent = '✅ Matched: ' + matchMatched.size + ' / ' + WORDS.length;
+      if (matchMatched.size === WORDS.length && score) score.textContent = '🎉 All matched! Great work!';
+    } else {
+      const prev = document.getElementById(matchSelected.elId);
+      el.classList.add('wrong-flash'); prev?.classList.add('wrong-flash');
+      setTimeout(() => { el.classList.remove('wrong-flash'); prev?.classList.remove('wrong-flash'); }, 500);
+      matchSelected = null;
+    }
+  }
+}
+
+// ═══════════════════════
+// PRACTICE: LISTEN
+// ═══════════════════════
+let listenIdx = 0, listenOrder = [], listenAnswered = false;
+
+function initListen() {
+  listenOrder = shuffle([...Array(WORDS.length).keys()]);
+  listenIdx = 0;
+  renderListen();
+}
+
+function renderListen() {
+  listenAnswered = false;
+  const area = document.getElementById('listen-area');
+  if (!area) return;
+  const correct = WORDS[listenOrder[listenIdx % listenOrder.length]];
+  const distractors = shuffle(WORDS.filter(function(w){ return w.word !== correct.word; })).slice(0, 3);
+  const opts = shuffle([correct].concat(distractors));
+  const optsHtml = opts.map(function(o){
+    return '<div class="listen-opt" data-word="' + o.word + '">' + o.word + '</div>';
+  }).join('');
+  area.innerHTML =
+    '<p style="font-size:0.88rem;color:var(--muted);text-align:center;margin-bottom:14px">Press play. Which word do you hear?</p>' +
+    '<button class="listen-play-btn" id="listen-play-btn">&#128266;</button>' +
+    '<div class="listen-opts">' + optsHtml + '</div>' +
+    '<div id="listen-fb" style="text-align:center;font-weight:700;margin-top:12px;min-height:24px;font-size:0.9rem"></div>';
+
+  document.getElementById('listen-play-btn').addEventListener('click', function(){ speakWord(correct.word); });
+  document.querySelectorAll('.listen-opt').forEach(function(el){
+    el.addEventListener('click', function(){
+      if (listenAnswered) return;
+      listenAnswered = true;
+      const chosen = el.dataset.word;
+      const fb = document.getElementById('listen-fb');
+      if (chosen === correct.word) {
+        el.classList.add('correct');
+        if (fb) fb.innerHTML = '<span style="color:var(--green)">Correct! "' + correct.word + '"</span>';
+        speakWord(correct.word);
+        setTimeout(function(){ listenIdx++; renderListen(); }, 1400);
+      } else {
+        el.classList.add('wrong');
+        if (fb) fb.innerHTML = '<span style="color:var(--red)">Listen again!</span>';
+        speakWord(correct.word);
+        setTimeout(function(){ listenAnswered = false; el.classList.remove('wrong'); if (fb) fb.innerHTML = ''; }, 1000);
+      }
+    });
+  });
+  setTimeout(function(){ speakWord(correct.word); }, 400);
+}
+
+// ═══════════════════════
+// PRACTICE: UNSCRAMBLE
+// ═══════════════════════
+let scrambleWord = null, scramblePlaced = [];
+
+function initScramble() {
+  const w = WORDS[Math.floor(Math.random() * WORDS.length)];
+  scrambleWord = w.word;
+  scramblePlaced = [];
+  const letters = shuffle(w.word.toUpperCase().split(''));
+  const area = document.getElementById('scramble-area');
+  if (!area) return;
+  const tilesHtml = letters.map(function(l,i){
+    return '<div class="scramble-tile" id="st' + i + '" data-letter="' + l + '" data-idx="' + i + '">' + l + '</div>';
+  }).join('');
+  area.innerHTML =
+    '<div class="scramble-card pop">' +
+    '<div class="scramble-hint">Definition: <strong>' + w.def + '</strong></div>' +
+    '<div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px">Tap letters to spell the word.</div>' +
+    '<div class="scramble-letters" id="scr-tiles">' + tilesHtml + '</div>' +
+    '<div class="scramble-answer" id="scr-answer"></div>' +
+    '<div id="scr-fb" style="font-weight:700;font-size:0.9rem;min-height:24px;margin-top:4px"></div>' +
+    '<button class="check-btn" onclick="checkScramble()">' + 'Check ✓' + '</button>' +
+    '</div>';
+  document.querySelectorAll('.scramble-tile').forEach(function(tile){
+    tile.addEventListener('click', function(){
+      placeLetter(tile.dataset.letter, parseInt(tile.dataset.idx));
+    });
+  });
+}
+
+function placeLetter(letter, idx) {
+  const tile = document.getElementById('st' + idx);
+  if (tile.classList.contains('used')) return;
+  tile.classList.add('used');
+  scramblePlaced.push({ letter, idx });
+  renderAnswer();
+}
+
+function renderAnswer() {
+  const area = document.getElementById('scr-answer');
+  if (!area) return;
+  area.innerHTML = scramblePlaced.map((p, i) =>
+    '<div class="scramble-placed" onclick="removeLetter(' + i + ')">' + p.letter + '</div>'
+  ).join('');
+}
+
+function removeLetter(i) {
+  const p = scramblePlaced[i];
+  scramblePlaced.splice(i, 1);
+  const tile = document.getElementById('st' + p.idx);
+  if (tile) tile.classList.remove('used');
+  renderAnswer();
+}
+
+function checkScramble() {
+  const attempt = scramblePlaced.map(p => p.letter).join('').toLowerCase();
+  const fb = document.getElementById('scr-fb');
+  if (!attempt) { if (fb) fb.innerHTML = '<span style="color:var(--red)">Tap some letters first!</span>'; return; }
+  if (attempt === scrambleWord) {
+    if (fb) fb.innerHTML = '<span style="color:var(--green)">✅ Correct! The word is "' + scrambleWord + '"</span>';
+    speakWord(scrambleWord);
+    setTimeout(() => initScramble(), 1800);
+  } else {
+    if (fb) fb.innerHTML = '<span style="color:var(--red)">❌ Try again!</span>';
+    scramblePlaced = [];
+    document.querySelectorAll('.scramble-tile').forEach(t => t.classList.remove('used'));
+    renderAnswer();
+  }
+}
+
+// ═══════════════════════
+// TABS
+// ═══════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.act-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.act-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'match') initMatch();
+  if (name === 'listen') initListen();
+  if (name === 'scramble') initScramble();
+  if (name === 'fitb') initFitbPrac();
+}
+
+// ═══════════════════════
+// UTILS
+// ═══════════════════════
+function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+</script>
+</body>
+</html>
