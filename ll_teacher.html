@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Launch – Teacher Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f7ff;--paper:#fff;--ink:#1a2236;--muted:#6b7a99;--border:#dde4f0;
+  --blue:#2563eb;--blue-light:#dbeafe;--green:#16a34a;--green-light:#dcfce7;
+  --red:#dc2626;--red-light:#fee2e2;--orange:#ea580c;--orange-light:#ffedd5;
+  --purple:#7c3aed;--shadow:0 4px 20px rgba(37,99,235,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:#fff;}
+.logo span{color:#fbbf24;}
+.back-link{color:#bfdbfe;font-size:0.85rem;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3);}
+.back-link:hover{color:#fff;}
+main{max-width:960px;margin:0 auto;padding:32px 20px 60px;}
+
+/* LOGIN */
+.pw-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.pw-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:360px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);text-align:center;}
+.pw-box h2{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--blue);margin-bottom:6px;}
+.pw-box p{color:var(--muted);font-size:0.88rem;margin-bottom:20px;}
+.pw-box input{width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:1rem;outline:none;margin-bottom:12px;}
+.pw-box input:focus{border-color:var(--blue);}
+.pw-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;}
+.pw-btn:hover{background:#1d4ed8;}
+.pw-error{color:var(--red);font-size:0.82rem;margin-top:8px;min-height:18px;}
+
+/* TABS */
+.tab-bar{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;}
+.tab{padding:10px 20px;border-radius:10px;border:2px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;color:var(--muted);transition:all 0.15s;}
+.tab:hover{border-color:var(--blue);color:var(--blue);}
+.tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* LESSON SETTINGS */
+.settings-grid{display:flex;flex-direction:column;gap:10px;}
+.lesson-setting-row{background:var(--paper);border:2px solid var(--border);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);}
+.lesson-setting-row.disabled-row{opacity:0.6;}
+.ls-num{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Fraunces',serif;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ls-info{flex:1;}
+.ls-title{font-weight:800;font-size:0.95rem;}
+.ls-topic{font-size:0.8rem;color:var(--muted);}
+.toggle-wrap{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.toggle-wrap label{font-size:0.8rem;font-weight:700;color:var(--muted);}
+.toggle{width:44px;height:24px;background:#ddd;border-radius:12px;cursor:pointer;position:relative;transition:background 0.2s;border:none;}
+.toggle.on{background:var(--green);}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.toggle.on::after{left:23px;}
+.save-settings-btn{margin-top:16px;padding:12px 28px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;}
+.save-settings-btn:hover{background:#1d4ed8;}
+.save-msg{font-size:0.85rem;color:var(--green);margin-left:12px;font-weight:700;}
+
+/* SCORES */
+.filter-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;align-items:center;}
+.filter-row select,.filter-row input{padding:8px 12px;border-radius:8px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:0.88rem;outline:none;}
+.filter-row select:focus,.filter-row input:focus{border-color:var(--blue);}
+.refresh-btn{padding:8px 16px;border-radius:8px;border:2px solid var(--border);background:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;color:var(--muted);}
+.refresh-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+.scores-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.scores-table th{background:var(--blue);color:#fff;padding:12px 16px;text-align:left;font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;}
+.scores-table td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:0.88rem;vertical-align:top;}
+.scores-table tr:last-child td{border-bottom:none;}
+.scores-table tr:hover td{background:#f8faff;}
+.score-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-weight:800;font-size:0.8rem;}
+.score-pill.high{background:var(--green-light);color:var(--green);}
+.score-pill.mid{background:var(--orange-light);color:var(--orange);}
+.score-pill.low{background:var(--red-light);color:var(--red);}
+.wrong-words{font-size:0.78rem;color:var(--red);margin-top:4px;}
+.wrong-tag{display:inline-block;background:var(--red-light);color:var(--red);padding:2px 6px;border-radius:4px;margin:2px;font-size:0.75rem;}
+.no-data{text-align:center;padding:40px;color:var(--muted);font-style:italic;}
+.loading{text-align:center;padding:40px;color:var(--muted);}
+
+.clear-btn{padding:6px 14px;border-radius:8px;border:2px solid var(--red-light);background:#fff;color:var(--red);font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;}
+.clear-btn:hover{background:var(--red-light);}
+</style>
+</head>
+<body>
+
+<div class="pw-overlay" id="pw-overlay">
+  <div class="pw-box">
+    <h2>Teacher Dashboard</h2>
+    <p>Language Launch &middot; Unit 5</p>
+    <input type="password" id="pw-input" placeholder="Password"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="pw-btn" onclick="checkPw()">Enter</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
+<header>
+  <div>
+    <div class="logo">Language <span>Launch</span> &mdash; Teacher</div>
+  </div>
+  <a href="ll_index.html" class="back-link">&larr; Back to lessons</a>
+</header>
+
+<main id="main" style="display:none">
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('scores')">&#128202; Student Scores</button>
+    <button class="tab" onclick="switchTab('lessons')">&#9881;&#65039; Lesson Settings</button>
+  </div>
+
+  <!-- SCORES TAB -->
+  <div class="tab-panel active" id="tab-scores">
+    <div class="filter-row">
+      <select id="filter-lesson" onchange="loadScores()">
+        <option value="">All Lessons</option>
+        <option value="1">Lesson 1</option>
+        <option value="2">Lesson 2</option>
+        <option value="3">Lesson 3</option>
+        <option value="4">Lesson 4</option>
+        <option value="5">Lesson 5</option>
+        <option value="6">Lesson 6</option>
+        <option value="7">Lesson 7</option>
+        <option value="8">Lesson 8</option>
+        <option value="9">Lesson 9</option>
+        <option value="10">Lesson 10</option>
+        <option value="11">Lesson 11</option>
+        <option value="12">Lesson 12</option>
+        <option value="13">Lesson 13</option>
+      </select>
+      <input type="text" id="filter-student" placeholder="Filter by student name..."
+        oninput="filterTable()">
+      <button class="refresh-btn" onclick="loadScores()">&#8635; Refresh</button>
+    </div>
+    <div id="scores-content"><div class="loading">Loading scores...</div></div>
+  </div>
+
+  <!-- LESSONS TAB -->
+  <div class="tab-panel" id="tab-lessons">
+    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:16px">
+      Toggle lessons on or off. Students only see enabled lessons on the index page.
+    </p>
+    <div class="settings-grid" id="settings-grid">
+      <div class="loading">Loading settings...</div>
+    </div>
+    <div style="margin-top:20px;display:flex;align-items:center;">
+      <button class="save-settings-btn" onclick="saveSettings()">Save Settings</button>
+      <span class="save-msg" id="save-msg"></span>
+    </div>
+  </div>
+</main>
+
+<script>
+const SUPA_URL = 'https://lhmwtfyceilgndpygivj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXd0ZnljZWlsZ25kcHlnaXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzk5MDIsImV4cCI6MjA5MTcxNTkwMn0.0uIXyctHMfTN4doWYn2JJ260swD5b-t0T-oDMSIPtBU';
+const TEACHER_PW = 'galileo2026';
+
+const LESSONS = [
+  {num:1,title:'Lesson 1',topic:'What in the World?'},
+  {num:2,title:'Lesson 2',topic:'The Ecosystem'},
+  {num:3,title:'Lesson 3',topic:'Plants'},
+  {num:4,title:'Lesson 4',topic:'Animals'},
+  {num:5,title:'Lesson 5',topic:'Break It Down!'},
+  {num:6,title:'Lesson 6',topic:'Habitats'},
+  {num:7,title:'Lesson 7',topic:'Life Cycles'},
+  {num:8,title:'Lesson 8',topic:'Energy and the Food Chain'},
+  {num:9,title:'Lesson 9',topic:'Natural Resources'},
+  {num:10,title:'Lesson 10',topic:'Water Cycle'},
+  {num:11,title:'Lesson 11',topic:'Human Impact'},
+  {num:12,title:'Lesson 12',topic:'Protecting Our Planet'},
+  {num:13,title:'Lesson 13',topic:'Reduce, Reuse, Recycle'},
+];
+
+// ── Auth ─────────────────────────────────────────────────
+function checkPw() {
+  const pw = document.getElementById('pw-input').value;
+  if (pw === TEACHER_PW) {
+    document.getElementById('pw-overlay').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+    loadScores();
+    loadSettings();
+  } else {
+    document.getElementById('pw-error').textContent = 'Incorrect password.';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') checkPw();
+});
+
+// ── Supabase ─────────────────────────────────────────────
+async function supaGet(table, params) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}?${params}`, {
+      headers: {'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}
+    });
+    return await r.json();
+  } catch(e) { return []; }
+}
+
+async function supaUpsert(table, data, onConflict) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}?on_conflict=${onConflict}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','apikey':SUPA_KEY,
+                'Authorization':`Bearer ${SUPA_KEY}`,'Prefer':'resolution=merge-duplicates,return=representation'},
+      body: JSON.stringify(data)
+    });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+// ── Tab switching ─────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── Scores tab ────────────────────────────────────────────
+let allAnswers = [];
+
+async function loadScores() {
+  const content = document.getElementById('scores-content');
+  content.innerHTML = '<div class="loading">Loading...</div>';
+
+  const lessonFilter = document.getElementById('filter-lesson').value;
+  let params = 'order=student_name.asc,lesson_num.asc,created_at.asc';
+  if (lessonFilter) params += '&lesson_num=eq.' + lessonFilter;
+
+  allAnswers = await supaGet('ll_answers', params);
+  renderScores(allAnswers);
+}
+
+function renderScores(answers) {
+  const content = document.getElementById('scores-content');
+
+  if (!answers || !answers.length) {
+    content.innerHTML = '<div class="no-data">No answers recorded yet.</div>';
+    return;
+  }
+
+  // Group by student + lesson
+  const grouped = {};
+  answers.forEach(function(a) {
+    const key = a.student_name + '|' + a.lesson_num;
+    if (!grouped[key]) grouped[key] = {name: a.student_name, lesson: a.lesson_num, total:0, correct:0, wrong:[]};
+    grouped[key].total++;
+    if (a.correct) grouped[key].correct++;
+    else grouped[key].wrong.push({word: a.word, activity: a.activity, given: a.given_answer});
+  });
+
+  // Deduplicate wrong words per student/lesson
+  Object.values(grouped).forEach(function(g) {
+    const seen = new Set();
+    g.wrong = g.wrong.filter(function(w) {
+      const k = w.word + '|' + w.activity;
+      if (seen.has(k)) return false;
+      seen.add(k); return true;
+    });
+  });
+
+  let html = '<table class="scores-table"><thead><tr>' +
+    '<th>Student</th><th>Lesson</th><th>Score</th><th>Wrong Words</th></tr></thead><tbody>';
+
+  Object.values(grouped).forEach(function(g) {
+    const pct = Math.round(100 * g.correct / g.total);
+    const cls = pct >= 80 ? 'high' : pct >= 60 ? 'mid' : 'low';
+    const wrongHtml = g.wrong.length
+      ? g.wrong.map(function(w) { return '<span class="wrong-tag">' + w.word + ' (' + w.activity.replace(/_/g,' ') + ')</span>'; }).join('')
+      : '<span style="color:var(--green);font-size:0.78rem">All correct!</span>';
+
+    html += '<tr data-name="' + g.name.toLowerCase() + '">' +
+      '<td><strong>' + g.name + '</strong></td>' +
+      '<td>Lesson ' + g.lesson + '</td>' +
+      '<td><span class="score-pill ' + cls + '">' + pct + '%</span><br><span style="font-size:0.75rem;color:var(--muted)">' + g.correct + '/' + g.total + '</span></td>' +
+      '<td><div class="wrong-words">' + wrongHtml + '</div></td>' +
+      '</tr>';
+  });
+
+  html += '</tbody></table>';
+  content.innerHTML = html;
+  filterTable();
+}
+
+function filterTable() {
+  const filter = (document.getElementById('filter-student').value || '').toLowerCase();
+  document.querySelectorAll('.scores-table tr[data-name]').forEach(function(row) {
+    row.style.display = (!filter || row.dataset.name.includes(filter)) ? '' : 'none';
+  });
+}
+
+// ── Lesson settings tab ───────────────────────────────────
+let lessonSettings = {};
+
+async function loadSettings() {
+  const rows = await supaGet('ll_lesson_settings', 'order=lesson_num.asc');
+  if (rows && rows.length) {
+    rows.forEach(function(r) { lessonSettings[r.lesson_num] = r.enabled; });
+  } else {
+    LESSONS.forEach(function(l) { lessonSettings[l.num] = true; });
+  }
+  renderSettings();
+}
+
+function renderSettings() {
+  const grid = document.getElementById('settings-grid');
+  grid.innerHTML = '';
+  LESSONS.forEach(function(lesson) {
+    const enabled = lessonSettings[lesson.num] !== false;
+    const row = document.createElement('div');
+    row.className = 'lesson-setting-row' + (enabled ? '' : ' disabled-row');
+    row.innerHTML =
+      '<div class="ls-num">' + lesson.num + '</div>' +
+      '<div class="ls-info"><div class="ls-title">' + lesson.title + '</div>' +
+      '<div class="ls-topic">' + lesson.topic + '</div></div>' +
+      '<div class="toggle-wrap">' +
+      '<label>' + (enabled ? 'On' : 'Off') + '</label>' +
+      '<button class="toggle ' + (enabled ? 'on' : '') + '" id="tog-' + lesson.num + '" ' +
+      'onclick="toggleLesson(' + lesson.num + ')"></button>' +
+      '</div>';
+    grid.appendChild(row);
+  });
+}
+
+function toggleLesson(num) {
+  lessonSettings[num] = !lessonSettings[num];
+  renderSettings();
+}
+
+async function saveSettings() {
+  const data = LESSONS.map(function(l) {
+    return {lesson_num: l.num, enabled: lessonSettings[l.num] !== false, topic: l.topic};
+  });
+  await supaUpsert('ll_lesson_settings', data, 'lesson_num');
+  const msg = document.getElementById('save-msg');
+  msg.textContent = 'Saved!';
+  setTimeout(function() { msg.textContent = ''; }, 2000);
+}
+</script>
+</body>
+</html>
