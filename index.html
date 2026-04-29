@@ -9,165 +9,321 @@
 :root {
   --bg:#f0f7ff; --paper:#fff; --ink:#1a2236; --muted:#6b7a99; --border:#dde4f0;
   --blue:#2563eb; --blue-light:#dbeafe; --green:#16a34a; --green-light:#dcfce7;
-  --orange:#ea580c; --shadow:0 4px 20px rgba(37,99,235,0.10);
+  --orange:#ea580c; --purple:#7c3aed; --shadow:0 4px 20px rgba(37,99,235,0.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
-header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:28px 32px;}
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .logo{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;color:#fff;}
 .logo span{color:#fbbf24;}
 .tagline{color:#bfdbfe;font-size:0.9rem;margin-top:4px;}
-main{max-width:600px;margin:40px auto;padding:0 20px 60px;}
-.unit-header{
-  font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;
-  color:var(--blue);margin-bottom:6px;
-}
+.header-student{color:#bfdbfe;font-size:0.85rem;font-weight:700;}
+.header-lang-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.header-lang-wrap label{font-size:0.7rem;color:#bfdbfe;text-transform:uppercase;letter-spacing:1px;}
+.header-lang-wrap select{font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;padding:5px 10px;border-radius:8px;border:2px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;outline:none;min-width:160px;}
+.header-lang-wrap select option{background:#1d4ed8;color:#fff;}
+
+/* LOGIN */
+.login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.login-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:400px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);text-align:center;}
+.login-box h2{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--blue);margin-bottom:6px;}
+.login-box p{color:var(--muted);font-size:0.9rem;margin-bottom:24px;}
+.login-field{margin-bottom:16px;text-align:left;}
+.login-field label{display:block;font-weight:700;font-size:0.85rem;margin-bottom:6px;color:var(--ink);}
+.login-field input,.login-field select{width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:1rem;outline:none;transition:border-color 0.15s;background:#fff;}
+.login-field input:focus,.login-field select:focus{border-color:var(--blue);}
+.login-btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:8px;transition:all 0.15s;}
+.login-btn:hover{background:#1d4ed8;}
+.login-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+main{max-width:640px;margin:40px auto;padding:0 20px 60px;}
+.unit-header{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--blue);margin-bottom:6px;}
 .unit-sub{color:var(--muted);font-size:0.9rem;margin-bottom:32px;}
 .lesson-list{display:flex;flex-direction:column;gap:12px;}
-.lesson-row{
-  background:var(--paper);border:2px solid var(--border);border-radius:16px;
-  padding:18px 20px;display:flex;align-items:center;gap:16px;
-  box-shadow:var(--shadow);transition:all 0.18s;
-}
+.lesson-row{background:var(--paper);border:2px solid var(--border);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);transition:all 0.18s;}
 .lesson-row.available:hover{border-color:var(--blue);transform:translateY(-2px);}
 .lesson-row.locked{opacity:0.45;cursor:not-allowed;}
-.lesson-num{
-  width:40px;height:40px;border-radius:50%;background:var(--blue);
-  color:#fff;font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.lesson-num{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .lesson-row.locked .lesson-num{background:var(--border);color:var(--muted);}
 .lesson-info{flex:1;}
 .lesson-title{font-weight:800;font-size:1rem;color:var(--ink);}
 .lesson-topic{font-size:0.82rem;color:var(--muted);margin-top:2px;}
-.lesson-row.locked .lesson-title{color:var(--muted);}
+.lesson-row.locked .lesson-title,.lesson-row.locked .lesson-topic{color:var(--muted);}
 a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center;gap:16px;flex:1;}
-.lesson-link:visited{color:inherit;}
 .lesson-arrow{color:var(--blue);font-size:1.2rem;flex-shrink:0;}
 .lesson-row.locked .lesson-arrow{color:var(--border);}
 .lock-icon{color:var(--muted);font-size:1rem;flex-shrink:0;}
-
-/* CHECKBOX */
 .complete-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;}
 .complete-wrap label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
-.complete-cb{
-  width:22px;height:22px;border-radius:6px;border:2px solid var(--border);
-  background:#fff;cursor:pointer;appearance:none;-webkit-appearance:none;
-  display:flex;align-items:center;justify-content:center;
-  transition:all 0.15s;position:relative;
-}
+.complete-cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:#fff;cursor:pointer;appearance:none;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;transition:all 0.15s;position:relative;}
 .complete-cb:checked{background:var(--green);border-color:var(--green);}
-.complete-cb:checked::after{
-  content:'✓';color:#fff;font-weight:900;font-size:0.85rem;
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-}
+.complete-cb:checked::after{content:'✓';color:#fff;font-weight:900;font-size:0.85rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
 .complete-cb:hover:not(:disabled){border-color:var(--green);}
 .complete-cb:disabled{opacity:0.3;cursor:not-allowed;}
-
-/* COMING SOON badge */
-.coming-badge{
-  font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;
-  background:#f1f5f9;color:var(--muted);padding:3px 8px;border-radius:6px;
-}
+.score-badge{font-size:0.75rem;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--blue-light);color:var(--blue);white-space:nowrap;}
+.score-badge.good{background:var(--green-light);color:var(--green);}
+.teacher-link{text-align:center;margin-top:32px;}
+.teacher-link a{color:var(--muted);font-size:0.8rem;text-decoration:none;border-bottom:1px dashed var(--border);}
+.teacher-link a:hover{color:var(--blue);}
 </style>
 </head>
 <body>
 
+<!-- Login overlay -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <h2>Language <span style="color:var(--blue)">Launch</span></h2>
+    <p>Unit 5 &middot; What in the World?</p>
+    <div class="login-field">
+      <label>Your Name</label>
+      <input type="text" id="login-name" placeholder="First and last name"
+        oninput="validateLogin()" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-field">
+      <label>My Language</label>
+      <select id="login-lang" onchange="validateLogin()">
+        <option value="">— select a language —</option>
+        <option value="English">English</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Cantonese">Cantonese</option>
+        <option value="Mandarin">Mandarin</option>
+        <option value="Arabic">Arabic</option>
+        <option value="Vietnamese">Vietnamese</option>
+        <option value="Russian">Russian</option>
+        <option value="Darija">Darija (Moroccan Arabic)</option>
+        <option value="Urdu">Urdu</option>
+        <option value="Tagalog">Tagalog</option>
+        <option value="French">French</option>
+      </select>
+    </div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()" disabled>Let's Go! &rarr;</button>
+  </div>
+</div>
+
 <header>
-  <div class="logo">Language <span>Launch</span></div>
-  <div class="tagline">Unit 5 · What in the World?</div>
+  <div>
+    <div class="logo">Language <span>Launch</span></div>
+    <div class="tagline">Unit 5 &middot; What in the World?</div>
+    <div class="header-student" id="header-student"></div>
+  </div>
+  <div class="header-lang-wrap" id="header-lang-wrap" style="display:none">
+    <label>Language</label>
+    <select id="header-lang" onchange="switchLang(this.value)">
+      <option value="English">English</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Cantonese">Cantonese</option>
+      <option value="Mandarin">Mandarin</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Russian">Russian</option>
+      <option value="Darija">Darija (Moroccan Arabic)</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Tagalog">Tagalog</option>
+      <option value="French">French</option>
+    </select>
+  </div>
 </header>
 
 <main>
   <div class="unit-header">Unit 5 Lessons</div>
   <div class="unit-sub">Click a lesson to begin. Check the box when you finish.</div>
-
-  <div class="lesson-list" id="lesson-list"></div>
+  <div class="lesson-list" id="lesson-list">
+    <div style="text-align:center;padding:40px;color:var(--muted)">Loading lessons...</div>
+  </div>
+  <div class="teacher-link">
+    <a href="ll_teacher.html">Teacher Dashboard</a>
+  </div>
 </main>
 
 <script>
-const LESSONS = [
-  { num:1,  title:'Lesson 1',  topic:'What in the World?',  file:'ll_lesson1.html',  available:true  },
-  { num:2,  title:'Lesson 2',  topic:'The Ecosystem',       file:'ll_lesson2.html',  available:true  },
-  { num:3,  title:'Lesson 3',  topic:'Plants',              file:'ll_lesson3.html',  available:true  },
-  { num:4,  title:'Lesson 4',  topic:'Animals',             file:'ll_lesson4.html',  available:true  },
-  { num:5,  title:'Lesson 5',  topic:'Break It Down!',      file:'ll_lesson5.html',  available:true  },
-  { num:6,  title:'Lesson 6',  topic:'Habitats',            file:'ll_lesson6.html',  available:true  },
-  { num:7,  title:'Lesson 7',  topic:'Life Cycles',         file:'ll_lesson7.html',  available:true  },
-  { num:8,  title:'Lesson 8',  topic:'Energy and the Food Chain', file:'ll_lesson8.html', available:true },
-  { num:9,  title:'Lesson 9',  topic:'Natural Resources',   file:'ll_lesson9.html',  available:true  },
-  { num:10, title:'Lesson 10', topic:'Water Cycle',         file:'ll_lesson10.html', available:true  },
-  { num:11, title:'Lesson 11', topic:'Human Impact',        file:'ll_lesson11.html', available:true  },
-  { num:12, title:'Lesson 12', topic:'Protecting Our Planet', file:'ll_lesson12.html', available:true },
-  { num:13, title:'Lesson 13', topic:'Reduce, Reuse, Recycle', file:'ll_lesson13.html', available:true },
+const SUPA_URL = 'https://lhmwtfyceilgndpygivj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXd0ZnljZWlsZ25kcHlnaXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzk5MDIsImV4cCI6MjA5MTcxNTkwMn0.0uIXyctHMfTN4doWYn2JJ260swD5b-t0T-oDMSIPtBU';
+
+let studentId   = sessionStorage.getItem('ll_student_id')   || null;
+let studentName = sessionStorage.getItem('ll_student_name') || '';
+let language    = sessionStorage.getItem('ll_language')     || '';
+
+const ALL_LESSONS = [
+  {num:1, title:'Lesson 1', topic:'What in the World?',         file:'ll_lesson1.html'},
+  {num:2, title:'Lesson 2', topic:'The Ecosystem',              file:'ll_lesson2.html'},
+  {num:3, title:'Lesson 3', topic:'Plants',                     file:'ll_lesson3.html'},
+  {num:4, title:'Lesson 4', topic:'Animals',                    file:'ll_lesson4.html'},
+  {num:5, title:'Lesson 5', topic:'Break It Down!',             file:'ll_lesson5.html'},
+  {num:6, title:'Lesson 6', topic:'Habitats',                   file:'ll_lesson6.html'},
+  {num:7, title:'Lesson 7', topic:'Life Cycles',                file:'ll_lesson7.html'},
+  {num:8, title:'Lesson 8', topic:'Energy and the Food Chain',  file:'ll_lesson8.html'},
+  {num:9, title:'Lesson 9', topic:'Natural Resources',          file:'ll_lesson9.html'},
+  {num:10,title:'Lesson 10',topic:'Water Cycle',                file:'ll_lesson10.html'},
+  {num:11,title:'Lesson 11',topic:'Human Impact',               file:'ll_lesson11.html'},
+  {num:12,title:'Lesson 12',topic:'Protecting Our Planet',      file:'ll_lesson12.html'},
+  {num:13,title:'Lesson 13',topic:'Reduce, Reuse, Recycle',     file:'ll_lesson13.html'},
 ];
 
-// Load completed state from localStorage
-function getCompleted() {
-  try { return JSON.parse(localStorage.getItem('ll_u5_completed') || '{}'); } catch(e) { return {}; }
-}
-function setCompleted(num, val) {
-  const c = getCompleted();
-  c[num] = val;
-  localStorage.setItem('ll_u5_completed', JSON.stringify(c));
+// ── Supabase ─────────────────────────────────────────────
+async function supaGet(table, params) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}?${params}`, {
+      headers: {'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`}
+    });
+    return await r.json();
+  } catch(e) { return []; }
 }
 
-function render() {
-  const completed = getCompleted();
+async function supaPost(table, data) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','apikey':SUPA_KEY,
+                'Authorization':`Bearer ${SUPA_KEY}`,'Prefer':'return=representation'},
+      body: JSON.stringify(data)
+    });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+// ── Login ─────────────────────────────────────────────────
+function validateLogin() {
+  const name = document.getElementById('login-name').value.trim();
+  const lang = document.getElementById('login-lang').value;
+  document.getElementById('login-btn').disabled = !(name.length >= 2 && lang);
+}
+
+async function doLogin() {
+  const name = document.getElementById('login-name').value.trim();
+  const lang = document.getElementById('login-lang').value;
+  if (!name || !lang) return;
+
+  // Register in Supabase
+  const rows = await supaPost('ll_students', {name, language: lang});
+  const id = (rows && rows[0]) ? rows[0].id : ('local-' + Date.now());
+
+  studentId   = id;
+  studentName = name;
+  language    = lang;
+  sessionStorage.setItem('ll_student_id',   id);
+  sessionStorage.setItem('ll_student_name', name);
+  sessionStorage.setItem('ll_language',     lang);
+
+  document.getElementById('login-overlay').style.display = 'none';
+  showHeader();
+  loadLessons();
+}
+
+function switchLang(lang) {
+  language = lang;
+  sessionStorage.setItem('ll_language', lang);
+}
+
+function showHeader() {
+  const s = document.getElementById('header-student');
+  if (s) s.textContent = studentName + ' \u00b7 ' + language;
+  const w = document.getElementById('header-lang-wrap');
+  if (w) {
+    w.style.display = 'flex';
+    const sel = document.getElementById('header-lang');
+    if (sel) sel.value = language;
+  }
+}
+
+// ── Load lessons from Supabase settings ──────────────────
+async function loadLessons() {
+  // Get enabled lessons from teacher settings
+  let settings = await supaGet('ll_lesson_settings', 'order=lesson_num.asc');
+  if (!settings || !settings.length) {
+    // Fallback: all enabled
+    settings = ALL_LESSONS.map(l => ({lesson_num: l.num, enabled: true}));
+  }
+
+  // Get scores for this student
+  let scores = {};
+  if (studentId && !studentId.startsWith('local-')) {
+    const answers = await supaGet('ll_answers',
+      `student_id=eq.${studentId}&select=lesson_num,correct`);
+    if (answers && answers.length) {
+      const byLesson = {};
+      answers.forEach(function(a) {
+        if (!byLesson[a.lesson_num]) byLesson[a.lesson_num] = {total:0,correct:0};
+        byLesson[a.lesson_num].total++;
+        if (a.correct) byLesson[a.lesson_num].correct++;
+      });
+      Object.keys(byLesson).forEach(function(n) {
+        const d = byLesson[n];
+        scores[n] = Math.round(100 * d.correct / d.total);
+      });
+    }
+  }
+
+  const settingsMap = {};
+  settings.forEach(function(s) { settingsMap[s.lesson_num] = s.enabled; });
+
+  const completed = JSON.parse(localStorage.getItem('ll_u5_completed') || '{}');
   const list = document.getElementById('lesson-list');
   list.innerHTML = '';
 
-  LESSONS.forEach(function(lesson) {
+  ALL_LESSONS.forEach(function(lesson) {
+    const enabled = settingsMap[lesson.num] !== false;
     const row = document.createElement('div');
-    row.className = 'lesson-row ' + (lesson.available ? 'available' : 'locked');
+    row.className = 'lesson-row ' + (enabled ? 'available' : 'locked');
 
     const numDiv = '<div class="lesson-num">' + lesson.num + '</div>';
+    const infoDiv = '<div class="lesson-info"><div class="lesson-title">' + lesson.title +
+      '</div><div class="lesson-topic">' + lesson.topic + '</div></div>';
 
-    const infoDiv =
-      '<div class="lesson-info">' +
-      '<div class="lesson-title">' + lesson.title + '</div>' +
-      '<div class="lesson-topic">' + lesson.topic + '</div>' +
-      '</div>';
+    const scoreHtml = scores[lesson.num] !== undefined
+      ? '<div class="score-badge' + (scores[lesson.num] >= 70 ? ' good' : '') + '">' + scores[lesson.num] + '%</div>'
+      : '';
 
-    const arrowOrLock = lesson.available
-      ? '<div class="lesson-arrow">&#8594;</div>'
+    const arrowOrLock = enabled
+      ? '<div class="lesson-arrow">&rarr;</div>'
       : '<div class="lock-icon">&#128274;</div>';
 
-    const cbHtml = lesson.available
-      ? '<div class="complete-wrap">' +
-        '<input type="checkbox" class="complete-cb" id="cb' + lesson.num + '"' +
-        (completed[lesson.num] ? ' checked' : '') + '>' +
-        '<label for="cb' + lesson.num + '">Done?</label>' +
-        '</div>'
-      : '<div class="complete-wrap">' +
-        '<input type="checkbox" class="complete-cb" disabled>' +
-        '<label style="opacity:0.3">Done?</label>' +
-        '</div>';
+    const cbHtml = enabled
+      ? '<div class="complete-wrap"><input type="checkbox" class="complete-cb" id="cb' + lesson.num + '"' +
+        (completed[lesson.num] ? ' checked' : '') + '><label for="cb' + lesson.num + '">Done?</label></div>'
+      : '<div class="complete-wrap"><input type="checkbox" class="complete-cb" disabled><label style="opacity:0.3">Done?</label></div>';
 
-    if (lesson.available && lesson.file) {
-      row.innerHTML =
-        '<a class="lesson-link" href="' + lesson.file + '">' +
-        numDiv + infoDiv + arrowOrLock +
-        '</a>' + cbHtml;
+    if (enabled) {
+      // Pass student info to lesson via URL params
+      const url = lesson.file + '?sid=' + encodeURIComponent(studentId || '') +
+        '&name=' + encodeURIComponent(studentName) +
+        '&lang=' + encodeURIComponent(language);
+      row.innerHTML = '<a class="lesson-link" href="' + url + '">' +
+        numDiv + infoDiv + scoreHtml + arrowOrLock + '</a>' + cbHtml;
     } else {
       row.innerHTML = numDiv + infoDiv + arrowOrLock + cbHtml;
     }
 
     list.appendChild(row);
 
-    // Checkbox change — stop event from bubbling to link
     const cb = document.getElementById('cb' + lesson.num);
     if (cb) {
       cb.addEventListener('change', function(e) {
         e.stopPropagation();
-        setCompleted(lesson.num, cb.checked);
+        const c = JSON.parse(localStorage.getItem('ll_u5_completed') || '{}');
+        c[lesson.num] = cb.checked;
+        localStorage.setItem('ll_u5_completed', JSON.stringify(c));
       });
       cb.addEventListener('click', function(e) { e.stopPropagation(); });
     }
   });
 }
 
-render();
+// ── Init ──────────────────────────────────────────────────
+window.addEventListener('load', function() {
+  if (studentId && studentName) {
+    document.getElementById('login-overlay').style.display = 'none';
+    showHeader();
+    loadLessons();
+  }
+  // Pre-fill login if returning
+  if (studentName) {
+    document.getElementById('login-name').value = studentName;
+  }
+  if (language) {
+    document.getElementById('login-lang').value = language;
+    validateLogin();
+  }
+});
 </script>
 </body>
 </html>
