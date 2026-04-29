@@ -468,10 +468,10 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
       <!-- ══ SECTION 7: Sentences ══ -->
   <div id="sec-sentences" style="display:none">
     <div class="section-banner"><div class="num">7</div><div><h2>Complete the Sentences</h2><p>Type the correct word in each blank.</p></div></div>
-    <div class="fitb-card"><div class="fitb-num">Sentence 1</div><div class="fitb-sentence">Wood from a tree is a <input class="fitb-input" id="f1a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because it comes from nature.</div><div class="fitb-hint">Choose from: <span>natural</span> <span>solar</span> </div><div class="fitb-feedback" id="fb1"></div></div>
-    <div class="fitb-card"><div class="fitb-num">Sentence 2</div><div class="fitb-sentence"><input class="fitb-input" id="f2a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> energy comes from sunlight and never runs out.</div><div class="fitb-hint">Choose from: <span>solar</span> <span>nonrenewable</span> </div><div class="fitb-feedback" id="fb2"></div></div>
-    <div class="fitb-card"><div class="fitb-num">Sentence 3</div><div class="fitb-sentence">Sunlight is a <input class="fitb-input" id="f3a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because there is always more of it.</div><div class="fitb-hint">Choose from: <span>renewable</span> <span>nonrenewable</span> </div><div class="fitb-feedback" id="fb3"></div></div>
-    <div class="fitb-card"><div class="fitb-num">Sentence 4</div><div class="fitb-sentence">Coal is a <input class="fitb-input" id="f4a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because it could run out someday.</div><div class="fitb-hint">Choose from: <span>nonrenewable</span> <span>renewable</span> </div><div class="fitb-feedback" id="fb4"></div></div>
+    <div class="fitb-card"><div class="fitb-num">Sentence 1</div><div class="fitb-sentence">Wood from a tree is a <input class="fitb-input" id="f1a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because it comes from nature.</div><div class="fitb-hint">Choose from: <span>solar</span> <span>natural</span></div><div class="fitb-feedback" id="fb1"></div></div>
+    <div class="fitb-card"><div class="fitb-num">Sentence 2</div><div class="fitb-sentence"><input class="fitb-input" id="f2a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> energy comes from sunlight and never runs out.</div><div class="fitb-hint">Choose from: <span>solar</span> <span>nonrenewable</span></div><div class="fitb-feedback" id="fb2"></div></div>
+    <div class="fitb-card"><div class="fitb-num">Sentence 3</div><div class="fitb-sentence">Sunlight is a <input class="fitb-input" id="f3a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because there is always more of it.</div><div class="fitb-hint">Choose from: <span>nonrenewable</span> <span>renewable</span></div><div class="fitb-feedback" id="fb3"></div></div>
+    <div class="fitb-card"><div class="fitb-num">Sentence 4</div><div class="fitb-sentence">Coal is a <input class="fitb-input" id="f4a" placeholder="______" autocomplete="off" onkeydown="if(event.key==='Enter')checkAllSentences()"> resource because it could run out someday.</div><div class="fitb-hint">Choose from: <span>nonrenewable</span> <span>renewable</span></div><div class="fitb-feedback" id="fb4"></div></div>
     <button class="check-btn" onclick="checkAllSentences()">Check All ✓</button>
     <div class="nav-row" style="margin-top:16px"><button class="btn-secondary" onclick="showSection('missingletters')">&#9664; Back</button><button class="btn-primary" onclick="showSection('fillinblank')">Next &#9654;</button></div>
   </div>
@@ -1482,24 +1482,68 @@ function initMissing2() {
   const area=document.getElementById('missing-area2');
   if(!area) return;
   const lettersHtml=missing2Pattern.map(function(l,i){
-    if(l==='_') return '<input class="miss-input" id="m2i'+i+'" maxlength="1" style="width:36px;height:40px;text-align:center;border:none;border-bottom:3px solid var(--blue);background:transparent;font-family:Nunito,sans-serif;font-size:1.2rem;font-weight:900;color:var(--blue);outline:none;margin:0 2px;" oninput="missingInput2('+i+',this)">';
+    if(l==='_') return '<input class="miss-input" id="m2i'+i+'" maxlength="1" style="width:36px;height:40px;text-align:center;border:none;border-bottom:3px solid var(--blue);background:transparent;font-family:Nunito,sans-serif;font-size:1.2rem;font-weight:900;color:var(--blue);outline:none;margin:0 2px;" oninput="missingInput2('+i+',this)" onkeydown="missingKeydown2('+i+',event)">';
     return '<span style="display:inline-block;width:36px;height:40px;line-height:40px;text-align:center;font-size:1.2rem;font-weight:900;color:var(--ink);margin:0 2px;">'+l.toUpperCase()+'</span>';
   }).join('');
   area.innerHTML='<div class="scramble-card pop"><div style="font-size:0.85rem;color:var(--muted);margin-bottom:6px">Definition:</div><div style="font-size:0.95rem;font-weight:700;color:var(--ink);margin-bottom:16px;padding:10px 14px;background:var(--warm);border-radius:8px">'+maskWordInDef(w.def,w.word)+'</div><div style="font-size:0.78rem;color:var(--muted);margin-bottom:10px">Type the missing letters:</div><div style="display:flex;align-items:center;flex-wrap:wrap;margin-bottom:14px">'+lettersHtml+'</div><div id="m2-fb" style="font-weight:700;font-size:0.9rem;min-height:24px;margin-bottom:10px"></div><button class="check-btn" onclick="checkMissing2()">Check ✓</button></div>';
   const first=area.querySelector('.miss-input'); if(first) setTimeout(function(){ first.focus(); },100);
 }
-function missingInput2(idx, el) {
-  if(el.value.length===1){ const inputs=Array.from(document.querySelectorAll('#missing-area2 .miss-input')); const pos=inputs.indexOf(el); if(pos<inputs.length-1) inputs[pos+1].focus(); }
+function missingInput2(idx_unused, el) {
+  const inputs = Array.from(document.querySelectorAll('#missing-area2 .miss-input'));
+  const pos = inputs.indexOf(el);
+  if (el.value.length === 1) {
+    // Auto-advance
+    if (pos < inputs.length - 1) {
+      inputs[pos + 1].focus();
+    } else {
+      // Last blank filled — auto-check
+      checkMissing2();
+    }
+  }
 }
+
+function missingKeydown2(idx, e) {
+  if (e.key !== 'Backspace') return;
+  const inputs = Array.from(document.querySelectorAll('#missing-area2 .miss-input'));
+  const pos = inputs.indexOf(document.getElementById('m2i' + idx));
+  if (inputs[pos] && inputs[pos].value.length > 0) {
+    // Clear current and stay
+    inputs[pos].value = '';
+    e.preventDefault();
+  } else if (pos > 0) {
+    // Move to previous and clear it
+    inputs[pos - 1].value = '';
+    inputs[pos - 1].focus();
+    e.preventDefault();
+  }
+}
+
 function checkMissing2() {
   const fb=document.getElementById('m2-fb');
   const inputs=document.querySelectorAll('#missing-area2 .miss-input');
   let allFilled=true;
   inputs.forEach(function(inp){ if(!inp.value.trim()) allFilled=false; });
   if(!allFilled){ if(fb) fb.innerHTML='<span style="color:var(--red)">Fill in all the blanks first.</span>'; return; }
-  const attempt=missing2Pattern.map(function(l,i){ if(l==='_'){ const inp=document.getElementById('m2i'+i); return inp?inp.value.trim().toLowerCase():''; } return l.toLowerCase(); }).join('');
-  if(attempt===missing2Word){ if(fb) fb.innerHTML='<span style="color:var(--green)">Correct! The word is &quot;'+missing2Word+'&quot;</span>'; speakWord(missing2Word); inputs.forEach(function(inp){ inp.style.borderBottomColor='var(--green)'; inp.style.color='var(--green)'; }); setTimeout(function(){ initMissing2(); },1800); }
-  else{ if(fb) fb.innerHTML='<span style="color:var(--red)">Not quite — try again!</span>'; inputs.forEach(function(inp){ inp.style.borderBottomColor='var(--red)'; inp.style.color='var(--red)'; setTimeout(function(){ inp.style.borderBottomColor='var(--blue)'; inp.style.color='var(--blue)'; inp.value=''; },600); }); setTimeout(function(){ if(fb) fb.innerHTML=''; const f=document.querySelector('#missing-area2 .miss-input'); if(f) f.focus(); },700); }
+  const attempt=missing2Pattern.map(function(l,i){ 
+    if(l==='_'){ const inp=document.getElementById('m2i'+i); return inp?inp.value.trim().toLowerCase():''; } 
+    return l.toLowerCase(); 
+  }).join('');
+  if(attempt===missing2Word){ 
+    if(fb) fb.innerHTML='<span style="color:var(--green)">\u2705 Correct!</span>'; 
+    speakWord(missing2Word); 
+    llRecord('missing_letters', missing2Word, true, attempt);
+    inputs.forEach(function(inp){ inp.style.borderBottomColor='var(--green)'; inp.style.color='var(--green)'; }); 
+    setTimeout(function(){ initMissing2(); },1400); 
+  } else { 
+    if(fb) fb.innerHTML='<span style="color:var(--red)">\u274C Not quite \u2014 try again!</span>'; 
+    llRecord('missing_letters', missing2Word, false, attempt);
+    inputs.forEach(function(inp){ inp.style.borderBottomColor='var(--red)'; inp.style.color='var(--red)'; });
+    setTimeout(function(){ 
+      inputs.forEach(function(inp){ inp.style.borderBottomColor='var(--blue)'; inp.style.color='var(--blue)'; inp.value=''; }); 
+      if(fb) fb.innerHTML=''; 
+      inputs[0] && inputs[0].focus(); 
+    }, 1200); 
+  }
 }
 
 // Fill in blank (section 9)
@@ -1514,16 +1558,37 @@ function initFitbPrac2() {
   area.innerHTML='<div class="fitb-card pop"><div class="fitb-num">Fill in the blank</div><div class="fitb-sentence">'+q.sentence.replace('___',inputTag)+'</div><div class="fitb-hint">Hint: <span>'+q.hint+'</span></div><div class="fitb-feedback" id="fp2-fb"></div><button class="check-btn" onclick="checkFitbPrac2()">Check ✓</button></div>';
   window._fp2Answer=q.answer;
   const inp=document.getElementById('fp2-input');
-  if(inp){ inp.addEventListener('keydown',function(e){ if(e.key==='Enter') checkFitbPrac2(); }); setTimeout(function(){ inp.focus(); },100); }
+  if(inp){
+    inp.addEventListener('keydown',function(e){ if(e.key==='Enter') checkFitbPrac2(); });
+    inp.addEventListener('input',function(){
+      // Auto-check when typed value matches answer length
+      if(inp.value.trim().toLowerCase()===window._fp2Answer) checkFitbPrac2();
+    });
+    setTimeout(function(){ inp.focus(); },100);
+  }
 }
 function checkFitbPrac2() {
   const inp=document.getElementById('fp2-input');
   const fb=document.getElementById('fp2-fb');
   if(!inp||!fb) return;
+  if(window._fp2Checking) return; // prevent double-fire
   const val=inp.value.trim().toLowerCase();
   if(!val){ fb.textContent='Type your answer first.'; fb.className='fitb-feedback err'; return; }
-  if(val===window._fp2Answer){ inp.classList.add('correct'); inp.classList.remove('incorrect'); fb.textContent='✅ Correct! "'+window._fp2Answer+'" is right.'; fb.className='fitb-feedback ok'; speakWord(window._fp2Answer); setTimeout(function(){ initFitbPrac2(); },1500); }
-  else{ inp.classList.add('incorrect'); inp.classList.remove('correct'); fb.textContent='❌ Try again!'; fb.className='fitb-feedback err'; inp.value=''; inp.focus(); }
+  if(val===window._fp2Answer){ 
+    window._fp2Checking=true;
+    inp.classList.add('correct'); inp.classList.remove('incorrect'); 
+    fb.textContent='\u2705 Correct! "'+window._fp2Answer+'" is right.'; 
+    fb.className='fitb-feedback ok'; 
+    speakWord(window._fp2Answer); 
+    llRecord('fill_blank', window._fp2Answer, true, val);
+    setTimeout(function(){ window._fp2Checking=false; initFitbPrac2(); },1400); 
+  }
+  else{ 
+    inp.classList.add('incorrect'); inp.classList.remove('correct'); 
+    fb.textContent='\u274C Try again!'; fb.className='fitb-feedback err'; 
+    llRecord('fill_blank', window._fp2Answer, false, val);
+    inp.value=''; inp.focus(); 
+  }
 }
 
 
