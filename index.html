@@ -260,6 +260,25 @@ async function loadLessons() {
   const list = document.getElementById('lesson-list');
   list.innerHTML = '';
 
+  // ── Dictionary links ─────────────────────────────────────
+  var dictRow = document.createElement('div');
+  dictRow.style.cssText = 'display:flex;gap:12px;margin-bottom:8px;flex-wrap:wrap;';
+  var dictLink1 = document.createElement('a');
+  dictLink1.href = 'll_dict_by_lesson.html';
+  dictLink1.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
+  dictLink1.innerHTML = '<div style="font-size:1.6rem">📖</div><div><div style="font-weight:800;font-size:0.95rem;color:var(--navy)">Bilingual Dictionary</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">by Lesson</div></div>';
+  dictLink1.onmouseover = function(){ this.style.borderColor = '#7c3aed'; };
+  dictLink1.onmouseout  = function(){ this.style.borderColor = ''; };
+  var dictLink2 = document.createElement('a');
+  dictLink2.href = 'll_dict_alpha.html';
+  dictLink2.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
+  dictLink2.innerHTML = '<div style="font-size:1.6rem">🔤</div><div><div style="font-weight:800;font-size:0.95rem;color:var(--navy)">Bilingual Dictionary</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">Alphabetical (A–Z)</div></div>';
+  dictLink2.onmouseover = function(){ this.style.borderColor = '#7c3aed'; };
+  dictLink2.onmouseout  = function(){ this.style.borderColor = ''; };
+  dictRow.appendChild(dictLink1);
+  dictRow.appendChild(dictLink2);
+  list.appendChild(dictRow);
+
   ALL_LESSONS.forEach(function(lesson) {
     const enabled = settingsMap[lesson.num] !== false;
     const row = document.createElement('div');
