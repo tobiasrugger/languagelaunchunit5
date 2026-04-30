@@ -3,106 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Idiom Island — Illustrated</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Language Launch – Unit 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#fdf6e8;--paper:#fff;--ink:#1a1118;--muted:#7a6e65;--border:#e8ddd0;
-  --blue:#2563eb;--blue-light:#dbeafe;--green:#16a34a;--green-light:#dcfce7;
-  --orange:#d4570a;--orange-light:#ffedd5;--shadow:0 4px 20px rgba(26,17,24,0.10);
-  --r:16px;
+:root {
+  --bg:#f0f7ff; --paper:#fff; --ink:#1a2236; --muted:#6b7a99; --border:#dde4f0;
+  --blue:#2563eb; --blue-light:#dbeafe; --green:#16a34a; --green-light:#dcfce7;
+  --orange:#ea580c; --purple:#7c3aed; --shadow:0 4px 20px rgba(37,99,235,0.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
-
-/* HEADER */
-header{background:linear-gradient(135deg,#1a1118 0%,#3d1a0a 100%);padding:24px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .logo{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;color:#fff;}
-.logo em{color:#f4a544;font-style:italic;}
-.logo span{font-size:1rem;opacity:0.5;font-style:normal;font-weight:400;}
-.tagline{color:#c9b8a8;font-size:0.85rem;margin-top:3px;}
-.header-right{display:flex;align-items:center;gap:16px;}
-.student-badge{color:#c9b8a8;font-size:0.85rem;font-weight:700;}
-.lang-chip{font-size:0.75rem;background:rgba(255,255,255,0.12);color:#e8d8c8;padding:4px 10px;border-radius:20px;}
+.logo span{color:#fbbf24;}
+.tagline{color:#bfdbfe;font-size:0.9rem;margin-top:4px;}
+.header-student{color:#bfdbfe;font-size:0.85rem;font-weight:700;}
+.header-lang-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.header-lang-wrap label{font-size:0.7rem;color:#bfdbfe;text-transform:uppercase;letter-spacing:1px;}
+.header-lang-wrap select{font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;padding:5px 10px;border-radius:8px;border:2px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;outline:none;min-width:160px;}
+.header-lang-wrap select option{background:#1d4ed8;color:#fff;}
 
-/* LOGIN POPUP */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;}
-.login-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:400px;width:90%;box-shadow:0 12px 48px rgba(0,0,0,0.25);text-align:center;}
-.login-box h2{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;color:var(--orange);margin-bottom:4px;}
-.login-box .sub{color:var(--muted);font-size:0.88rem;margin-bottom:24px;}
-.login-field{margin-bottom:14px;text-align:left;}
-.login-field label{display:block;font-weight:700;font-size:0.82rem;color:var(--ink);margin-bottom:5px;}
-.login-field input,.login-field select{width:100%;padding:11px 13px;border-radius:10px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;background:#fff;transition:border-color 0.15s;}
-.login-field input:focus,.login-field select:focus{border-color:var(--orange);}
-.login-btn{width:100%;padding:13px;border-radius:12px;border:none;background:var(--orange);color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;margin-top:6px;transition:all 0.15s;}
-.login-btn:hover:not(:disabled){background:#b84508;}
-.login-btn:disabled{opacity:0.35;cursor:not-allowed;}
+/* LOGIN */
+.login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;}
+.login-box{background:#fff;border-radius:20px;padding:36px 32px;max-width:400px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.2);text-align:center;}
+.login-box h2{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--blue);margin-bottom:6px;}
+.login-box p{color:var(--muted);font-size:0.9rem;margin-bottom:24px;}
+.login-field{margin-bottom:16px;text-align:left;}
+.login-field label{display:block;font-weight:700;font-size:0.85rem;margin-bottom:6px;color:var(--ink);}
+.login-field input,.login-field select{width:100%;padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:1rem;outline:none;transition:border-color 0.15s;background:#fff;}
+.login-field input:focus,.login-field select:focus{border-color:var(--blue);}
+.login-btn{width:100%;padding:14px;border-radius:12px;border:none;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:8px;transition:all 0.15s;}
+.login-btn:hover{background:#1d4ed8;}
+.login-btn:disabled{opacity:0.4;cursor:not-allowed;}
 
-/* MAIN */
-main{max-width:640px;margin:40px auto;padding:0 20px 80px;}
-.page-title{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:900;color:var(--orange);margin-bottom:4px;}
-.page-sub{color:var(--muted);font-size:0.88rem;margin-bottom:28px;}
-
-/* LESSON LIST */
+main{max-width:640px;margin:40px auto;padding:0 20px 60px;}
+.unit-header{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--blue);margin-bottom:6px;}
+.unit-sub{color:var(--muted);font-size:0.9rem;margin-bottom:32px;}
 .lesson-list{display:flex;flex-direction:column;gap:12px;}
-.lesson-row{background:var(--paper);border:2px solid var(--border);border-radius:var(--r);padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow);transition:all 0.18s;}
-.lesson-row.available:hover{border-color:var(--orange);transform:translateY(-2px);}
+.lesson-row{background:var(--paper);border:2px solid var(--border);border-radius:16px;padding:18px 20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);transition:all 0.18s;}
+.lesson-row.available:hover{border-color:var(--blue);transform:translateY(-2px);}
 .lesson-row.locked{opacity:0.45;cursor:not-allowed;}
-.lesson-num{width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.lesson-num{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Fraunces',serif;font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .lesson-row.locked .lesson-num{background:var(--border);color:var(--muted);}
 .lesson-info{flex:1;}
-.lesson-title{font-weight:800;font-size:0.95rem;}
-.lesson-topic{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.lesson-title{font-weight:800;font-size:1rem;color:var(--ink);}
+.lesson-topic{font-size:0.82rem;color:var(--muted);margin-top:2px;}
 .lesson-row.locked .lesson-title,.lesson-row.locked .lesson-topic{color:var(--muted);}
-a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center;gap:14px;flex:1;}
-.lesson-arrow{color:var(--orange);font-size:1.2rem;flex-shrink:0;}
+a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center;gap:16px;flex:1;}
+.lesson-arrow{color:var(--blue);font-size:1.2rem;flex-shrink:0;}
+.lesson-row.locked .lesson-arrow{color:var(--border);}
 .lock-icon{color:var(--muted);font-size:1rem;flex-shrink:0;}
 .complete-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;}
-.complete-wrap label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
-.complete-cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:#fff;cursor:pointer;appearance:none;-webkit-appearance:none;position:relative;transition:all 0.15s;}
+.complete-wrap label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);}
+.complete-cb{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:#fff;cursor:pointer;appearance:none;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;transition:all 0.15s;position:relative;}
 .complete-cb:checked{background:var(--green);border-color:var(--green);}
-.complete-cb:checked::after{content:'✓';color:#fff;font-weight:900;font-size:0.82rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.complete-cb:checked::after{content:'✓';color:#fff;font-weight:900;font-size:0.85rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
 .complete-cb:hover:not(:disabled){border-color:var(--green);}
 .complete-cb:disabled{opacity:0.3;cursor:not-allowed;}
-.teacher-link{text-align:center;margin-top:28px;}
+.score-badge{font-size:0.75rem;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--blue-light);color:var(--blue);white-space:nowrap;}
+.score-badge.good{background:var(--green-light);color:var(--green);}
+.teacher-link{text-align:center;margin-top:32px;}
 .teacher-link a{color:var(--muted);font-size:0.8rem;text-decoration:none;border-bottom:1px dashed var(--border);}
-.teacher-link a:hover{color:var(--orange);}
-
-/* TEACHER DASHBOARD OVERLAY */
-.teacher-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:8888;display:none;align-items:center;justify-content:center;}
-.teacher-overlay.open{display:flex;}
-.teacher-box{background:#fff;border-radius:20px;padding:32px;max-width:480px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,0.2);}
-.teacher-box h2{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;color:var(--orange);margin-bottom:4px;}
-.teacher-box .sub{color:var(--muted);font-size:0.82rem;margin-bottom:20px;}
-.teacher-pw{display:flex;gap:8px;margin-bottom:20px;}
-.teacher-pw input{flex:1;padding:9px 12px;border-radius:8px;border:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:0.9rem;outline:none;}
-.teacher-pw input:focus{border-color:var(--orange);}
-.teacher-pw button{padding:9px 16px;border-radius:8px;border:none;background:var(--orange);color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;}
-.teacher-content{display:none;}
-.teacher-content.visible{display:block;}
-.t-lesson-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
-.t-lesson-row:last-child{border-bottom:none;}
-.t-lesson-info .t-title{font-weight:800;font-size:0.9rem;}
-.t-lesson-info .t-topic{font-size:0.78rem;color:var(--muted);}
-.toggle{width:46px;height:26px;background:#ddd;border-radius:13px;cursor:pointer;position:relative;border:none;transition:background 0.2s;flex-shrink:0;}
-.toggle.on{background:var(--green);}
-.toggle::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);}
-.toggle.on::after{left:23px;}
-.save-btn{margin-top:16px;padding:10px 24px;border-radius:10px;border:none;background:var(--orange);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.9rem;cursor:pointer;}
-.save-msg{font-size:0.82rem;color:var(--green);font-weight:700;margin-left:12px;}
-.close-teacher{float:right;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);}
-.pw-err{color:#dc2626;font-size:0.8rem;margin-top:4px;}
+.teacher-link a:hover{color:var(--blue);}
 </style>
 </head>
 <body>
 
-<!-- LOGIN POPUP -->
-<div class="overlay" id="login-overlay">
+<!-- Login overlay -->
+<div class="login-overlay" id="login-overlay">
   <div class="login-box">
-    <h2>Idiom <em>Island</em></h2>
-    <div class="sub">Illustrated · Learn with cartoons</div>
+    <h2>Language <span style="color:var(--blue)">Launch</span></h2>
+    <p>Unit 5 &middot; What in the World?</p>
     <div class="login-field">
-      <label>Your Full Name</label>
+      <label>Your Name</label>
       <input type="text" id="login-name" placeholder="First and last name"
         oninput="validateLogin()" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
@@ -123,245 +96,255 @@ a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center
         <option value="French">French</option>
       </select>
     </div>
-    <button class="login-btn" id="login-btn" onclick="doLogin()" disabled>Let's Go! →</button>
-  </div>
-</div>
-
-<!-- TEACHER DASHBOARD OVERLAY -->
-<div class="teacher-overlay" id="teacher-overlay">
-  <div class="teacher-box">
-    <button class="close-teacher" onclick="closeTeacher()">✕</button>
-    <h2>Teacher Dashboard</h2>
-    <div class="sub">Idiom Island · Illustrated</div>
-    <div class="teacher-pw" id="teacher-pw-row">
-      <input type="password" id="teacher-pw" placeholder="Password"
-        onkeydown="if(event.key==='Enter')checkTeacherPw()">
-      <button onclick="checkTeacherPw()">Enter</button>
-    </div>
-    <div class="pw-err" id="pw-err"></div>
-    <div class="teacher-content" id="teacher-content">
-      <div id="teacher-lessons"></div>
-      <div style="margin-top:16px;display:flex;align-items:center;">
-        <button class="save-btn" onclick="saveTeacherSettings()">Save Settings</button>
-        <span class="save-msg" id="save-msg"></span>
-      </div>
-    </div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()" disabled>Let's Go! &rarr;</button>
   </div>
 </div>
 
 <header>
   <div>
-    <div class="logo">Idiom <em>Island</em> <span>✦ Illustrated</span></div>
-    <div class="tagline">Learn with the original cartoon cards</div>
+    <div class="logo">Language <span>Launch</span></div>
+    <div class="tagline">Unit 5 &middot; What in the World?</div>
+    <div class="header-student" id="header-student"></div>
   </div>
-  <div class="header-right">
-    <div id="header-info"></div>
+  <div class="header-lang-wrap" id="header-lang-wrap" style="display:none">
+    <label>Language</label>
+    <select id="header-lang" onchange="switchLang(this.value)">
+      
+      <option value="Spanish">Spanish</option>
+      <option value="Cantonese">Cantonese</option>
+      <option value="Mandarin">Mandarin</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Russian">Russian</option>
+      <option value="Darija">Darija (Moroccan Arabic)</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Tagalog">Tagalog</option>
+      <option value="French">French</option>
+    </select>
   </div>
 </header>
 
 <main>
-  <div class="page-title">Lessons</div>
-  <div class="page-sub">Choose a lesson to begin. Check the box when you finish.</div>
+  <div class="unit-header">Unit 5 Lessons</div>
+  <div class="unit-sub">Click a lesson to begin. Check the box when you finish.</div>
+  <div style="margin:12px 0 4px">
+    <a href="ll_dict_index.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff;border-radius:12px;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;box-shadow:0 3px 12px rgba(37,99,235,0.25);transition:opacity 0.15s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+      📚 All Bilingual Dictionaries (Units 1–6)
+    </a>
+  </div>
   <div class="lesson-list" id="lesson-list">
-    <div style="text-align:center;padding:40px;color:var(--muted)">Loading...</div>
+    <div style="text-align:center;padding:40px;color:var(--muted)">Loading lessons...</div>
   </div>
   <div class="teacher-link">
-    <a href="#" onclick="openTeacher();return false;">Teacher Dashboard</a>
+    <a href="ll_teacher.html">Teacher Dashboard</a>
   </div>
 </main>
 
 <script>
-const TEACHER_PW = 'galileo2026';
+const SUPA_URL = 'https://lhmwtfyceilgndpygivj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXd0ZnljZWlsZ25kcHlnaXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzk5MDIsImV4cCI6MjA5MTcxNTkwMn0.0uIXyctHMfTN4doWYn2JJ260swD5b-t0T-oDMSIPtBU';
+
+let studentId   = sessionStorage.getItem('ll_student_id')   || null;
+let studentName = sessionStorage.getItem('ll_student_name') || '';
+let language    = sessionStorage.getItem('ll_language')     || '';
 
 const ALL_LESSONS = [
-  {num:1, title:'Lesson 1', topic:'Body Talk',         id:'body'},
-  {num:2, title:'Lesson 2', topic:'Animal Kingdom',    id:'animals'},
-  {num:3, title:'Lesson 3', topic:'Money Matters',     id:'money'},
-  {num:4, title:'Lesson 4', topic:'Action & Attitude', id:'action'},
-  {num:5, title:'Lesson 5', topic:'Truth & Deception', id:'honesty'},
-  {num:6, title:'Lesson 6', topic:'Trouble & Safety',  id:'trouble'},
-  {num:7, title:'Lesson 7', topic:'Wisdom & Advice',   id:'wisdom'},
+  {num:1, title:'Lesson 1', topic:'What in the World?',         file:'ll_lesson1.html'},
+  {num:2, title:'Lesson 2', topic:'The Ecosystem',              file:'ll_lesson2.html'},
+  {num:3, title:'Lesson 3', topic:'Plants',                     file:'ll_lesson3.html'},
+  {num:4, title:'Lesson 4', topic:'Animals',                    file:'ll_lesson4.html'},
+  {num:5, title:'Lesson 5', topic:'Break It Down!',             file:'ll_lesson5.html'},
+  {num:6, title:'Lesson 6', topic:'Habitats',                   file:'ll_lesson6.html'},
+  {num:7, title:'Lesson 7', topic:'Life Cycles',                file:'ll_lesson7.html'},
+  {num:8, title:'Lesson 8', topic:'Energy and the Food Chain',  file:'ll_lesson8.html'},
+  {num:9, title:'Lesson 9', topic:'Natural Resources',          file:'ll_lesson9.html'},
+  {num:10,title:'Lesson 10',topic:'Water Cycle',                file:'ll_lesson10.html'},
+  {num:11,title:'Lesson 11',topic:'Human Impact',               file:'ll_lesson11.html'},
+  {num:12,title:'Lesson 12',topic:'Protecting Our Planet',      file:'ll_lesson12.html'},
+  {num:13,title:'Lesson 13',topic:'Reduce, Reuse, Recycle',     file:'ll_lesson13.html'},
 ];
 
-let studentName = sessionStorage.getItem('idiom_name') || '';
-let studentLang = sessionStorage.getItem('idiom_lang') || '';
+// ── Supabase ─────────────────────────────────────────────
+async function supaGet(table, params) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}?${params}`, {
+      headers: {'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}`}
+    });
+    return await r.json();
+  } catch(e) { return []; }
+}
 
-// ── Login ─────────────────────────────────────────────
+async function supaPost(table, data) {
+  try {
+    const r = await fetch(`${SUPA_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','apikey':SUPA_KEY,
+                'Authorization':`Bearer ${SUPA_KEY}`,'Prefer':'return=representation'},
+      body: JSON.stringify(data)
+    });
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+// ── Login ─────────────────────────────────────────────────
 function validateLogin() {
   const name = document.getElementById('login-name').value.trim();
   const lang = document.getElementById('login-lang').value;
-  const btn  = document.getElementById('login-btn');
-  btn.disabled = !(name.length >= 2 && lang);
+  document.getElementById('login-btn').disabled = !(name.length >= 2 && lang);
 }
 
-function doLogin() {
+async function doLogin() {
   const name = document.getElementById('login-name').value.trim();
   const lang = document.getElementById('login-lang').value;
   if (!name || !lang) return;
+
+  // Register in Supabase
+  const rows = await supaPost('ll_students', {name, language: lang});
+  const id = (rows && rows[0]) ? rows[0].id : ('local-' + Date.now());
+
+  studentId   = id;
   studentName = name;
-  studentLang = lang;
-  sessionStorage.setItem('idiom_name', name);
-  sessionStorage.setItem('idiom_lang', lang);
+  language    = lang;
+  sessionStorage.setItem('ll_student_id',   id);
+  sessionStorage.setItem('ll_student_name', name);
+  sessionStorage.setItem('ll_language',     lang);
+
   document.getElementById('login-overlay').style.display = 'none';
   showHeader();
-  renderLessons();
+  loadLessons();
+}
+
+function switchLang(lang) {
+  language = lang;
+  sessionStorage.setItem('ll_language', lang);
 }
 
 function showHeader() {
-  const el = document.getElementById('header-info');
-  if (studentName) {
-    el.innerHTML = '<span class="student-badge">' + studentName + '</span>' +
-      '<span class="lang-chip">' + studentLang + '</span>';
+  const s = document.getElementById('header-student');
+  if (s) s.textContent = studentName + ' \u00b7 ' + language;
+  const w = document.getElementById('header-lang-wrap');
+  if (w) {
+    w.style.display = 'flex';
+    const sel = document.getElementById('header-lang');
+    if (sel) sel.value = language;
   }
 }
 
-// ── Lesson settings (localStorage for now, no Supabase dependency) ───
-function getSettings() {
-  try { return JSON.parse(localStorage.getItem('idiom_lesson_settings') || '{}'); }
-  catch(e) { return {}; }
-}
-function saveSettings(obj) {
-  localStorage.setItem('idiom_lesson_settings', JSON.stringify(obj));
-}
+// ── Load lessons from Supabase settings ──────────────────
+async function loadLessons() {
+  // Get enabled lessons from teacher settings
+  let settings = await supaGet('ll_lesson_settings', 'order=lesson_num.asc');
+  if (!settings || !settings.length) {
+    // Fallback: all enabled
+    settings = ALL_LESSONS.map(l => ({lesson_num: l.num, enabled: true}));
+  }
 
-// ── Render lessons ────────────────────────────────────
-function renderLessons() {
-  const settings  = getSettings();
-  const completed = JSON.parse(localStorage.getItem('idiom_completed') || '{}');
+  // Get scores for this student
+  let scores = {};
+  if (studentId && !studentId.startsWith('local-')) {
+    const answers = await supaGet('ll_answers',
+      `student_id=eq.${studentId}&select=lesson_num,correct`);
+    if (answers && answers.length) {
+      const byLesson = {};
+      answers.forEach(function(a) {
+        if (!byLesson[a.lesson_num]) byLesson[a.lesson_num] = {total:0,correct:0};
+        byLesson[a.lesson_num].total++;
+        if (a.correct) byLesson[a.lesson_num].correct++;
+      });
+      Object.keys(byLesson).forEach(function(n) {
+        const d = byLesson[n];
+        scores[n] = Math.round(100 * d.correct / d.total);
+      });
+    }
+  }
+
+  const settingsMap = {};
+  settings.forEach(function(s) { settingsMap[s.lesson_num] = s.enabled; });
+
+  const completed = JSON.parse(localStorage.getItem('ll_u5_completed') || '{}');
   const list = document.getElementById('lesson-list');
   list.innerHTML = '';
 
-  // ── Dictionary links ──────────────────────────────────────
+  // ── Dictionary links ─────────────────────────────────────
   var dictRow = document.createElement('div');
   dictRow.style.cssText = 'display:flex;gap:12px;margin-bottom:8px;flex-wrap:wrap;';
-  var d1 = document.createElement('a');
-  d1.href = 'idiom_by_topic.html';
-  d1.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
-  d1.innerHTML = '<div style="font-size:1.6rem">🗂️</div><div><div style="font-weight:800;font-size:0.95rem">Idioms by Topic</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">All 69 idioms grouped by lesson</div></div>';
-  d1.onmouseover = function(){ this.style.borderColor='var(--accent)'; };
-  d1.onmouseout  = function(){ this.style.borderColor=''; };
-  var d2 = document.createElement('a');
-  d2.href = 'idiom_alpha.html';
-  d2.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
-  d2.innerHTML = '<div style="font-size:1.6rem">🔤</div><div><div style="font-weight:800;font-size:0.95rem">Idioms A–Z</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">All 69 idioms alphabetical</div></div>';
-  d2.onmouseover = function(){ this.style.borderColor='var(--accent)'; };
-  d2.onmouseout  = function(){ this.style.borderColor=''; };
-  dictRow.appendChild(d1);
-  dictRow.appendChild(d2);
+  var dictLink1 = document.createElement('a');
+  dictLink1.href = 'll_dict_by_lesson.html';
+  dictLink1.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
+  dictLink1.innerHTML = '<div style="font-size:1.6rem">📖</div><div><div style="font-weight:800;font-size:0.95rem;color:var(--navy)">Bilingual Dictionary</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">by Lesson</div></div>';
+  dictLink1.onmouseover = function(){ this.style.borderColor = '#7c3aed'; };
+  dictLink1.onmouseout  = function(){ this.style.borderColor = ''; };
+  var dictLink2 = document.createElement('a');
+  dictLink2.href = 'll_dict_alpha.html';
+  dictLink2.style.cssText = 'flex:1;min-width:200px;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--paper);border:2px solid var(--border);border-radius:16px;box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:all 0.18s;font-family:inherit;';
+  dictLink2.innerHTML = '<div style="font-size:1.6rem">🔤</div><div><div style="font-weight:800;font-size:0.95rem;color:var(--navy)">Bilingual Dictionary</div><div style="font-size:0.78rem;color:var(--muted);margin-top:2px">Alphabetical (A–Z)</div></div>';
+  dictLink2.onmouseover = function(){ this.style.borderColor = '#7c3aed'; };
+  dictLink2.onmouseout  = function(){ this.style.borderColor = ''; };
+  dictRow.appendChild(dictLink1);
+  dictRow.appendChild(dictLink2);
   list.appendChild(dictRow);
 
   ALL_LESSONS.forEach(function(lesson) {
-    const enabled = settings[lesson.id] !== false; // default on
+    const enabled = settingsMap[lesson.num] !== false;
     const row = document.createElement('div');
     row.className = 'lesson-row ' + (enabled ? 'available' : 'locked');
 
     const numDiv = '<div class="lesson-num">' + lesson.num + '</div>';
-    const info   = '<div class="lesson-info"><div class="lesson-title">' + lesson.title +
+    const infoDiv = '<div class="lesson-info"><div class="lesson-title">' + lesson.title +
       '</div><div class="lesson-topic">' + lesson.topic + '</div></div>';
-    const arrow  = enabled ? '<div class="lesson-arrow">→</div>' : '<div class="lock-icon">🔒</div>';
-    const cbHtml = '<div class="complete-wrap">' +
-      '<input type="checkbox" class="complete-cb" id="cb_' + lesson.id + '"' +
-      (completed[lesson.id] ? ' checked' : '') +
-      (enabled ? '' : ' disabled') + '>' +
-      '<label for="cb_' + lesson.id + '">Done?</label></div>';
+
+    const scoreHtml = scores[lesson.num] !== undefined
+      ? '<div class="score-badge' + (scores[lesson.num] >= 70 ? ' good' : '') + '">' + scores[lesson.num] + '%</div>'
+      : '';
+
+    const arrowOrLock = enabled
+      ? '<div class="lesson-arrow">&rarr;</div>'
+      : '<div class="lock-icon">&#128274;</div>';
+
+    const cbHtml = enabled
+      ? '<div class="complete-wrap"><input type="checkbox" class="complete-cb" id="cb' + lesson.num + '"' +
+        (completed[lesson.num] ? ' checked' : '') + '><label for="cb' + lesson.num + '">Done?</label></div>'
+      : '<div class="complete-wrap"><input type="checkbox" class="complete-cb" disabled><label style="opacity:0.3">Done?</label></div>';
 
     if (enabled) {
-      const url = 'idiom_lesson' + lesson.num + '.html';
+      // Pass student info to lesson via URL params
+      const url = lesson.file + '?sid=' + encodeURIComponent(studentId || '') +
+        '&name=' + encodeURIComponent(studentName) +
+        '&lang=' + encodeURIComponent(language);
       row.innerHTML = '<a class="lesson-link" href="' + url + '">' +
-        numDiv + info + arrow + '</a>' + cbHtml;
+        numDiv + infoDiv + scoreHtml + arrowOrLock + '</a>' + cbHtml;
     } else {
-      row.innerHTML = numDiv + info + arrow + cbHtml;
+      row.innerHTML = numDiv + infoDiv + arrowOrLock + cbHtml;
     }
 
     list.appendChild(row);
 
-    const cb = document.getElementById('cb_' + lesson.id);
+    const cb = document.getElementById('cb' + lesson.num);
     if (cb) {
       cb.addEventListener('change', function(e) {
         e.stopPropagation();
-        const c = JSON.parse(localStorage.getItem('idiom_completed') || '{}');
-        c[lesson.id] = cb.checked;
-        localStorage.setItem('idiom_completed', JSON.stringify(c));
+        const c = JSON.parse(localStorage.getItem('ll_u5_completed') || '{}');
+        c[lesson.num] = cb.checked;
+        localStorage.setItem('ll_u5_completed', JSON.stringify(c));
       });
       cb.addEventListener('click', function(e) { e.stopPropagation(); });
     }
   });
 }
 
-// ── Teacher dashboard ──────────────────────────────────
-let teacherUnlocked = false;
-let teacherSettings = {};
-
-function openTeacher() {
-  document.getElementById('teacher-overlay').classList.add('open');
-  if (!teacherUnlocked) {
-    document.getElementById('teacher-pw').focus();
-  }
-}
-
-function closeTeacher() {
-  document.getElementById('teacher-overlay').classList.remove('open');
-}
-
-function checkTeacherPw() {
-  const pw = document.getElementById('teacher-pw').value;
-  if (pw === TEACHER_PW) {
-    teacherUnlocked = true;
-    teacherSettings  = getSettings();
-    document.getElementById('teacher-pw-row').style.display = 'none';
-    document.getElementById('pw-err').textContent = '';
-    document.getElementById('teacher-content').classList.add('visible');
-    renderTeacherLessons();
-  } else {
-    document.getElementById('pw-err').textContent = 'Incorrect password.';
-  }
-}
-
-function renderTeacherLessons() {
-  const container = document.getElementById('teacher-lessons');
-  container.innerHTML = '';
-  ALL_LESSONS.forEach(function(lesson) {
-    const enabled = teacherSettings[lesson.id] !== false;
-    const row = document.createElement('div');
-    row.className = 't-lesson-row';
-    row.innerHTML = '<div class="t-lesson-info">' +
-      '<div class="t-title">' + lesson.title + '</div>' +
-      '<div class="t-topic">' + lesson.topic + '</div></div>' +
-      '<button class="toggle ' + (enabled ? 'on' : '') + '" id="tog_' + lesson.id + '" ' +
-      'onclick="toggleLesson(\'' + lesson.id + '\')"></button>';
-    container.appendChild(row);
-  });
-}
-
-function toggleLesson(id) {
-  teacherSettings[id] = teacherSettings[id] === false ? true : false;
-  const btn = document.getElementById('tog_' + id);
-  if (btn) btn.className = 'toggle ' + (teacherSettings[id] !== false ? 'on' : '');
-}
-
-function saveTeacherSettings() {
-  saveSettings(teacherSettings);
-  const msg = document.getElementById('save-msg');
-  msg.textContent = 'Saved!';
-  setTimeout(function() { msg.textContent = ''; }, 2000);
-  renderLessons(); // refresh lesson list
-}
-
-// Close overlay on background click
-document.getElementById('teacher-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeTeacher();
-});
-
-// ── Init ──────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────
 window.addEventListener('load', function() {
-  if (studentName && studentLang) {
+  if (studentId && studentName) {
     document.getElementById('login-overlay').style.display = 'none';
     showHeader();
-    renderLessons();
-  } else {
-    // Pre-fill if partial data
-    if (studentName) document.getElementById('login-name').value = studentName;
-    if (studentLang) { document.getElementById('login-lang').value = studentLang; }
+    loadLessons();
+  }
+  // Pre-fill login if returning
+  if (studentName) {
+    document.getElementById('login-name').value = studentName;
+  }
+  if (language) {
+    document.getElementById('login-lang').value = language;
     validateLogin();
   }
 });
