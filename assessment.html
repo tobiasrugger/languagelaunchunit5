@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Launch · Pronunciation Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#1B6CA8;--sky-light:#D6EAFF;--sky-mid:#5FA8D3;--sky-dark:#0D3F66;--green:#2E8B57;--green-light:#D4F5E2;--green-dark:#1A5C38;--red:#C0392B;--red-light:#FDECEA;--amber:#E07B00;--amber-light:#FFF4CC;--purple:#6B3FA0;--bg:#F4F8FC;--card:#fff;--text:#1C2B3A;--muted:#5E7A8A;--border:#D0E3F0;--radius:14px;--radius-sm:8px;--shadow:0 2px 12px rgba(27,108,168,.10);--shadow-lg:0 6px 28px rgba(27,108,168,.16);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:linear-gradient(135deg,var(--sky-dark),var(--sky));padding:18px 24px;box-shadow:0 2px 16px rgba(0,0,0,.18);}
+.hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.hdr-title{font-family:'Nunito',sans-serif;font-size:19px;font-weight:800;color:#fff;}
+.hdr-title span{color:#A8D8F0;font-weight:600;}
+main{max-width:660px;margin:0 auto;padding:28px 16px 60px;}
+.screen{display:none;}.screen.visible{display:block;}
+/* NAME CARD */
+.name-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:32px 26px;text-align:center;max-width:420px;margin:40px auto;}
+.name-card h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:var(--sky-dark);margin-bottom:8px;}
+.name-card p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6;}
+.name-input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:16px;font-family:'Nunito Sans',sans-serif;color:var(--text);outline:none;margin-bottom:14px;}
+.name-input:focus{border-color:var(--sky);}
+.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.phase-card{padding:14px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;text-align:left;}
+.phase-card:hover{border-color:var(--sky-mid);}
+.phase-card.selected{border-color:var(--sky);background:var(--sky-light);}
+.phase-card .pc-t{font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--sky-dark);margin-bottom:3px;}
+.phase-card .pc-d{font-size:11px;color:var(--muted);line-height:1.4;}
+.unit-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;justify-content:center;}
+.uf-btn{padding:5px 12px;border-radius:16px;font-size:11px;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;}
+.uf-btn.active{background:var(--sky);border-color:var(--sky);color:#fff;}
+/* ASSESS */
+.assess-prog{height:5px;background:var(--border);border-radius:3px;margin-bottom:18px;overflow:hidden;}
+.assess-prog-fill{height:100%;background:linear-gradient(90deg,var(--sky-mid),var(--sky));border-radius:3px;transition:width .4s;}
+.item-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.item-hdr span{font-size:12px;font-weight:700;color:var(--muted);}
+.assess-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:28px 24px;text-align:center;margin-bottom:18px;border:2px solid var(--border);}
+.a-badge{display:inline-block;padding:3px 10px;border-radius:16px;font-size:10px;font-weight:700;font-family:'Nunito',sans-serif;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+.bw{background:var(--sky-light);color:var(--sky-dark);}
+.bs{background:#EDE0FF;color:#3D1C7A;}
+.bu1{background:#D4F5E2;color:#1A5C38;}
+.bu2{background:#FFF4CC;color:#7A4400;}
+.bu3{background:#FFE8E8;color:#7A0000;}
+.bu4{background:var(--sky-light);color:var(--sky-dark);}
+.assess-item{font-family:'Nunito',sans-serif;font-size:32px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:5px;}
+.assess-item.sentence{font-size:19px;font-weight:700;line-height:1.5;}
+.assess-phonetic{font-size:13px;color:var(--muted);margin-bottom:18px;font-style:italic;}
+.rec-row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:10px;}
+.rec-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:30px;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;color:#fff;}
+.rec-btn.idle{background:var(--sky);}
+.rec-btn.recording{background:var(--red);animation:rpulse .6s ease-in-out infinite alternate;}
+.rec-btn.done{background:var(--green);}
+@keyframes rpulse{from{transform:scale(1);}to{transform:scale(1.05);}}
+.rec-timer{font-size:20px;font-weight:800;color:var(--red);font-family:'Nunito',sans-serif;min-width:28px;}
+.rec-status{font-size:12px;font-weight:600;color:var(--muted);min-height:16px;margin-bottom:8px;}
+.recog-row{display:flex;align-items:center;justify-content:center;gap:8px;min-height:32px;margin-bottom:8px;flex-wrap:wrap;}
+.recog-heard{font-size:12px;color:var(--muted);font-style:italic;}
+.recog-badge{padding:3px 12px;border-radius:16px;font-size:11px;font-weight:700;font-family:'Nunito',sans-serif;}
+.rb-match{background:var(--green-light);color:var(--green-dark);}
+.rb-close{background:var(--amber-light);color:var(--amber);}
+.rb-no{background:var(--red-light);color:var(--red);}
+.pb-row{display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;}
+audio{height:30px;max-width:200px;}
+.ss{font-size:11px;font-weight:700;color:var(--green);min-height:14px;text-align:center;margin-bottom:6px;}
+.nav-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.btn{padding:9px 20px;border-radius:30px;border:1.5px solid var(--border);background:var(--card);font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;color:var(--text);transition:all .15s;}
+.btn:hover{background:var(--sky-light);}
+.btn.pri{background:var(--sky);border-color:var(--sky);color:#fff;}
+.btn.pri:hover{background:var(--sky-dark);}
+.btn:disabled{opacity:.4;pointer-events:none;}
+/* COMPLETE */
+.complete-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:32px 26px;text-align:center;max-width:420px;margin:40px auto;}
+.complete-card .big{font-size:48px;margin-bottom:10px;display:block;}
+.complete-card h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:var(--sky-dark);margin-bottom:8px;}
+.complete-card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
+.stat{background:var(--sky-light);border-radius:var(--radius-sm);padding:10px 6px;text-align:center;}
+.stat-n{font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:var(--sky-dark);}
+.stat-l{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="hdr-title">Language Launch <span>· Pronunciation Assessment</span></div>
+  </div>
+</header>
+<main>
+
+<div class="screen visible" id="screen-name">
+  <div class="name-card">
+    <h2>Ready to read aloud?</h2>
+    <p>You will see words and sentences. Read each one out loud and record yourself. <strong>There is no audio model</strong> — just read what you see!</p>
+    <input class="name-input" id="name-input" type="text" placeholder="Type your name…" autocomplete="off">
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px;text-align:left">Filter by unit (optional):</p>
+    <div class="unit-filter">
+      <button class="uf-btn active" data-u="All" onclick="setUnitFilter(this,'All')">All Units</button>
+      <button class="uf-btn" data-u="U1" onclick="setUnitFilter(this,'U1')">Unit 1</button>
+      <button class="uf-btn" data-u="U2" onclick="setUnitFilter(this,'U2')">Unit 2</button>
+      <button class="uf-btn" data-u="U3" onclick="setUnitFilter(this,'U3')">Unit 3</button>
+      <button class="uf-btn" data-u="U4" onclick="setUnitFilter(this,'U4')">Unit 4</button>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card selected" id="pc-words" onclick="selPhase('words')">
+        <div class="pc-t">📝 Words only</div>
+        <div class="pc-d">Read vocabulary words aloud</div>
+      </div>
+      <div class="phase-card" id="pc-both" onclick="selPhase('both')">
+        <div class="pc-t">📝 + 📖 Words &amp; sentences</div>
+        <div class="pc-d">Words first, then sentences</div>
+      </div>
+    </div>
+    <button class="btn pri" style="width:100%;padding:13px" onclick="startAssess()">Start Assessment →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-assess">
+  <div class="assess-prog"><div class="assess-prog-fill" id="a-prog" style="width:0%"></div></div>
+  <div class="item-hdr">
+    <span id="a-counter">Item 1 of 20</span>
+    <span id="a-score" style="color:var(--green)"></span>
+  </div>
+  <div class="assess-card">
+    <div id="a-badge" class="a-badge bw">Word · Unit 1</div>
+    <div class="assess-item" id="a-item">school</div>
+    <div class="assess-phonetic" id="a-phonetic"></div>
+    <div class="rec-row">
+      <span class="rec-timer" id="a-timer" style="display:none">5</span>
+      <button class="rec-btn idle" id="a-rec-btn" onclick="toggleAssessRec()">
+        <span id="a-rec-icon" style="font-size:16px">🎤</span>
+        <span id="a-rec-lbl">Record</span>
+      </button>
+    </div>
+    <div class="rec-status" id="a-status">Tap Record when you are ready.</div>
+    <div class="recog-row" id="a-recog" style="display:none">
+      <span class="recog-heard" id="a-heard"></span>
+      <span class="recog-badge" id="a-badge2"></span>
+    </div>
+    <div class="pb-row" id="a-pb-row" style="display:none">
+      <audio id="a-playback" controls></audio>
+    </div>
+    <div class="ss" id="a-ss"></div>
+  </div>
+  <div class="nav-row">
+    <button class="btn" onclick="skipItem()">Skip →</button>
+    <button class="btn pri" id="a-next" onclick="nextItem()" disabled>Next →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-done">
+  <div class="complete-card">
+    <span class="big">🎉</span>
+    <h2>Assessment complete!</h2>
+    <p id="done-msg">Your recordings have been saved.</p>
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-n" id="s-match">—</div><div class="stat-l">Matched</div></div>
+      <div class="stat"><div class="stat-n" id="s-close">—</div><div class="stat-l">Close</div></div>
+      <div class="stat"><div class="stat-n" id="s-total">—</div><div class="stat-l">Total</div></div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:18px">Speech matching is a guide — your teacher will listen to your recordings.</p>
+    <button class="btn pri" style="width:100%" onclick="restartAssess()">Start Again</button>
+  </div>
+</div>
+</main>
+
+<script>
+const SUPA_URL='https://lhmwtfyceilgndpygivj.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXd0ZnljZWlsZ25kcHlnaXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzk5MDIsImV4cCI6MjA5MTcxNTkwMn0.0uIXyctHMfTN4doWYn2JJ260swD5b-t0T-oDMSIPtBU';
+const supaOK=true;
+async function supaUpload(blob,fn){
+  if(!supaOK)return null;
+  try {
+    const r=await fetch(`${SUPA_URL}/storage/v1/object/recordings/${fn}`,{
+      method:'POST',
+      headers:{'Authorization':`Bearer ${SUPA_KEY}`,'Content-Type':blob.type||'audio/webm'},
+      body:blob
+    });
+    if(!r.ok){
+      const err=await r.text();
+      console.error('Upload failed:',r.status,err);
+      return null;
+    }
+    return `${SUPA_URL}/storage/v1/object/public/recordings/${fn}`;
+  } catch(e){
+    console.error('Upload error:',e);
+    return null;
+  }
+}
+async function supaInsert(row){
+  if(!supaOK)return;
+  await fetch(`${SUPA_URL}/rest/v1/recordings`,{method:'POST',headers:{'Authorization':`Bearer ${SUPA_KEY}`,'apikey':SUPA_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)});
+}
+
+const ADATA={"words":[{"text":"school","phonetic":"/skuːl/","lesson":"L1","unit":"U1"},{"text":"classroom","phonetic":"/ˈklɑːsruːm/","lesson":"L3","unit":"U1"},{"text":"library","phonetic":"/ˈlaɪbreri/","lesson":"L3","unit":"U1"},{"text":"cafeteria","phonetic":"/ˌkæfəˈtɪriə/","lesson":"L3","unit":"U1"},{"text":"language","phonetic":"/ˈlæŋɡwɪdʒ/","lesson":"L2","unit":"U1"},{"text":"introduce","phonetic":"/ˌɪntrəˈduːs/","lesson":"L2","unit":"U1"},{"text":"talent","phonetic":"/ˈtælənt/","lesson":"L1","unit":"U2"},{"text":"curious","phonetic":"/ˈkjʊriəs/","lesson":"L3","unit":"U2"},{"text":"responsible","phonetic":"/rɪˈspɒnsɪbl/","lesson":"L3","unit":"U2"},{"text":"temperature","phonetic":"/ˈtempərətʃər/","lesson":"L5","unit":"U2"},{"text":"calendar","phonetic":"/ˈkælɪndər/","lesson":"L4","unit":"U2"},{"text":"collaborative","phonetic":"/kəˈlæbərətɪv/","lesson":"L3","unit":"U2"},{"text":"neighborhood","phonetic":"/ˈneɪbərhʊd/","lesson":"L1","unit":"U3"},{"text":"community","phonetic":"/kəˈmjuːnɪti/","lesson":"L1","unit":"U3"},{"text":"emergency","phonetic":"/ɪˈmɜːrdʒənsi/","lesson":"L7","unit":"U3"},{"text":"firefighter","phonetic":"/ˈfaɪərfaɪtər/","lesson":"L7","unit":"U3"},{"text":"pharmacist","phonetic":"/ˈfɑːrməsɪst/","lesson":"L7","unit":"U3"},{"text":"government","phonetic":"/ˈɡʌvərnmənt/","lesson":"L6","unit":"U3"},{"text":"map","phonetic":"/mæp/","lesson":"L1","unit":"U4"},{"text":"compass","phonetic":"/ˈkʌmpəs/","lesson":"L1","unit":"U4"},{"text":"continent","phonetic":"/ˈkɒntɪnənt/","lesson":"L2","unit":"U4"},{"text":"equator","phonetic":"/ɪˈkweɪtər/","lesson":"L2","unit":"U4"},{"text":"hemisphere","phonetic":"/ˈhemɪsfɪr/","lesson":"L2","unit":"U4"},{"text":"climate","phonetic":"/ˈklaɪmɪt/","lesson":"L4","unit":"U4"},{"text":"precipitation","phonetic":"/prɪˌsɪpɪˈteɪʃən/","lesson":"L4","unit":"U4"},{"text":"population","phonetic":"/ˌpɒpjʊˈleɪʃən/","lesson":"L9","unit":"U4"},{"text":"migrate","phonetic":"/ˈmaɪɡreɪt/","lesson":"L11","unit":"U4"},{"text":"geography","phonetic":"/dʒiˈɒɡrəfi/","lesson":"L1","unit":"U4"}],"sentences":[{"text":"I go to school every day.","lesson":"L1","unit":"U1"},{"text":"The library has many books.","lesson":"L3","unit":"U1"},{"text":"My favorite subject is science.","lesson":"L5","unit":"U1"},{"text":"I have a talent for drawing.","lesson":"L1","unit":"U2"},{"text":"She is curious about everything.","lesson":"L3","unit":"U2"},{"text":"The temperature is hot today.","lesson":"L5","unit":"U2"},{"text":"I live in a small neighborhood.","lesson":"L1","unit":"U3"},{"text":"Call an ambulance in an emergency.","lesson":"L7","unit":"U3"},{"text":"The firefighter is very brave.","lesson":"L7","unit":"U3"},{"text":"A map shows where places are located.","lesson":"L1","unit":"U4"},{"text":"The equator goes around the middle of Earth.","lesson":"L2","unit":"U4"},{"text":"Many people migrate to find new opportunities.","lesson":"L11","unit":"U4"}]};
+
+let sName='', aPhase='words', aUnitFilter='All', aItems=[], aIdx=0;
+let aRec=null, aChunks=[], aBlob=null, aTick=null;
+let matchCount=0, closeCount=0, recog=null;
+
+function setUnitFilter(btn,u){
+  aUnitFilter=u;
+  document.querySelectorAll('.uf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function selPhase(p){
+  aPhase=p;
+  document.getElementById('pc-words').classList.toggle('selected',p==='words');
+  document.getElementById('pc-both').classList.toggle('selected',p==='both');
+}
+function startAssess(){
+  const n=document.getElementById('name-input').value.trim();
+  if(!n){document.getElementById('name-input').focus();return;}
+  sName=n;localStorage.setItem('ll_student',n);
+  let words=[...ADATA.words];
+  if(aUnitFilter!=='All')words=words.filter(w=>w.unit===aUnitFilter);
+  let sents=aPhase==='both'?[...ADATA.sentences]:[];
+  if(aUnitFilter!=='All')sents=sents.filter(s=>s.unit===aUnitFilter);
+  words=shuffleArr(words).slice(0,aPhase==='words'?20:12);
+  sents=shuffleArr(sents).slice(0,6);
+  aItems=[...words,...sents];
+  aIdx=0;matchCount=0;closeCount=0;
+  showScr('assess');showItem();
+}
+function unitBadgeClass(unit){return{U1:'bu1',U2:'bu2',U3:'bu3',U4:'bu4'}[unit]||'bw';}
+function showItem(){
+  if(aIdx>=aItems.length){finishAssess();return;}
+  const item=aItems[aIdx];const total=aItems.length;
+  document.getElementById('a-prog').style.width=((aIdx/total)*100)+'%';
+  document.getElementById('a-counter').textContent=`Item ${aIdx+1} of ${total}`;
+  document.getElementById('a-score').textContent=matchCount>0?`✓ ${matchCount} matched`:'';
+  const isSent=item.text.includes(' ');
+  const badge=document.getElementById('a-badge');
+  badge.textContent=(isSent?'Sentence':'Word')+' · '+(item.unit||'');
+  badge.className='a-badge '+(isSent?'bs ':'')+unitBadgeClass(item.unit||'U1');
+  const el=document.getElementById('a-item');
+  el.textContent=item.text;el.className='assess-item'+(isSent?' sentence':'');
+  document.getElementById('a-phonetic').textContent=item.phonetic||'';
+  aBlob=null;aChunks=[];
+  // Reset any lingering recognition
+  if(recog){try{recog.abort();}catch(e){} recog=null;}
+  document.getElementById('a-rec-btn').className='rec-btn idle';
+  document.getElementById('a-rec-icon').textContent='🎤';
+  document.getElementById('a-rec-lbl').textContent='Record';
+  document.getElementById('a-timer').style.display='none';
+  document.getElementById('a-status').textContent='Tap Record when you are ready.';
+  document.getElementById('a-recog').style.display='none';
+  document.getElementById('a-pb-row').style.display='none';
+  document.getElementById('a-ss').textContent='';
+  document.getElementById('a-next').disabled=true;
+}
+async function toggleAssessRec(){
+  // Don't allow stopping mid-record — let it run the full 5 seconds
+  if(aRec&&aRec.state==='recording') return;
+
+  aChunks=[];aBlob=null;
+  document.getElementById('a-pb-row').style.display='none';
+  document.getElementById('a-recog').style.display='none';
+  document.getElementById('a-ss').textContent='';
+  document.getElementById('a-next').disabled=true;
+
+  const recBtn=document.getElementById('a-rec-btn');
+  const recLbl=document.getElementById('a-rec-lbl');
+  recBtn.disabled=true;
+
+  try{
+    // Open the mic stream FIRST so it's warm before we count down
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+      : MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
+      : MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4'
+      : '';
+    aRec=new MediaRecorder(stream, mimeType ? {mimeType} : {});
+    aRec.ondataavailable=e=>{if(e.data.size>0)aChunks.push(e.data);};
+    aRec.onstop=()=>{
+      const savedItem = aItems[aIdx];
+      stream.getTracks().forEach(t=>t.stop());
+      clearInterval(aTick);
+      document.getElementById('a-timer').style.display='none';
+      aBlob=new Blob(aChunks,{type:aRec.mimeType||'audio/webm'});
+      document.getElementById('a-playback').src=URL.createObjectURL(aBlob);
+      document.getElementById('a-pb-row').style.display='flex';
+      recBtn.className='rec-btn done';
+      recBtn.disabled=false;
+      document.getElementById('a-rec-icon').textContent='🎤';
+      recLbl.textContent='Record again';
+      document.getElementById('a-status').textContent='✓ Recorded! Tap Next to continue.';
+      document.getElementById('a-next').disabled=false;
+      saveAssessRec(savedItem);
+    };
+
+    // Countdown WHILE mic is already open and warming up
+    recBtn.className='rec-btn idle';
+    for(let i=3;i>=1;i--){
+      document.getElementById('a-status').textContent=`Get ready… ${i}`;
+      recLbl.textContent=`${i}…`;
+      await new Promise(r=>setTimeout(r,700));
+    }
+
+    // NOW start recording — mic is warm, student is ready
+    aRec.start();
+    recBtn.className='rec-btn recording';
+    recBtn.disabled=true; // no stopping — runs full 5 seconds
+    document.getElementById('a-rec-icon').textContent='🔴';
+    recLbl.textContent='Recording…';
+    document.getElementById('a-status').textContent='🔴 Say it now!';
+    let secs=5;
+    document.getElementById('a-timer').textContent=secs;
+    document.getElementById('a-timer').style.display='block';
+    aTick=setInterval(()=>{
+      secs--;
+      document.getElementById('a-timer').textContent=secs;
+      if(secs<=0){clearInterval(aTick);stopAssessRec();}
+    },1000);
+    // Delay recognition 800ms — gives the student time to start speaking
+    // before the recognizer's internal silence timeout fires
+    setTimeout(()=>startRecog(), 800);
+  }catch(e){
+    recBtn.disabled=false;
+    document.getElementById('a-status').textContent='Microphone not available. Try https://';
+  }
+}
+function stopAssessRec(){
+  if(aRec&&aRec.state==='recording') aRec.stop();
+  clearInterval(aTick);
+  document.getElementById('a-timer').style.display='none';
+  if(recog){try{recog.stop();}catch(e){} recog=null;}
+}
+function startRecog(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return;
+  // Cancel any existing recognition first
+  if(recog){try{recog.abort();}catch(e){} recog=null;}
+  const target=aItems[aIdx].text.toLowerCase();
+  let gotResult=false;
+  // Small delay so mic stream is established before recognition starts
+  setTimeout(()=>{
+    recog=new SR();
+    recog.lang='en-US';
+    recog.interimResults=false;
+    recog.maxAlternatives=5;
+    recog.continuous=false;
+    recog.onresult=e=>{
+      gotResult=true;
+      const alts=Array.from(e.results[0]).map(r=>r.transcript.toLowerCase().trim());
+      const heard=alts[0]||'';
+      const targetWords=target.split(' ').filter(w=>w.length>3);
+      let result='no-match';
+      // Exact or contained match across all alternatives
+      if(alts.some(a=>
+        a===target ||
+        a.includes(target) ||
+        target.includes(a) ||
+        targetWords.some(w=>a.includes(w)) ||
+        // handle common endings: recognizer drops/adds s, ed, ing
+        targetWords.some(w=>a.includes(w.replace(/s$/,''))||a.includes(w+'s')||a.includes(w+'ed')||a.includes(w+'ing'))
+      )){
+        result='match'; matchCount++;
+      } else {
+        // Fuzzy: longest common substring relative to shorter of the two
+        const sh=longestCommon(heard,target);
+        const shorter=Math.min(heard.length,target.length)||1;
+        if(sh/shorter>=0.45){ result='close'; closeCount++; }
+      }
+      showRecog(heard,result);
+      recog=null;
+    };
+    recog.onend=()=>{
+      // Chrome sometimes fires onend before onresult — if we haven't got a result yet,
+      // show a neutral indicator rather than nothing
+      if(!gotResult){
+        showRecog('','no-match');
+      }
+      recog=null;
+    };
+    recog.onerror=e=>{
+      // 'no-speech' and 'aborted' are normal — just silently clear
+      if(e.error!=='no-speech'&&e.error!=='aborted'){
+        showRecog('','no-match');
+      }
+      recog=null;
+    };
+    try{recog.start();}catch(e){recog=null;}
+  }, 300);
+}
+function longestCommon(a,b){let m=0;for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++){let l=0;while(i+l<a.length&&j+l<b.length&&a[i+l]===b[j+l])l++;if(l>m)m=l;}return m;}
+function showRecog(heard,result){
+  const row=document.getElementById('a-recog');const badge=document.getElementById('a-badge2');const he=document.getElementById('a-heard');
+  row.style.display='flex';he.textContent=heard?`heard: "${heard}"`:'(no speech detected)';
+  if(result==='match'){badge.textContent='✓ Sounds right!';badge.className='recog-badge rb-match';}
+  else if(result==='close'){badge.textContent='~ Close!';badge.className='recog-badge rb-close';}
+  else{badge.textContent='Try again?';badge.className='recog-badge rb-no';}
+  document.getElementById('a-score').textContent=matchCount>0?`✓ ${matchCount} matched`:'';
+}
+async function saveAssessRec(item){
+  if(!aBlob)return;
+  const ext = aBlob.type.includes('mp4') ? 'mp4' : 'webm';
+  const fn=`assess_${sName.replace(/\s+/g,'_')}_${item.text.replace(/\s+/g,'-')}_${Date.now()}.${ext}`;
+  document.getElementById('a-ss').textContent='⏳ Saving…';
+  const url=await supaUpload(aBlob,fn);
+  const badge=document.getElementById('a-badge2').textContent||'';
+  await supaInsert({student_name:sName,activity_type:'assessment',word:item.text,audio_url:url||'(local)',match_result:badge.includes('✓')?'match':badge.includes('~')?'close':'no-match',level:'assess',lesson:item.lesson||'',unit:item.unit||''});
+  document.getElementById('a-ss').textContent=url?'✓ Saved':'⚠️ Audio upload failed — row saved without audio';
+}
+function skipItem(){
+  supaInsert({student_name:sName,activity_type:'assessment',word:aItems[aIdx].text,audio_url:null,match_result:'skipped',level:'assess',lesson:aItems[aIdx].lesson||'',unit:aItems[aIdx].unit||''});
+  nextItem();
+}
+function nextItem(){aIdx++;if(aIdx>=aItems.length)finishAssess();else showItem();}
+function finishAssess(){
+  document.getElementById('a-prog').style.width='100%';
+  document.getElementById('s-match').textContent=matchCount;
+  document.getElementById('s-close').textContent=closeCount;
+  document.getElementById('s-total').textContent=aItems.length;
+  document.getElementById('done-msg').textContent=supaOK?`Great work, ${sName}! Your recordings are saved in the teacher dashboard.`:`Great work, ${sName}! Add Supabase credentials to save recordings.`;
+  showScr('done');
+}
+function restartAssess(){showScr('name');}
+function showScr(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('visible'));document.getElementById('screen-'+id).classList.add('visible');}
+function shuffleArr(a){let r=[...a];for(let i=r.length-1;i>0;i--){const j=0|Math.random()*(i+1);[r[i],r[j]]=[r[j],r[i]];}return r;}
+const saved=localStorage.getItem('ll_student');if(saved)document.getElementById('name-input').value=saved;
+</script>
+</body>
+</html>
