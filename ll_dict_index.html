@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Launch — Bilingual Dictionaries</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #2d3748; min-height: 100vh; }
+header { background: linear-gradient(135deg, #3a7bd5, #6c48c5); color: white; padding: 24px; text-align: center; }
+header h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+header p { opacity: 0.85; font-size: 0.95rem; }
+.back-link { display: block; text-align: center; margin: 16px; }
+.back-link a { color: #3a7bd5; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.units { max-width: 640px; margin: 0 auto; padding: 8px 16px 32px; display: flex; flex-direction: column; gap: 16px; }
+.unit-block { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.unit-label { padding: 14px 20px; font-weight: 700; font-size: 1.05rem; color: white; display: flex; align-items: center; gap: 10px; }
+.unit-label .count { font-size: 0.8rem; font-weight: 500; background: rgba(255,255,255,0.25); border-radius: 10px; padding: 2px 10px; margin-left: auto; }
+.dict-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #e2e8f0; }
+.dict-link { background: white; padding: 16px; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; transition: background 0.15s; }
+.dict-link:hover { background: #f7fafc; }
+.dict-link .icon { font-size: 1.4rem; flex-shrink: 0; }
+.dict-link .label { font-weight: 700; font-size: 0.95rem; }
+.dict-link .sub { font-size: 0.78rem; color: #718096; margin-top: 2px; }
+.coming-soon { background: #fafafa; padding: 16px; display: flex; align-items: center; gap: 12px; color: #a0aec0; border: 2px dashed #e2e8f0; margin: 4px; border-radius: 8px; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Bilingual Dictionaries</h1>
+  <p>Language Launch · All Units</p>
+</header>
+<div class="back-link"><a href="ll_index.html">← Back to Language Launch</a></div>
+
+<div class="units">
+
+  <!-- UNIT 1 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#4a90d9">🏫 Unit 1: Welcome to School <span class="count">78 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_u1_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">78 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_u1_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">78 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UNIT 2 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#7b5ea7">🙋 Unit 2: All About Me <span class="count">94 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_u2_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">94 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_u2_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">94 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UNIT 3 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#e8734a">🏘️ Unit 3: My Community <span class="count">86 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_u3_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">86 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_u3_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">86 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UNIT 4 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#3aaa6e">🌍 Unit 4: Around the World <span class="count">68 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_u4_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">68 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_u4_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">68 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UNIT 5 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#2b8abd">🌐 Unit 5: What in the World? <span class="count">103 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">103 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">103 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UNIT 6 -->
+  <div class="unit-block">
+    <div class="unit-label" style="background:#d4a017">🎭 Unit 6: Our Cultures <span class="count">56 words</span></div>
+    <div class="dict-row">
+      <a href="ll_dict_u6_by_lesson.html" class="dict-link">
+        <span class="icon">📖</span>
+        <div><div class="label">By Lesson</div><div class="sub">56 words · grouped by lesson</div></div>
+      </a>
+      <a href="ll_dict_u6_alpha.html" class="dict-link">
+        <span class="icon">🔤</span>
+        <div><div class="label">A–Z</div><div class="sub">56 words · sorted A–Z</div></div>
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
