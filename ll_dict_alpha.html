@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Language Launch – Unit 5 · Bilingual Dictionary (A–Z)</title>
 <style>
@@ -300,7 +301,7 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
 
 <style>
 .dict-header {
-  background: #1e3a5f;
+  background: linear-gradient(135deg,#1d4ed8,#7c3aed);
   color: #fff;
   padding: 20px 28px;
   display: flex;
@@ -355,7 +356,7 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
 .dict-body { max-width: 860px; margin: 0 auto; padding: 28px 20px; }
 .lesson-section { margin-bottom: 36px; }
 .lesson-section-header {
-  background: #1e3a5f;
+  background: linear-gradient(135deg,#1d4ed8,#7c3aed);
   color: #fff;
   border-radius: 10px;
   padding: 12px 20px;
@@ -385,7 +386,7 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
   font-size: 2rem;
   font-weight: 900;
   color: #fff;
-  background: #1e3a5f;
+  background: linear-gradient(135deg,#1d4ed8,#7c3aed);
   display: inline-block;
   padding: 4px 20px;
   border-radius: 8px;
@@ -3526,6 +3527,16 @@ function playBack(id) {
   if (!btn || !btn.dataset.url) return;
   new Audio(btn.dataset.url).play();
 }
+  // Auto-translate on load using saved language
+  (function() {
+    var lang = sessionStorage.getItem('ll_language') || '';
+    if (lang) {
+      currentLang = lang;
+      var sel = document.getElementById('langsel');
+      if (sel) sel.value = lang;
+      translateAll();
+    }
+  })();
 </script>
 </body>
 </html>
