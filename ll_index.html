@@ -83,7 +83,7 @@ a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center
       <label>My Language</label>
       <select id="login-lang" onchange="validateLogin()">
         <option value="">— select a language —</option>
-        <option value="English">English</option>
+        
         <option value="Spanish">Spanish</option>
         <option value="Cantonese">Cantonese</option>
         <option value="Mandarin">Mandarin</option>
@@ -109,7 +109,7 @@ a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center
   <div class="header-lang-wrap" id="header-lang-wrap" style="display:none">
     <label>Language</label>
     <select id="header-lang" onchange="switchLang(this.value)">
-      <option value="English">English</option>
+      
       <option value="Spanish">Spanish</option>
       <option value="Cantonese">Cantonese</option>
       <option value="Mandarin">Mandarin</option>
@@ -127,6 +127,11 @@ a.lesson-link{text-decoration:none;color:inherit;display:flex;align-items:center
 <main>
   <div class="unit-header">Unit 5 Lessons</div>
   <div class="unit-sub">Click a lesson to begin. Check the box when you finish.</div>
+  <div style="margin:12px 0 4px">
+    <a href="ll_dict_index.html" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff;border-radius:12px;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.88rem;box-shadow:0 3px 12px rgba(37,99,235,0.25);transition:opacity 0.15s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+      📚 All Bilingual Dictionaries (Units 1–6)
+    </a>
+  </div>
   <div class="lesson-list" id="lesson-list">
     <div style="text-align:center;padding:40px;color:var(--muted)">Loading lessons...</div>
   </div>
