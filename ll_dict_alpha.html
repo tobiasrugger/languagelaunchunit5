@@ -3489,10 +3489,12 @@ function showTrans(wordId, text) {
 
 async function translateAll() {
   if (!currentLang) { alert('Please select a language first.'); return; }
-  const all = ALL_WORDS;
-  for (var i = 0; i < all.length; i++) {
-    await translateWord(all[i].word, all[i].def);
-    await new Promise(function(r){ setTimeout(r, 120); });
+  var BATCH = 3;
+  for (var i = 0; i < ALL_WORDS.length; i += BATCH) {
+    var batch = ALL_WORDS.slice(i, i + BATCH);
+    await Promise.all(batch.map(function(w) {
+      return translateWord(w.word, w.def);
+    }));
   }
 }
 
