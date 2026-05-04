@@ -736,7 +736,7 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
         </div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px">
-        <div class="word-definition" style="flex:1">Reyna’s mother has parents.</div>
+        <div class="word-definition" style="flex:1"><strong style="text-decoration:underline">grandparent</strong> — Reyna’s mother has parents.</div>
         <div style="display:flex;gap:6px;flex-shrink:0;padding-top:6px">
           <button class="btn-speak" onclick="speakWord('Reyna’s mother has parents.')" title="Hear the definition">🔊</button>
           <button class="btn-record" id="rec2-grandparent" onclick="toggleRecord('def-grandparent')" title="Record the definition">🎙️</button>
@@ -1415,7 +1415,7 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
         </div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:10px">
-        <div class="word-definition" style="flex:1">Reyna has an older brother and a younger sister.</div>
+        <div class="word-definition" style="flex:1"><strong style="text-decoration:underline">sibling</strong> — Reyna has an older brother and a younger sister.</div>
         <div style="display:flex;gap:6px;flex-shrink:0;padding-top:6px">
           <button class="btn-speak" onclick="speakWord('Reyna has an older brother and a younger sister.')" title="Hear the definition">🔊</button>
           <button class="btn-record" id="rec2-sibling" onclick="toggleRecord('def-sibling')" title="Record the definition">🎙️</button>
@@ -1704,15 +1704,17 @@ async function translateWord(word, def) {
     const data = await resp.json();
     if (data.ok && data.translation) {
       const t = data.translation;
+      const currentWord = word;
       let display;
-      if (t.equiv && t.equiv !== 'null' && t.equiv.trim()) {
-        // Bold+underline the translated word, then show meaning on new line
-        display = '<strong style="text-decoration:underline;font-size:1.05em">' + t.equiv + '</strong>';
-        if (t.meaning && t.meaning !== t.equiv) {
-          display += '<br><span style="font-weight:400;font-size:0.88em;color:var(--muted)">' + t.meaning + '</span>';
-        }
-      } else {
-        display = t.meaning || 'no translation available';
+      const equiv = t.equiv && t.equiv !== 'null' && t.equiv.trim() ? t.equiv.trim() : null;
+      const meaning = t.meaning && t.meaning.trim() ? t.meaning.trim() : null;
+      // Always show the word (translated equiv, or English word if no equiv) bold+underlined
+      const wordDisplay = equiv
+        ? '<strong style="text-decoration:underline;font-size:1.05em">' + equiv + '</strong>'
+        : '<strong style="text-decoration:underline;font-size:1.05em;color:#888">' + (currentWord || '') + '</strong>';
+      display = wordDisplay;
+      if (meaning) {
+        display += ' — <span style="font-weight:400;font-size:0.92em">' + meaning + '</span>';
       }
       transCache[key] = display;
       showTrans(wordId, display);
