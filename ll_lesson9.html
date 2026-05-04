@@ -608,6 +608,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbFr3oopIITlxKDhI5w
 // ═══════════════════════
 let currentLang = '';
 const transCache = {};
+const transEquivCache = {};
 
 function setLang(lang) {
   currentLang = lang;
@@ -618,7 +619,7 @@ function setLang(lang) {
 async function translateWord(word, def) {
   const key = word + '|' + currentLang;
   if (transCache[key]) { showTrans(word, transCache[key]); return; }
-  const el = document.getElementById('tr-' + word);
+  const el = document.getElementById('tr-' + word.replace(/ /g,'-'));
   if (el) el.innerHTML = '<span class="spin">&#8635;</span> translating...';
   try {
     const params = new URLSearchParams({ action:'translate', idiom:word, meaning:def, lang:currentLang });
@@ -626,12 +627,14 @@ async function translateWord(word, def) {
     const data = await resp.json();
     if (data.ok && data.translation) {
       const t = data.translation;
-      const display = t.equiv && t.equiv !== 'null' ? t.equiv + (t.meaning ? ' — ' + t.meaning : '') : (t.meaning || 'no translation available');
+      const equiv = (t.equiv && t.equiv !== 'null') ? t.equiv : '';
+      transEquivCache[key] = equiv || (t.meaning || word);
+      const display = equiv ? equiv + (t.meaning ? ' — ' + t.meaning : '') : (t.meaning || 'no translation available');
       transCache[key] = display;
       showTrans(word, display);
     }
   } catch(e) {
-    const el2 = document.getElementById('tr-' + word);
+    const el2 = document.getElementById('tr-' + word.replace(/ /g,'-'));
     if (el2) el2.innerHTML = '<em style="color:#dc2626;font-size:0.8rem">unavailable</em>';
   }
 }
@@ -1698,11 +1701,7 @@ async function initNativeMatch() {
 
   function getNative(word) {
     var key = word + '|' + currentLang;
-    var cached = transCache[key] || '';
-    // transCache stores "equiv — meaning" or just "meaning"
-    var parts = cached.split(' — ');
-    var equiv = parts[0].trim();
-    return equiv || cached || '?';
+    return transEquivCache[key] || transCache[key] || '?';
   }
 
   function makeGroup(words, groupNum) {
