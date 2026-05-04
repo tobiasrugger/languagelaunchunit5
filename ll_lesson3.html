@@ -370,10 +370,11 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
     <div class="prog-step" onclick="showSection('vocab2')">2 · Words 5–8</div>
     <div class="prog-step" onclick="showSection('picmatch')">3 · Match Picture</div>
     <div class="prog-step" onclick="showSection('matchword')">4 · Match Word</div>
-    <div class="prog-step" onclick="showSection('listen')">5 · Listen &amp; Choose</div>
-    <div class="prog-step" onclick="showSection('missingletters')">6 · Missing Letters</div>
-    <div class="prog-step" onclick="showSection('sentences')">7 · Sentences</div>
-    <div class="prog-step" onclick="showSection('fillinblank')">8 · Fill in Blank</div>
+    <div class="prog-step" onclick="showSection('nativematch')">5 · Match Translation</div>
+    <div class="prog-step" onclick="showSection('listen')">6 · Listen &amp; Choose</div>
+    <div class="prog-step" onclick="showSection('missingletters')">7 · Missing Letters</div>
+    <div class="prog-step" onclick="showSection('sentences')">8 · Sentences</div>
+    <div class="prog-step" onclick="showSection('fillinblank')">9 · Fill in Blank</div>
   </div>
 
   <!-- ══ SECTION 1: Vocab Set 1 ══ -->
@@ -700,19 +701,31 @@ main{max-width:780px;margin:0 auto;padding:28px 20px 60px;}
       <div><h2>Match Word</h2><p>Match each word to its meaning.</p></div>
     </div>
     <div class="match-score" id="matchword-score">Matched: 0 / 8</div>
-    <div class="match-grid">
-      <div class="match-col" id="mw-left"></div>
-      <div class="match-col" id="mw-right"></div>
-    </div>
+    <div id="matchword-area"></div>
     <div class="nav-row" style="margin-top:12px">
       <button class="btn-secondary" onclick="showSection('picmatch')">&#9664; Back</button>
       <button class="btn-primary" onclick="initMatchWord()">New Game &#128260;</button>
+      <button class="btn-primary" onclick="showSection('nativematch')">Next &#9654;</button>
+    </div>
+  </div>
+
+    <!-- ══ SECTION 5: Listen & Choose ══ -->
+  <div <!-- ══ SECTION: Match Native ══ -->
+  <div id="sec-nativematch" style="display:none">
+    <div class="section-banner">
+      <div class="num">5</div>
+      <div><h2>Match Translation</h2><p>Match each English word to its translation.</p></div>
+    </div>
+    <div class="match-score" id="nativematch-score">Matched: 0 / 8</div>
+    <div id="nativematch-area"></div>
+    <div class="nav-row" style="margin-top:12px">
+      <button class="btn-secondary" onclick="showSection('matchword')">&#9664; Back</button>
+      <button class="btn-primary" onclick="initNativeMatch()">New Game &#128260;</button>
       <button class="btn-primary" onclick="showSection('listen')">Next &#9654;</button>
     </div>
   </div>
 
-  <!-- ══ SECTION 5: Listen & Choose ══ -->
-  <div id="sec-listen" style="display:none">
+  id="sec-listen" style="display:none">
     <div class="section-banner">
       <div class="num">5</div>
       <div><h2>Listen &amp; Choose</h2><p>Press play. Which word do you hear?</p></div>
@@ -907,6 +920,7 @@ function showSection(name) {
     else if (i === idx) el.classList.add('current');
   });
   if (name === 'picmatch') { initPicMatch2(); }
+  if (name === 'nativematch') { initNativeMatch(); }
   if (name === 'matchword') { initMatchWord(); }
   if (name === 'listen') { initListen2(); }
   if (name === 'missingletters') { initMissing2(); }
@@ -1606,18 +1620,43 @@ function picMatch2Click(type, word, elId) {
 let mwSelected = null, mwMatched = new Set();
 function initMatchWord() {
   mwSelected = null; mwMatched = new Set();
+  const area  = document.getElementById('matchword-area');
   const score = document.getElementById('matchword-score');
-  const left  = document.getElementById('mw-left');
-  const right = document.getElementById('mw-right');
-  if (!left || !right) return;
+  if (!area) return;
   score.textContent = 'Matched: 0 / ' + WORDS.length;
-  const li = shuffle([...WORDS]), ri = shuffle([...WORDS]);
-  left.innerHTML = li.map(function(w,i){ return '<div class="match-item" id="mwl'+i+'" data-word="'+w.word+'" data-side="left" data-id="mwl'+i+'">'+w.word+'</div>'; }).join('');
-  right.innerHTML = ri.map(function(w,i){ return '<div class="match-item" id="mwr'+i+'" data-word="'+w.word+'" data-side="right" data-id="mwr'+i+'">'+w.short+'</div>'; }).join('');
-  document.querySelectorAll('#mw-left .match-item, #mw-right .match-item').forEach(function(el){
-    el.addEventListener('click', function(){ mwClick(el.dataset.side, el.dataset.word, el.dataset.id); });
+
+  var group1 = WORDS.slice(0, 4);
+  var group2 = WORDS.slice(4);
+
+  function makeGroup(words, groupNum) {
+    var side = 'g' + groupNum;
+    var leftWords  = shuffle([...words]);
+    var rightWords = shuffle([...words]);
+    var leftHtml  = leftWords.map(function(w, i) {
+      var id = 'mwl' + side + i;
+      return '<div class="match-item" id="' + id + '" data-word="' + w.word + '" data-side="left" data-id="' + id + '">' + w.word + '</div>';
+    }).join('');
+    var rightHtml = rightWords.map(function(w, i) {
+      var id = 'mwr' + side + i;
+      return '<div class="match-item" id="' + id + '" data-word="' + w.word + '" data-side="right" data-id="' + id + '">' + w.short + '</div>';
+    }).join('');
+    return '<h3 class="pm-group-label">Group ' + groupNum + '</h3>'
+      + '<p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px">Match each word to its meaning.</p>'
+      + '<div class="match-grid">'
+      + '<div class="match-col" id="mw-left-' + groupNum + '">' + leftHtml + '</div>'
+      + '<div class="match-col" id="mw-right-' + groupNum + '">' + rightHtml + '</div>'
+      + '</div>';
+  }
+
+  area.innerHTML = makeGroup(group1, 1) + makeGroup(group2, 2);
+
+  area.querySelectorAll('.match-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      mwClick(el.dataset.side, el.dataset.word, el.dataset.id);
+    });
   });
 }
+
 function mwClick(side, word, elId) {
   if (mwMatched.has(word)) return;
   const el = document.getElementById(elId);
@@ -1826,6 +1865,113 @@ window.addEventListener('DOMContentLoaded', function() {
     window.location.href = 'll_index.html';
   }
 });
+
+// ── Match: English word ↔ Native language word ────────────────
+var nmSelected = null;
+var nmMatched  = new Set();
+
+async function initNativeMatch() {
+  nmSelected = null; nmMatched = new Set();
+  var area  = document.getElementById('nativematch-area');
+  var score = document.getElementById('nativematch-score');
+  if (!area) return;
+
+  // Need translations - fetch any missing ones first
+  if (!currentLang) {
+    area.innerHTML = '<p style="color:var(--muted);padding:20px;text-align:center">Please select a language at the top of the page first.</p>';
+    return;
+  }
+
+  score.textContent = 'Matched: 0 / ' + WORDS.length;
+  area.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px"><span class="spin" style="display:inline-block;animation:spin 1s linear infinite">⟳</span> Loading translations…</p>';
+
+  // Fetch all translations
+  for (var j = 0; j < WORDS.length; j++) {
+    var w = WORDS[j];
+    var key = w.word + '|' + currentLang;
+    if (!transCache[key]) {
+      await translateWord(w.word, w.def);
+      await new Promise(function(r){ setTimeout(r, 80); });
+    }
+  }
+
+  var group1 = WORDS.slice(0, 4);
+  var group2 = WORDS.slice(4);
+
+  function getNative(word) {
+    var key = word + '|' + currentLang;
+    var cached = transCache[key] || '';
+    // transCache stores "equiv — meaning" or just "meaning"
+    var parts = cached.split(' — ');
+    var equiv = parts[0].trim();
+    return equiv || cached || '?';
+  }
+
+  function makeGroup(words, groupNum) {
+    var side = 'ng' + groupNum;
+    var leftWords  = shuffle([...words]);
+    var rightWords = shuffle([...words]);
+    var leftHtml = leftWords.map(function(w, i) {
+      var id = 'nml' + side + i;
+      return '<div class="match-item" id="' + id + '" data-word="' + w.word + '" data-side="left" data-id="' + id + '">' + w.word + '</div>';
+    }).join('');
+    var rightHtml = rightWords.map(function(w, i) {
+      var id = 'nmr' + side + i;
+      var native = getNative(w.word);
+      return '<div class="match-item" id="' + id + '" data-word="' + w.word + '" data-side="right" data-id="' + id + '">' + native + '</div>';
+    }).join('');
+    return '<h3 class="pm-group-label">Group ' + groupNum + '</h3>'
+      + '<p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px">Match each English word to its ' + currentLang + ' translation.</p>'
+      + '<div class="match-grid">'
+      + '<div class="match-col">' + leftHtml + '</div>'
+      + '<div class="match-col">' + rightHtml + '</div>'
+      + '</div>';
+  }
+
+  area.innerHTML = makeGroup(group1, 1) + makeGroup(group2, 2);
+
+  area.querySelectorAll('.match-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      nmClick(el.dataset.side, el.dataset.word, el.dataset.id);
+    });
+  });
+}
+
+function nmClick(side, word, elId) {
+  if (nmMatched.has(word)) return;
+  var el = document.getElementById(elId);
+  if (!nmSelected) {
+    document.querySelectorAll('.match-item.sel').forEach(function(e){ e.classList.remove('sel'); });
+    el.classList.add('sel');
+    nmSelected = { side: side, word: word, elId: elId };
+  } else {
+    if (nmSelected.side === side) {
+      document.getElementById(nmSelected.elId).classList.remove('sel');
+      el.classList.add('sel');
+      nmSelected = { side: side, word: word, elId: elId };
+      return;
+    }
+    if (nmSelected.word === word) {
+      nmMatched.add(word);
+      document.getElementById(nmSelected.elId).className = 'match-item matched pop';
+      el.className = 'match-item matched pop';
+      speakWord(word);
+      nmSelected = null;
+      var s = document.getElementById('nativematch-score');
+      if (s) s.textContent = 'Matched: ' + nmMatched.size + ' / ' + WORDS.length;
+      if (nmMatched.size === WORDS.length && s) s.textContent = '🎉 All matched!';
+    } else {
+      var prev = document.getElementById(nmSelected.elId);
+      el.classList.add('wrong-flash');
+      if (prev) prev.classList.add('wrong-flash');
+      setTimeout(function() {
+        el.classList.remove('wrong-flash');
+        if (prev) prev.classList.remove('wrong-flash');
+      }, 500);
+      nmSelected = null;
+    }
+  }
+}
 
 </script>
 </body>
