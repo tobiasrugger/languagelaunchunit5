@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Language Launch · Unit 5 · Lesson Activities</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --sky: #e8f4fd;
+  --leaf: #e8f5e3;
+  --sun: #fff8e1;
+  --soil: #fdf0e8;
+  --ink: #1a2733;
+  --muted: #6b7a8d;
+  --border: #d8e4f0;
+  --white: #ffffff;
+
+  --blue: #1d6eba;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --orange: #d97706;
+  --orange-light: #fef3c7;
+  --red: #dc2626;
+  --red-light: #fee2e2;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --teal: #0d9488;
+  --teal-light: #ccfbf1;
+
+  --r: 16px;
+  --shadow: 0 4px 20px rgba(29,110,186,0.10);
+  --shadow-lg: 0 8px 32px rgba(29,110,186,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--sky);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ─── TOP BAR ─────────────────────────────────────────────── */
+.topbar {
+  background: linear-gradient(135deg, #1a4f8a 0%, #2563eb 50%, #7c3aed 100%);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.logo { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 900; color: #fff; line-height: 1; }
+.logo em { color: #fbbf24; font-style: normal; }
+.unit-badge { background: rgba(255,255,255,0.18); color: #e0eaff; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 3px 9px; border-radius: 20px; }
+.lang-wrap { display: flex; align-items: center; gap: 8px; }
+.lang-wrap label { font-size: 0.72rem; font-weight: 700; color: #bfdbfe; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+.lang-wrap select {
+  font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+  padding: 6px 10px; border-radius: 10px;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.12); color: #fff;
+  cursor: pointer; outline: none; min-width: 155px;
+}
+.lang-wrap select option { background: #1e3a8a; color: #fff; }
+
+/* ─── LESSON TABS ─────────────────────────────────────────── */
+.lesson-nav {
+  background: #fff;
+  border-bottom: 2px solid var(--border);
+  display: flex; overflow-x: auto; gap: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.lesson-nav::-webkit-scrollbar { display: none; }
+.lesson-tab {
+  padding: 12px 16px; font-size: 0.78rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1px;
+  white-space: nowrap; cursor: pointer;
+  color: var(--muted); border-bottom: 3px solid transparent;
+  transition: all 0.2s; flex-shrink: 0;
+  background: none; border-top: none; border-left: none; border-right: none;
+  font-family: 'Nunito', sans-serif;
+}
+.lesson-tab:hover { color: var(--blue); }
+.lesson-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+/* ─── LESSON HEADER ───────────────────────────────────────── */
+.lesson-header {
+  background: linear-gradient(135deg, #1d6eba, #2563eb);
+  color: #fff; padding: 28px 24px 24px;
+  border-radius: 0 0 var(--r) var(--r);
+  margin-bottom: 0;
+}
+.lesson-num { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; opacity: 0.75; margin-bottom: 4px; }
+.lesson-title { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 900; line-height: 1.15; }
+.lesson-subtitle { font-size: 0.88rem; opacity: 0.82; margin-top: 6px; }
+.lesson-meta { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+.lesson-pill {
+  background: rgba(255,255,255,0.15); color: #e8f0ff;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  padding: 4px 12px; border-radius: 20px;
+}
+.progress-bar-wrap { margin-top: 14px; }
+.progress-label { font-size: 0.72rem; opacity: 0.8; margin-bottom: 4px; }
+.progress-bar { height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: #86efac; border-radius: 3px; transition: width 0.5s ease; }
+
+/* ─── CARDS CONTAINER ─────────────────────────────────────── */
+.cards-wrap { padding: 20px 16px 60px; max-width: 680px; margin: 0 auto; }
+
+/* ─── WORD CARD (the full card per word) ──────────────────── */
+.word-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.word-card.answered { border-color: var(--green); }
+.word-card.answered-wrong { border-color: var(--orange); }
+
+/* card top strip */
+.card-strip {
+  height: 5px;
+}
+.strip-blue { background: linear-gradient(90deg, #2563eb, #7c3aed); }
+.strip-green { background: linear-gradient(90deg, #16a34a, #0d9488); }
+.strip-orange { background: linear-gradient(90deg, #d97706, #dc2626); }
+.strip-teal { background: linear-gradient(90deg, #0891b2, #0d9488); }
+
+/* ─── WORD HERO (image + word) ────────────────────────────── */
+.word-hero {
+  display: flex; gap: 0; align-items: stretch;
+}
+.word-img-wrap {
+  width: 120px; min-width: 120px; height: 120px; overflow: hidden; flex-shrink: 0;
+  background: var(--sky);
+  position: relative;
+}
+.word-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s;
+}
+.word-img-wrap:hover img { transform: scale(1.05); }
+.word-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--sky), #d0e8ff);
+}
+.word-info {
+  flex: 1; padding: 14px 16px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.word-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.word-text { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 900; color: var(--blue); line-height: 1; }
+.word-syllables { font-size: 0.72rem; color: var(--muted); letter-spacing: 2px; margin-top: 2px; }
+.word-pos-badge {
+  font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+  padding: 2px 8px; border-radius: 20px; margin-top: 4px; display: inline-block;
+}
+.pos-noun { background: var(--blue-light); color: #1e40af; }
+.pos-adjective { background: var(--green-light); color: #15803d; }
+.pos-verb { background: var(--orange-light); color: #b45309; }
+.pos-nounverb { background: var(--red-light); color: var(--red); }
+.btn-speak {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--green); background: var(--white); color: var(--green);
+  font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; flex-shrink: 0;
+}
+.btn-speak:hover { background: var(--green); color: #fff; }
+.word-definition {
+  font-size: 0.88rem; color: var(--ink); line-height: 1.5; margin-top: 8px;
+}
+
+/* ─── TRANSLATION ROW ─────────────────────────────────────── */
+.trans-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; background: #f8faff;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.trans-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); white-space: nowrap; }
+.trans-value { font-size: 0.9rem; font-weight: 700; color: var(--purple); min-height: 20px; }
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── QUESTION ZONE ───────────────────────────────────────── */
+.question-zone {
+  padding: 16px 16px 18px;
+  border-top: 2px dashed var(--border);
+  background: var(--sun);
+}
+.q-label {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--orange); margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+}
+.q-type-icon { font-size: 0.9rem; }
+.q-prompt { font-size: 0.95rem; color: var(--ink); line-height: 1.5; margin-bottom: 12px; font-weight: 600; }
+
+/* Multiple choice */
+.mc-options { display: flex; flex-direction: column; gap: 8px; }
+.mc-option {
+  padding: 10px 14px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--white);
+  font-size: 0.9rem; font-weight: 600; color: var(--ink);
+  cursor: pointer; transition: all 0.15s; text-align: left;
+  font-family: 'Nunito', sans-serif;
+}
+.mc-option:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+.mc-option.correct { border-color: var(--green); background: var(--green-light); color: #166534; }
+.mc-option.wrong { border-color: var(--red); background: var(--red-light); color: #991b1b; }
+.mc-option.revealed { border-color: var(--green); background: var(--green-light); color: #166534; }
+.mc-option:disabled { cursor: default; }
+
+/* Fill in blank */
+.fitb-sentence {
+  font-size: 1rem; line-height: 2.2; color: var(--ink); font-weight: 600;
+}
+.fitb-input {
+  display: inline-block; border: none; border-bottom: 3px solid var(--blue);
+  background: transparent; font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 700; color: var(--blue); text-align: center;
+  width: 140px; padding: 0 4px; outline: none;
+  transition: border-color 0.15s;
+}
+.fitb-input:focus { border-bottom-color: var(--purple); }
+.fitb-input.correct-in { border-bottom-color: var(--green); color: var(--green); }
+.fitb-input.wrong-in { border-bottom-color: var(--red); color: var(--red); }
+.fitb-hint { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+.fitb-hint span { background: var(--blue-light); color: var(--blue); padding: 2px 8px; border-radius: 6px; font-weight: 700; margin: 0 2px; }
+
+/* Use it in a sentence */
+.sentence-input {
+  width: 100%; padding: 10px 12px; border: 2px solid var(--border);
+  border-radius: 10px; font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem; color: var(--ink); resize: vertical; min-height: 70px; outline: none;
+  transition: border-color 0.15s; background: var(--white);
+}
+.sentence-input:focus { border-color: var(--purple); }
+
+/* Matching */
+.match-pairs { display: flex; flex-direction: column; gap: 6px; }
+.match-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.match-word {
+  background: var(--blue-light); color: #1e40af; font-weight: 800;
+  padding: 6px 12px; border-radius: 8px; font-size: 0.88rem; min-width: 100px;
+}
+.match-select {
+  font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 600;
+  padding: 6px 10px; border-radius: 8px; border: 2px solid var(--border);
+  background: var(--white); color: var(--ink); cursor: pointer; outline: none; flex: 1; min-width: 0;
+}
+.match-select.correct-m { border-color: var(--green); background: var(--green-light); color: #166534; }
+.match-select.wrong-m { border-color: var(--red); background: var(--red-light); }
+
+/* Image question */
+.img-q-wrap { display: flex; flex-direction: column; gap: 8px; }
+.img-q-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.img-choice {
+  border: 3px solid var(--border); border-radius: 12px; overflow: hidden;
+  cursor: pointer; transition: all 0.15s; text-align: center; background: var(--white);
+  font-family: 'Nunito', sans-serif;
+}
+.img-choice:hover:not(:disabled) { border-color: var(--blue); transform: scale(1.02); }
+.img-choice img { width: 100%; height: 80px; object-fit: cover; }
+.img-choice-label { font-size: 0.8rem; font-weight: 700; padding: 6px 4px; }
+.img-choice.correct { border-color: var(--green); background: var(--green-light); }
+.img-choice.wrong { border-color: var(--red); background: var(--red-light); }
+.img-choice:disabled { cursor: default; }
+
+/* Feedback & Check button */
+.q-feedback {
+  margin-top: 10px; font-size: 0.88rem; font-weight: 700; min-height: 20px;
+  display: flex; align-items: center; gap: 6px;
+}
+.q-feedback.ok { color: var(--green); }
+.q-feedback.err { color: var(--red); }
+.q-feedback.info { color: var(--blue); }
+.q-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-check {
+  padding: 8px 22px; border-radius: 10px; border: none;
+  background: var(--blue); color: #fff; font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+}
+.btn-check:hover { background: #1e40af; transform: translateY(-1px); }
+.btn-submit-sentence {
+  padding: 8px 22px; border-radius: 10px; border: none;
+  background: var(--purple); color: #fff; font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+}
+.btn-submit-sentence:hover { background: #5b21b6; }
+.btn-show-answer {
+  padding: 8px 18px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--white);
+  color: var(--muted); font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.15s;
+}
+.btn-show-answer:hover { color: var(--ink); border-color: var(--muted); }
+
+/* ─── LESSON COMPLETE BANNER ──────────────────────────────── */
+.complete-banner {
+  background: linear-gradient(135deg, #16a34a, #0d9488);
+  color: #fff; border-radius: var(--r);
+  padding: 28px 24px; text-align: center; margin-top: 8px;
+  box-shadow: var(--shadow-lg);
+}
+.complete-banner h2 { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+.complete-banner p { font-size: 0.9rem; opacity: 0.9; }
+.complete-score { font-size: 2.5rem; font-weight: 900; margin: 12px 0 4px; }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 440px) {
+  .word-img-wrap { width: 90px; min-width: 90px; height: 90px; }
+  .word-text { font-size: 1.3rem; }
+  .lesson-title { font-size: 1.4rem; }
+  .img-choice img { height: 60px; }
+}
+
+/* ─── SCORE STARS ─────────────────────────────────────────── */
+.score-stars { font-size: 1.6rem; margin-bottom: 4px; }
+
+/* ─── LESSON HIDDEN ───────────────────────────────────────── */
+.lesson-page { display: none; }
+.lesson-page.active { display: block; }
+
+/* ─── INTRO CARD ──────────────────────────────────────────── */
+.intro-card {
+  background: var(--white); border: 2px solid var(--border); border-radius: var(--r);
+  padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow);
+  border-left: 5px solid var(--blue);
+}
+.intro-card h3 { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.intro-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div>
+      <div class="logo">Language <em>Launch</em></div>
+      <div style="font-size:0.65rem;color:#bfdbfe;letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Unit 5 · What in the World?</div>
+    </div>
+  </div>
+  <div class="lang-wrap">
+    <label for="langsel">Translate to:</label>
+    <select id="langsel" onchange="setLang(this.value)">
+      <option value="">— select language —</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Cantonese">Cantonese</option>
+      <option value="Mandarin">Mandarin</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Russian">Russian</option>
+      <option value="Darija">Darija (Moroccan Arabic)</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Tagalog">Tagalog</option>
+      <option value="French">French</option>
+      <option value="Korean">Korean</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Somali">Somali</option>
+      <option value="Nepali">Nepali</option>
+    </select>
+  </div>
+</header>
+
+<!-- LESSON TABS -->
+<nav class="lesson-nav" id="lessonNav"></nav>
+
+<!-- LESSON PAGES -->
+<div id="lessonPages"></div>
+
+<script>
+/* ─── CONFIG ─────────────────────────────────────────────── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwbFr3oopIITlxKDhI5wGhEZdomWc3tmB5ZSK6NpBVisPAz-CMA4uKiruXDkCEU3T0Q/exec';
+const SUPA_URL = 'https://lhmwtfyceilgndpygivj.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxobXd0ZnljZWlsZ25kcHlnaXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzk5MDIsImV4cCI6MjA5MTcxNTkwMn0.0uIXyctHMfTN4doWYn2JJ260swD5b-t0T-oDMSIPtBU';
+
+let currentLang = '';
+let transCache = {};
+
+/* ─── UNSPLASH IMAGE QUERIES per word ─────────────────────── */
+// Map word → Unsplash search query for vivid nature/science images
+const IMAGE_QUERIES = {
+  animal: 'florida panther wild cat nature',
+  extinct: 'woolly mammoth fossil museum',
+  endangered: 'endangered sea turtle ocean',
+  habitat: 'forest wildlife habitat nature',
+  environment: 'beautiful forest river nature',
+  balanced: 'ecosystem balance nature forest',
+  connected: 'food web nature connection ecosystem',
+  ecosystem: 'wetland ecosystem birds plants water',
+  sun: 'golden sun rays through trees forest',
+  plant: 'tropical plant green leaves sunlight',
+  survive: 'desert cactus survives harsh landscape',
+  provide: 'rain watering plants nature',
+  grow: 'seedling sprouting soil sunlight',
+  flower: 'wildflower meadow bloom colorful',
+  identify: 'botanist magnifying glass plant leaf',
+  amphibian: 'colorful tree frog amphibian',
+  mammal: 'wolf pack mammals nature wildlife',
+  organism: 'microscope science cells biology',
+  fungus: 'colorful mushrooms forest floor',
+  bacteria: 'microscope science biology',
+  decomposer: 'earthworm soil decomposition nature',
+  decay: 'fallen log decaying forest floor',
+  grassland: 'african grassland plains savanna',
+  savanna: 'savanna zebra acacia tree sunset',
+  tundra: 'arctic tundra snow landscape',
+  freshwater: 'crystal clear mountain lake stream',
+  marine: 'ocean underwater marine life',
+  'coral reef': 'colorful coral reef tropical fish',
+  'life cycle': 'butterfly life cycle metamorphosis',
+  reproduce: 'salmon spawning river reproduce',
+  seed: 'dandelion seeds floating wind',
+  begin: 'seed sprouting new beginning soil',
+  energy: 'sunlight solar energy nature golden',
+  omnivore: 'bear eating berries river fish',
+  carnivore: 'tiger stalking prey wildlife',
+  herbivore: 'panda eating bamboo',
+  consumer: 'deer eating grass meadow',
+  producer: 'green plants photosynthesis sunlight',
+  predator: 'eagle hunting prey wildlife',
+  prey: 'zebra herd running savanna',
+  natural: 'natural wood forest trees',
+  resource: 'forest natural resources trees water',
+  electricity: 'solar panels electricity renewable',
+  'fossil fuel': 'coal oil energy fossil fuels',
+  solar: 'solar panels sunlight renewable energy',
+  renewable: 'wind turbines renewable energy',
+  nonrenewable: 'coal mine mining fossil fuels',
+  problem: 'pollution plastic ocean problem',
+  solution: 'clean river restoration solution',
+  damage: 'deforestation damaged forest environmental',
+  fix: 'tree planting restoration forest',
+  notice: 'child looking at butterfly nature observe',
+  liquid: 'crystal clear water drops liquid',
+  solid: 'ice glacier solid water',
+  gas: 'steam water vapor mist nature',
+  atmosphere: 'earth atmosphere clouds from space',
+  cloud: 'dramatic storm clouds dramatic sky',
+  return: 'rain falling river nature cycle',
+  collect: 'rainwater collection barrel garden',
+  become: 'water turning ice winter lake',
+  litter: 'plastic ocean pollution litter beach',
+  pollute: 'factory smoke air pollution',
+  toxic: 'warning hazardous chemicals toxic',
+  chemical: 'chemistry laboratory science',
+  contaminate: 'polluted water contamination',
+  reduce: 'energy saving light bulb green',
+  reuse: 'reusable bag bottle eco friendly',
+  recycle: 'recycling bins colorful sorting',
+  protect: 'ranger protecting wildlife nature',
+  container: 'glass jar bottles recycling',
+  empty: 'empty glass jar sunlight clean',
+  biodegrade: 'compost soil decomposing leaves',
+};
+
+/* ─── LESSON DATA ─────────────────────────────────────────── */
+const LESSONS = [
+  {
+    num: 1, title: 'What in the World?',
+    topic: 'Animals, habitats, and why our world is connected.',
+    words: [
+      { w: 'animal', syl: 'an • i • mal', pos: 'noun', def: 'An animal is a living thing. Animals need food and water to live.' },
+      { w: 'extinct', syl: 'ex • tinct', pos: 'adjective', def: 'When an animal species dies out forever, the species is extinct.' },
+      { w: 'endangered', syl: 'en • dan • gered', pos: 'adjective', def: 'An endangered animal species has very few animals left and is almost extinct.' },
+      { w: 'habitat', syl: 'hab • i • tat', pos: 'noun', def: 'A habitat is where an animal lives in nature.' },
+      { w: 'environment', syl: 'en • vi • ron • ment', pos: 'noun', def: 'The environment is the physical world, including plants, animals, water, land, and air.' },
+      { w: 'balanced', syl: 'bal • anced', pos: 'adjective', def: 'When a habitat is balanced, it has the right amount of each type of animal—not too many or too few.' },
+      { w: 'connected', syl: 'con • nect • ed', pos: 'adjective', def: 'Humans and animals are connected. Our actions affect animals, and their actions affect us.' },
+    ]
+  },
+  {
+    num: 2, title: 'The Ecosystem',
+    topic: 'Living things share spaces and depend on each other.',
+    words: [
+      { w: 'ecosystem', syl: 'e • co • sys • tem', pos: 'noun', def: 'An ecosystem is all the living things in a specific place and how they interact with each other and their environment.' },
+      { w: 'sun', syl: 'sun', pos: 'noun', def: 'The sun is the source of heat and light for Earth.' },
+      { w: 'plant', syl: 'plant', pos: 'noun', def: 'A plant is a living thing that grows from the ground.' },
+      { w: 'survive', syl: 'sur • vive', pos: 'verb', def: 'To survive is to stay alive.' },
+      { w: 'provide', syl: 'pro • vide', pos: 'verb', def: 'It is important to provide plants with water so they can survive.' },
+      { w: 'grow', syl: 'grow', pos: 'verb', def: 'A living thing, like a plant, grows bigger during its lifetime.' },
+    ]
+  },
+  {
+    num: 3, title: 'Plants',
+    topic: 'Flowers, parts of a plant, and how to identify them.',
+    words: [
+      { w: 'flower', syl: 'flow • er', pos: 'noun', def: 'Many plants have flowers. These plants are called flowering plants.' },
+      { w: 'identify', syl: 'i • den • ti • fy', pos: 'verb', def: 'You can identify a plant by looking at its flowers and other parts.' },
+    ]
+  },
+  {
+    num: 4, title: 'Animals',
+    topic: 'The five classes of animals and what makes each special.',
+    words: [
+      { w: 'amphibian', syl: 'am • phib • i • an', pos: 'noun', def: 'Amphibians are small animals that live on land and in water.' },
+      { w: 'mammal', syl: 'mam • mal', pos: 'noun', def: 'A mammal is covered in fur or hair and produces milk for its young.' },
+    ]
+  },
+  {
+    num: 5, title: 'Break It Down!',
+    topic: 'Organisms, fungi, bacteria, and the power of decomposers.',
+    words: [
+      { w: 'organism', syl: 'or • gan • ism', pos: 'noun', def: 'An organism is any living thing. You are an organism. A plant is an organism.' },
+      { w: 'fungus', syl: 'fun • gus', pos: 'noun', def: 'A fungus is a type of organism that often lives on dead or decaying things.' },
+      { w: 'bacteria', syl: 'bac • te • ri • a', pos: 'noun', def: 'Bacteria are very tiny organisms that are everywhere, but you need a microscope to see them.' },
+      { w: 'decomposer', syl: 'de • com • pos • er', pos: 'noun', def: 'A decomposer feeds on other organisms after they die. Insects, bacteria, fungi, and worms are decomposers.' },
+      { w: 'decay', syl: 'de • cay', pos: 'verb', def: 'Breaking apart a dead plant or a dead animal helps it decay and become part of the soil.' },
+    ]
+  },
+  {
+    num: 6, title: 'Habitats',
+    topic: 'Grasslands, savannas, oceans, and the amazing variety of homes on Earth.',
+    words: [
+      { w: 'grassland', syl: 'grass • land', pos: 'noun', def: 'A grassland is a flat area of land covered by grass.' },
+      { w: 'savanna', syl: 'sa • van • na', pos: 'noun', def: 'A savanna is a flat area of land covered by grass and scattered trees in tropical places.' },
+      { w: 'tundra', syl: 'tun • dra', pos: 'noun', def: 'A tundra is a very cold and windy area.' },
+      { w: 'freshwater', syl: 'fresh • wa • ter', pos: 'adjective', def: 'Freshwater habitats include lakes, streams, and rivers. The water in these habitats is not salty.' },
+      { w: 'marine', syl: 'ma • rine', pos: 'adjective', def: 'Marine habitats are found in the ocean, which is salty.' },
+      { w: 'coral reef', syl: 'cor • al reef', pos: 'noun', def: 'A coral reef is a type of marine habitat that is made up of rock-like living organisms called coral.' },
+    ]
+  },
+  {
+    num: 7, title: 'Life Cycles',
+    topic: 'How every living thing grows, changes, and reproduces.',
+    words: [
+      { w: 'life cycle', syl: 'life cy • cle', pos: 'noun', def: 'A life cycle is the series of changes a living thing goes through during its lifetime.' },
+      { w: 'reproduce', syl: 're • pro • duce', pos: 'verb', def: 'When organisms reproduce, they create new organisms.' },
+      { w: 'seed', syl: 'seed', pos: 'noun', def: 'Plants produce seeds to create new plants.' },
+      { w: 'begin', syl: 'be • gin', pos: 'verb', def: 'To begin is to start. The life cycle of a plant begins with a seed.' },
+    ]
+  },
+  {
+    num: 8, title: 'Energy and the Food Chain',
+    topic: 'How energy moves from the sun to plants to animals.',
+    words: [
+      { w: 'energy', syl: 'en • er • gy', pos: 'noun', def: 'Living things need energy to grow and move.' },
+      { w: 'omnivore', syl: 'om • ni • vore', pos: 'noun', def: 'An omnivore eats plants and animals. A bear is an omnivore.' },
+      { w: 'carnivore', syl: 'car • ni • vore', pos: 'noun', def: 'A carnivore eats animals. A tiger is a carnivore.' },
+      { w: 'herbivore', syl: 'her • bi • vore', pos: 'noun', def: 'An herbivore eats plants. A panda is an herbivore.' },
+      { w: 'consumer', syl: 'con • sum • er', pos: 'noun', def: 'A consumer eats plants or animals. Omnivores, carnivores, and herbivores are consumers.' },
+      { w: 'producer', syl: 'pro • duc • er', pos: 'noun', def: 'A producer makes its own food. Plants are producers.' },
+      { w: 'predator', syl: 'pred • a • tor', pos: 'noun', def: 'A predator is an animal that hunts and eats other animals.' },
+      { w: 'prey', syl: 'prey', pos: 'noun', def: 'Prey is an animal that is hunted and eaten by a predator. Zebras are prey.' },
+    ]
+  },
+  {
+    num: 9, title: 'Natural Resources',
+    topic: 'What we take from Earth—and whether it can run out.',
+    words: [
+      { w: 'natural', syl: 'nat • u • ral', pos: 'adjective', def: 'Something that is natural comes from nature, like wood from trees.' },
+      { w: 'resource', syl: 're • source', pos: 'noun', def: 'A resource is something we use. Wood is a natural resource.' },
+      { w: 'electricity', syl: 'e • lec • tric • i • ty', pos: 'noun', def: 'Electricity is a type of energy. We use electricity in our homes and at school.' },
+      { w: 'fossil fuel', syl: 'fos • sil fu • el', pos: 'noun', def: 'Oil is a fossil fuel. Coal and gas are also fossil fuels. We burn fossil fuels to produce heat and electricity.' },
+      { w: 'solar', syl: 'so • lar', pos: 'adjective', def: 'Solar energy comes from sunlight. We use solar energy to produce electricity.' },
+      { w: 'renewable', syl: 're • new • a • ble', pos: 'adjective', def: 'A renewable resource never runs out. Solar energy from the sun is a renewable resource.' },
+      { w: 'nonrenewable', syl: 'non • re • new • a • ble', pos: 'adjective', def: 'A nonrenewable resource is limited. Coal is a nonrenewable resource.' },
+    ]
+  },
+  {
+    num: 10, title: 'Water Cycle',
+    topic: 'Water moves around Earth in an endless cycle.',
+    words: [
+      { w: 'liquid', syl: 'liq • uid', pos: 'noun', def: 'The water you drink is a liquid.' },
+      { w: 'solid', syl: 'sol • id', pos: 'noun', def: 'Water in the form of ice is a solid.' },
+      { w: 'gas', syl: 'gas', pos: 'noun', def: 'Water in the form of water vapor is a gas. Water vapor is also called steam.' },
+      { w: 'atmosphere', syl: 'at • mos • phere', pos: 'noun', def: 'The atmosphere is the layer of gases that surrounds Earth.' },
+      { w: 'cloud', syl: 'cloud', pos: 'noun', def: 'Each cloud is made up of water vapor, tiny bits of ice, or tiny drops of liquid water.' },
+      { w: 'return', syl: 're • turn', pos: 'verb', def: 'Water returns, or comes back, to Earth through rain.' },
+      { w: 'collect', syl: 'col • lect', pos: 'verb', def: 'You can collect rainwater in a bucket.' },
+      { w: 'become', syl: 'be • come', pos: 'verb', def: 'Water can become, or turn into, ice.' },
+    ]
+  },
+  {
+    num: 11, title: 'Human Impact',
+    topic: 'Humans can help or harm the environment. What will we do?',
+    words: [
+      { w: 'problem', syl: 'prob • lem', pos: 'noun', def: 'A problem is something that causes difficulty or worry.' },
+      { w: 'solution', syl: 'so • lu • tion', pos: 'noun', def: 'A solution is something that makes something better.' },
+      { w: 'damage', syl: 'dam • age', pos: 'verb', def: 'When we cut down trees, we might damage an ecosystem.' },
+      { w: 'fix', syl: 'fix', pos: 'verb', def: 'When you fix something, you make it better. Planting new trees can help fix the problem of deforestation.' },
+      { w: 'notice', syl: 'no • tice', pos: 'verb', def: 'When you look at trees, you might notice beautiful leaves and flowers.' },
+    ]
+  },
+  {
+    num: 12, title: 'Protecting Our Planet',
+    topic: 'Pollution, toxic chemicals, and what they do to our world.',
+    words: [
+      { w: 'litter', syl: 'lit • ter', pos: 'noun/verb', def: 'Litter is garbage that people throw on the ground. When people litter, they make the planet dirty and unhealthy.' },
+      { w: 'pollute', syl: 'pol • lute', pos: 'verb', def: 'Litter and toxic chemicals pollute the environment. This makes the air, land, and water less safe to use.' },
+      { w: 'toxic', syl: 'tox • ic', pos: 'adjective', def: 'Things that are toxic are not safe to eat, drink, touch, or breathe.' },
+      { w: 'chemical', syl: 'chem • i • cal', pos: 'noun', def: 'A chemical can be a liquid, solid, or gas. Some chemicals are toxic.' },
+      { w: 'contaminate', syl: 'con • tam • i • nate', pos: 'verb', def: 'Liquid chemicals can contaminate water and make it dangerous to drink.' },
+    ]
+  },
+  {
+    num: 13, title: 'Reduce, Reuse, Recycle',
+    topic: 'Three powerful actions that protect our planet.',
+    words: [
+      { w: 'reduce', syl: 're • duce', pos: 'verb', def: 'Turn off the lights when you leave a room to reduce how much electricity you use.' },
+      { w: 'reuse', syl: 're • use', pos: 'verb', def: 'When you reuse something, you use it again instead of throwing it away.' },
+      { w: 'recycle', syl: 're • cy • cle', pos: 'verb', def: 'Recycle plastic, paper, and metal items so they can be made into new items!' },
+      { w: 'protect', syl: 'pro • tect', pos: 'verb', def: 'Reducing, reusing, and recycling help protect the planet so it stays healthy and beautiful.' },
+      { w: 'container', syl: 'con • tain • er', pos: 'noun', def: 'A container holds something. You can recycle many types of containers.' },
+      { w: 'empty', syl: 'emp • ty', pos: 'adjective', def: 'When something is empty, it has nothing in it. Only empty containers go in a recycling bin.' },
+      { w: 'biodegrade', syl: 'bi • o • de • grade', pos: 'verb', def: 'Biodegrade means to slowly decay over time and become part of the soil. Food waste can biodegrade.' },
+    ]
+  },
+];
+
+/* ─── QUESTION GENERATOR ──────────────────────────────────── */
+// Deterministically assign question types based on word index and lesson
+// Types: 'mc', 'fitb', 'sentence', 'match', 'truefalse'
+function getQType(lessonIdx, wordIdx) {
+  const pattern = ['mc', 'fitb', 'sentence', 'mc', 'truefalse', 'fitb', 'mc', 'sentence'];
+  return pattern[(lessonIdx * 3 + wordIdx) % pattern.length];
+}
+
+function getStripClass(lessonIdx) {
+  const strips = ['strip-blue', 'strip-green', 'strip-orange', 'strip-teal', 'strip-blue', 'strip-green', 'strip-orange', 'strip-teal', 'strip-blue', 'strip-green', 'strip-orange', 'strip-teal', 'strip-blue'];
+  return strips[lessonIdx % strips.length];
+}
+
+/* ─── BUILD MULTIPLE CHOICE QUESTION ─────────────────────── */
+function buildMC(word, allWords, cardId) {
+  // Pick 3 wrong answers from allWords (or global pool)
+  const pool = allWords.filter(w => w.w !== word.w);
+  const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, 3);
+  const options = [...shuffled.map(w => ({text: w.def.split('.')[0] + '.', isCorrect: false})),
+                   {text: word.def.split('.')[0] + '.', isCorrect: true}]
+    .sort(() => Math.random() - 0.5);
+  
+  const optHtml = options.map((o, i) => 
+    `<button class="mc-option" onclick="checkMC(this,'${cardId}',${o.isCorrect})" data-correct="${o.isCorrect}">
+      ${o.text}
+    </button>`
+  ).join('');
+
+  return `
+    <div class="q-label"><span class="q-type-icon">🎯</span> Multiple Choice</div>
+    <div class="q-prompt">Which sentence best describes <strong>${word.w}</strong>?</div>
+    <div class="mc-options">${optHtml}</div>
+    <div class="q-feedback" id="fb-${cardId}"></div>
+  `;
+}
+
+/* ─── BUILD FILL-IN-BLANK ─────────────────────────────────── */
+function buildFITB(word, cardId) {
+  // Create a sentence with the word blanked out
+  const def = word.def;
+  // Replace first occurrence of the word in def
+  const rx = new RegExp(word.w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'i');
+  let sentence = def.replace(rx, `<input class="fitb-input" id="fitb-${cardId}" placeholder="?" autocomplete="off" autocorrect="off" spellcheck="false">`);
+  
+  // If word not in def, create a different blanking
+  if (!def.toLowerCase().includes(word.w.toLowerCase())) {
+    sentence = def.split('. ')[0] + '. <input class="fitb-input" id="fitb-${cardId}" placeholder="?" autocomplete="off" autocorrect="off" spellcheck="false"> is the vocabulary word.';
+  }
+
+  // Get first 2 letters as hint
+  const hint = word.w.substring(0, 2);
+  
+  return `
+    <div class="q-label"><span class="q-type-icon">✏️</span> Fill in the Blank</div>
+    <div class="q-prompt">Complete the sentence with the correct word:</div>
+    <div class="fitb-sentence">${sentence}</div>
+    <div class="fitb-hint">Hint: starts with <span>${hint}–</span></div>
+    <div class="q-actions">
+      <button class="btn-check" onclick="checkFITB('${cardId}','${word.w}')">Check ✓</button>
+      <button class="btn-show-answer" onclick="revealFITB('${cardId}','${word.w}')">Show answer</button>
+    </div>
+    <div class="q-feedback" id="fb-${cardId}"></div>
+  `;
+}
+
+/* ─── BUILD TRUE/FALSE ────────────────────────────────────── */
+function buildTF(word, allWords, cardId) {
+  // 50% chance of using the real definition, 50% swap a key part
+  const isTrue = Math.random() > 0.5;
+  let statement;
+  if (isTrue) {
+    statement = word.def.split('.')[0] + '.';
+  } else {
+    // Find a different word and swap its def
+    const other = allWords.filter(w => w.w !== word.w)[Math.floor(Math.random() * (allWords.length-1))];
+    statement = `A ${word.w} is the same as a ${other.w}.`;
+  }
+  
+  return `
+    <div class="q-label"><span class="q-type-icon">⚖️</span> True or False?</div>
+    <div class="q-prompt">Is this statement true or false?</div>
+    <div style="background:var(--white);padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-style:italic;margin-bottom:10px;font-size:0.92rem;line-height:1.5;">"${statement}"</div>
+    <div style="display:flex;gap:8px;">
+      <button class="mc-option" style="flex:1" onclick="checkTF(this,'${cardId}',${isTrue},true)">👍 True</button>
+      <button class="mc-option" style="flex:1" onclick="checkTF(this,'${cardId}',${isTrue},false)">👎 False</button>
+    </div>
+    <div class="q-feedback" id="fb-${cardId}"></div>
+  `;
+}
+
+/* ─── BUILD USE IT IN A SENTENCE ──────────────────────────── */
+function buildSentence(word, cardId) {
+  return `
+    <div class="q-label"><span class="q-type-icon">💬</span> Use It in a Sentence</div>
+    <div class="q-prompt">Write your own sentence using the word <strong>${word.w}</strong>:</div>
+    <textarea class="sentence-input" id="sent-${cardId}" placeholder="Write a sentence that shows you understand ${word.w}..."></textarea>
+    <div class="q-actions">
+      <button class="btn-submit-sentence" onclick="submitSentence('${cardId}','${word.w}')">Submit 🚀</button>
+    </div>
+    <div class="q-feedback" id="fb-${cardId}"></div>
+  `;
+}
+
+/* ─── IMAGE URL ───────────────────────────────────────────── */
+function getImageUrl(word) {
+  const query = IMAGE_QUERIES[word.w] || (word.w + ' nature science');
+  // Use Unsplash Source (free, no API key)
+  const seed = word.w.replace(/\s+/g,'-');
+  return `https://source.unsplash.com/240x240/?${encodeURIComponent(query)}&sig=${seed}`;
+}
+
+/* ─── RENDER WORD CARD ────────────────────────────────────── */
+function renderCard(word, allWords, lessonIdx, wordIdx) {
+  const cardId = `L${lessonIdx}W${wordIdx}`;
+  const qtype = getQType(lessonIdx, wordIdx);
+  const strip = getStripClass(wordIdx);
+  const posClass = {noun:'pos-noun',adjective:'pos-adjective',verb:'pos-verb','noun/verb':'pos-nounverb'}[word.pos] || 'pos-noun';
+  const imgUrl = getImageUrl(word);
+  const wordId = word.w.replace(/\s+/g,'-');
+  
+  let questionHtml = '';
+  if (qtype === 'mc') questionHtml = buildMC(word, allWords, cardId);
+  else if (qtype === 'fitb') questionHtml = buildFITB(word, cardId);
+  else if (qtype === 'truefalse') questionHtml = buildTF(word, allWords, cardId);
+  else questionHtml = buildSentence(word, cardId);
+
+  return `
+    <div class="word-card" id="card-${cardId}">
+      <div class="card-strip ${strip}"></div>
+      <div class="word-hero">
+        <div class="word-img-wrap">
+          <img src="${imgUrl}" alt="${word.w}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="word-img-placeholder" style="display:none">${getEmoji(word.w)}</div>
+        </div>
+        <div class="word-info">
+          <div class="word-top">
+            <div>
+              <div class="word-text">${word.w}</div>
+              <div class="word-syllables">${word.syl}</div>
+              <span class="word-pos-badge ${posClass}">${word.pos}</span>
+            </div>
+            <button class="btn-speak" onclick="speak('${word.w}')" title="Hear pronunciation">🔊</button>
+          </div>
+          <div class="word-definition">${word.def}</div>
+        </div>
+      </div>
+      <div class="trans-row">
+        <span class="trans-label">Translation:</span>
+        <span class="trans-value" id="tr-${wordId}">
+          ${currentLang ? '<span class="spin">↻</span>' : '<em style="color:var(--muted);font-size:0.82rem">select a language above</em>'}
+        </span>
+      </div>
+      <div class="question-zone">
+        ${questionHtml}
+      </div>
+    </div>
+  `;
+}
+
+function getEmoji(word) {
+  const map = {animal:'🐾',extinct:'🦴',endangered:'🐢',habitat:'🌿',environment:'🌍',balanced:'⚖️',connected:'🔗',ecosystem:'🌱',sun:'☀️',plant:'🌿',survive:'💪',provide:'💧',grow:'🌱',flower:'🌸',identify:'🔍',amphibian:'🐸',mammal:'🐺',organism:'🔬',fungus:'🍄',bacteria:'🦠',decomposer:'🪱',decay:'🍂',grassland:'🌾',savanna:'🦒',tundra:'🏔️',freshwater:'💧',marine:'🌊','coral reef':'🪸','life cycle':'🔄',reproduce:'🥚',seed:'🌰',begin:'🌱',energy:'⚡',omnivore:'🐻',carnivore:'🐯',herbivore:'🐼',consumer:'🦌',producer:'🌿',predator:'🦅',prey:'🦓',natural:'🌲',resource:'⛏️',electricity:'💡','fossil fuel':'🛢️',solar:'☀️',renewable:'💨',nonrenewable:'⛏️',problem:'⚠️',solution:'✅',damage:'🌫️',fix:'🌳',notice:'👁️',liquid:'💧',solid:'🧊',gas:'💨',atmosphere:'🌍',cloud:'☁️',return:'🔄',collect:'🪣',become:'🔄',litter:'🗑️',pollute:'🏭',toxic:'⚠️',chemical:'🧪',contaminate:'☠️',reduce:'💡',reuse:'♻️',recycle:'♻️',protect:'🛡️',container:'🫙',empty:'🫙',biodegrade:'🌿'};
+  return map[word] || '📚';
+}
+
+/* ─── INTERACTION HANDLERS ────────────────────────────────── */
+const answered = {};
+
+function checkMC(btn, cardId, isCorrect) {
+  const zone = btn.closest('.question-zone');
+  const btns = zone.querySelectorAll('.mc-option');
+  btns.forEach(b => {
+    b.disabled = true;
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+  });
+  const fb = document.getElementById('fb-' + cardId);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.className = 'q-feedback ok';
+    fb.textContent = '✅ Correct! Great work!';
+    markAnswered(cardId, true);
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'q-feedback err';
+    fb.textContent = '❌ Not quite. The correct answer is highlighted.';
+    markAnswered(cardId, false);
+  }
+}
+
+function checkTF(btn, cardId, isTrue, userSaidTrue) {
+  const zone = btn.closest('.question-zone');
+  const btns = zone.querySelectorAll('.mc-option');
+  btns.forEach(b => b.disabled = true);
+  const correct = (isTrue === userSaidTrue);
+  const fb = document.getElementById('fb-' + cardId);
+  if (correct) {
+    btn.classList.add('correct');
+    fb.className = 'q-feedback ok';
+    fb.textContent = '✅ Correct!';
+    markAnswered(cardId, true);
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'q-feedback err';
+    fb.textContent = '❌ Not quite! The statement is ' + (isTrue ? 'TRUE' : 'FALSE') + '.';
+    markAnswered(cardId, false);
+  }
+}
+
+function checkFITB(cardId, correctWord) {
+  const inp = document.getElementById('fitb-' + cardId);
+  if (!inp) return;
+  const val = inp.value.trim().toLowerCase();
+  const fb = document.getElementById('fb-' + cardId);
+  if (val === correctWord.toLowerCase()) {
+    inp.classList.add('correct-in');
+    fb.className = 'q-feedback ok';
+    fb.textContent = '✅ Correct!';
+    inp.disabled = true;
+    markAnswered(cardId, true);
+  } else {
+    inp.classList.add('wrong-in');
+    fb.className = 'q-feedback err';
+    fb.textContent = '❌ Try again! Check your spelling.';
+    setTimeout(() => { inp.classList.remove('wrong-in'); fb.textContent = ''; }, 1500);
+  }
+}
+
+function revealFITB(cardId, correctWord) {
+  const inp = document.getElementById('fitb-' + cardId);
+  if (!inp) return;
+  inp.value = correctWord;
+  inp.classList.add('correct-in');
+  inp.disabled = true;
+  const fb = document.getElementById('fb-' + cardId);
+  fb.className = 'q-feedback info';
+  fb.textContent = 'The answer is: ' + correctWord;
+  markAnswered(cardId, false);
+}
+
+function submitSentence(cardId, word) {
+  const ta = document.getElementById('sent-' + cardId);
+  if (!ta) return;
+  const val = ta.value.trim();
+  const fb = document.getElementById('fb-' + cardId);
+  if (!val) { fb.className = 'q-feedback err'; fb.textContent = '⚠️ Please write a sentence first!'; return; }
+  if (!val.toLowerCase().includes(word.toLowerCase())) {
+    fb.className = 'q-feedback err';
+    fb.textContent = `⚠️ Don't forget to use the word "${word}" in your sentence!`;
+    return;
+  }
+  ta.disabled = true;
+  fb.className = 'q-feedback ok';
+  fb.textContent = '✅ Great sentence! Your teacher will review it.';
+  markAnswered(cardId, true);
+}
+
+function markAnswered(cardId, correct) {
+  answered[cardId] = correct;
+  const card = document.getElementById('card-' + cardId);
+  if (card) {
+    card.classList.remove('answered', 'answered-wrong');
+    card.classList.add(correct ? 'answered' : 'answered-wrong');
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  // Find active lesson
+  const active = document.querySelector('.lesson-page.active');
+  if (!active) return;
+  const lessonIdx = parseInt(active.dataset.lessonIdx);
+  const lesson = LESSONS[lessonIdx];
+  const total = lesson.words.length;
+  let done = 0;
+  lesson.words.forEach((w, wi) => {
+    const cid = `L${lessonIdx}W${wi}`;
+    if (answered[cid] !== undefined) done++;
+  });
+  const pct = Math.round(done / total * 100);
+  const bar = document.getElementById(`progress-fill-${lessonIdx}`);
+  const label = document.getElementById(`progress-label-${lessonIdx}`);
+  if (bar) bar.style.width = pct + '%';
+  if (label) label.textContent = `${done} / ${total} words practiced`;
+  
+  // Show complete banner
+  const banner = document.getElementById(`complete-${lessonIdx}`);
+  if (banner && done === total) {
+    banner.style.display = 'block';
+    const correct = lesson.words.filter((w,wi) => answered[`L${lessonIdx}W${wi}`] === true).length;
+    const stars = correct === total ? '⭐⭐⭐' : correct >= Math.ceil(total * 0.7) ? '⭐⭐' : '⭐';
+    document.getElementById(`score-${lessonIdx}`).textContent = `${correct} / ${total}`;
+    document.getElementById(`stars-${lessonIdx}`).textContent = stars;
+  }
+}
+
+/* ─── SPEECH ──────────────────────────────────────────────── */
+function speak(word) {
+  if (!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.85;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+/* ─── TRANSLATION ─────────────────────────────────────────── */
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('ll_u5_lang', lang);
+  if (lang) translateVisible();
+}
+
+async function translateVisible() {
+  const active = document.querySelector('.lesson-page.active');
+  if (!active) return;
+  const lessonIdx = parseInt(active.dataset.lessonIdx);
+  const lesson = LESSONS[lessonIdx];
+  for (const word of lesson.words) {
+    translateWord(word.w, word.def);
+  }
+}
+
+async function translateWord(word, def) {
+  if (!currentLang) return;
+  const wordId = word.replace(/ /g, '-');
+  const key = word + '|' + currentLang;
+  if (transCache[key]) { showTrans(wordId, transCache[key]); return; }
+  const el = document.getElementById('tr-' + wordId);
+  if (el) el.innerHTML = '<span class="spin">↻</span>';
+  try {
+    const params = new URLSearchParams({ action: 'translate', idiom: word, meaning: def, lang: currentLang });
+    const resp = await fetch(SCRIPT_URL + '?' + params, { method: 'GET', redirect: 'follow' });
+    const data = await resp.json();
+    if (data.ok && data.translation) {
+      const t = data.translation;
+      const display = t.equiv && t.equiv !== 'null'
+        ? t.equiv + (t.meaning ? ' — ' + t.meaning : '')
+        : (t.meaning || 'no translation available');
+      transCache[key] = display;
+      showTrans(wordId, display);
+    }
+  } catch(e) {
+    const el2 = document.getElementById('tr-' + wordId);
+    if (el2) el2.innerHTML = '<em style="color:#dc2626;font-size:0.8rem">unavailable</em>';
+  }
+}
+
+function showTrans(wordId, text) {
+  const el = document.getElementById('tr-' + wordId);
+  if (el) { el.textContent = text; el.style.color = 'var(--purple)'; }
+}
+
+/* ─── BUILD UI ────────────────────────────────────────────── */
+function buildNav() {
+  const nav = document.getElementById('lessonNav');
+  nav.innerHTML = LESSONS.map((l, i) =>
+    `<button class="lesson-tab${i===0?' active':''}" onclick="showLesson(${i})" id="tab-${i}">
+      L${l.num}: ${l.title}
+    </button>`
+  ).join('');
+}
+
+function buildLesson(lessonIdx) {
+  const lesson = LESSONS[lessonIdx];
+  const cardsHtml = lesson.words.map((w, wi) => renderCard(w, lesson.words, lessonIdx, wi)).join('');
+  
+  return `
+    <div class="lesson-page${lessonIdx===0?' active':''}" id="lesson-${lessonIdx}" data-lesson-idx="${lessonIdx}">
+      <div class="lesson-header">
+        <div class="lesson-num">Lesson ${lesson.num}</div>
+        <div class="lesson-title">${lesson.title}</div>
+        <div class="lesson-subtitle">${lesson.topic}</div>
+        <div class="lesson-meta">
+          <span class="lesson-pill">📚 ${lesson.words.length} words</span>
+          <span class="lesson-pill">🌍 Unit 5 · What in the World?</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label" id="progress-label-${lessonIdx}">0 / ${lesson.words.length} words practiced</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill-${lessonIdx}" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="cards-wrap">
+        <div class="intro-card">
+          <h3>📖 How to use this page</h3>
+          <p>Each card has a word from your workbook with a picture, definition, and a practice question. Use the translation dropdown above to see the word in your home language. Questions vary — some are multiple choice, some fill-in-the-blank, some ask you to write your own sentence!</p>
+        </div>
+        ${cardsHtml}
+        <div class="complete-banner" id="complete-${lessonIdx}" style="display:none">
+          <div class="score-stars" id="stars-${lessonIdx}">⭐⭐⭐</div>
+          <h2>Lesson Complete! 🎉</h2>
+          <div class="complete-score" id="score-${lessonIdx}"></div>
+          <p>You practiced all ${lesson.words.length} vocabulary words. Nice work!</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildAll() {
+  const pages = document.getElementById('lessonPages');
+  pages.innerHTML = LESSONS.map((l, i) => buildLesson(i)).join('');
+}
+
+function showLesson(idx) {
+  document.querySelectorAll('.lesson-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('lesson-' + idx).classList.add('active');
+  document.getElementById('tab-' + idx).classList.add('active');
+  // Scroll tab into view
+  document.getElementById('tab-' + idx).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Translate if language set
+  if (currentLang) translateVisible();
+}
+
+/* ─── INIT ────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  buildNav();
+  buildAll();
+  
+  // Restore language preference
+  const saved = localStorage.getItem('ll_u5_lang');
+  if (saved) {
+    document.getElementById('langsel').value = saved;
+    currentLang = saved;
+    translateVisible();
+  }
+});
+</script>
+</body>
+</html>
